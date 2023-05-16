@@ -1,80 +1,129 @@
 <template>
-	<view id="app" style="margin-top: 20px;">
-		<h1>猜数字游戏</h1>
-		<view>
-			<form @submit.prevent="checkAnswer">
-				<label>请输入四个数字，用空格分隔：</label>
-				<input type="text" v-model="inputNumbers" />
-				<button type="submit" @click="checkAnswer">提交</button>
-			</form>
+	<view class="u-page">
+		<view class="prompt"> </view>
+
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">游戏目录</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__button-item">
+					<u-button @click="gameBegin(1)" text="第一关" size="normal" type="primary" />
+				</view>
+			</view>
 		</view>
-		<view v-if="result !== ''">
-			<h2>本次结果：</h2>
-			<p>{{ result }}</p>
-		</view>
-		<view v-if="gameOver">
-			<h2>游戏结束！</h2>
-			<p>{{ gameResult }}</p>
-		</view>
+
+
 	</view>
 </template>
 
 <script>
 	export default {
-
 		data() {
 			return {
-				// 正确的数字序列
-				secretNumbers: [1, 2, 3, 4],
-				// 用户输入的数字序列
-				inputNumbers: '',
-				// 本次游戏结果
-				result: '',
-				// 是否游戏结束
-				gameOver: false,
-				// 游戏结果
-				gameResult: '',
-				// 已猜测次数
-				count: 0,
-				// 最大猜测次数
-				maxCount: 10
+
 			}
 		},
-
 		methods: {
-			// 检查用户输入数字并显示结果
-			checkAnswer() {
-				this.inputNumbers = this.inputNumbers.trim()
-				// 将用户输入的数字序列转换为数字数组
-				const inputArray = this.inputNumbers.split(' ').map(num => Number(num));
-				// 检查输入数字的长度和合法性
-				if (inputArray.length !== 4 || inputArray.some(num => isNaN(num))) {
-					alert('请输入合法的四个数字！');
-					return;
-				}
-				// 计算本次结果（1A和1B的数量）
-				let A = 0,
-					B = 0;
-				for (let i = 0; i < 4; i++) {
-					if (inputArray[i] === this.secretNumbers[i]) A++; // 数字和位置都正确
-					else if (this.secretNumbers.includes(inputArray[i])) B++; // 数字正确但位置不正确
-				}
-				// 更新结果和猜测次数
-				this.result = A === 4 ? '恭喜你猜对了！' : `${A}A${B}B`;
-				this.count++;
-				// 如果猜测次数已满10次或者已猜对，则游戏结束
-				if (A === 4 || this.count === this.maxCount) {
-					this.gameOver = true;
-					this.gameResult = A === 4 ? '恭喜你猜对了！' :
-						`很遗憾，你没有在规定的${this.maxCount}次内猜中答案。正确答案是${this.secretNumbers.join('')}`;
-				}
-				// 清空输入数字
-				this.inputNumbers = '';
-			}
+			gameBegin(type) {
+				uni.navigateTo({
+					url: '/pages/games/gameBegin'
+				});
+			},
 		}
 	}
 </script>
 
-<style>
-	/*每个页面公共css */
+<style lang="scss" scoped>
+	.u-view {
+		padding: 40px 20px 0px 20px;
+
+		&__title {
+			font-size: 14px;
+			color: rgb(143, 156, 162);
+			margin-bottom: 10px;
+		}
+	}
+
+	.u-block {
+		padding: 14px;
+
+		&__section {
+			margin-bottom: 10px;
+		}
+
+		&__title {
+			margin-top: 10px;
+			font-size: 15px;
+			color: $u-content-color;
+			margin-bottom: 10px;
+		}
+
+		&__flex {
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+		}
+	}
+
+	// 使用了cell组件的icon图片样式
+	.u-cell-icon {
+		width: 36rpx;
+		height: 36rpx;
+		margin-right: 8rpx;
+	}
+
+	.u-page {
+		padding: 15px 15px 40px 15px;
+	}
+
+	.u-demo-block {
+		flex: 1;
+		margin-bottom: 23px;
+
+		&__content {
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			// flex-direction: row!important;
+			// align-items: center;
+			// flex-wrap: wrap;
+		}
+
+
+		&__title {
+			margin-top: 50%;
+			display: block;
+			font-size: 20px;
+			color: #40485B;
+			margin-bottom: 18px;
+			text-align: center;
+		}
+	}
+
+
+
+	.u-page {
+		&__button-item {
+			width: 100%;
+			margin: 0 15px 15px 0;
+		}
+	}
+
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.prompt {
+		background-color: rgba(242, 238, 214, 0.4);
+		font-size: 28rpx;
+		color: #d9063f;
+		padding: 5rpx 15rpx 15rpx;
+		margin-bottom: 30rpx;
+		border-radius: 8rpx;
+
+		&>view {
+			margin-top: 10rpx;
+		}
+	}
 </style>
