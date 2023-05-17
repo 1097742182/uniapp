@@ -13,8 +13,6 @@
 				</view>
 			</view>
 		</view>
-
-
 	</view>
 </template>
 
@@ -27,9 +25,10 @@
 		},
 		methods: {
 			goPage(type) {
-				uni.navigateTo({
-					url: '/pages/games/gameMenu'
-				});
+				this.$Router.push({
+					name: "gameMenu",
+					params: {}
+				})
 			},
 		}
 	}

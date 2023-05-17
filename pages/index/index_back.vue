@@ -95,7 +95,7 @@
 				
 				if(e.index == 9){
 					this.$Router.push({
-						name: 'NormalHeader',
+						name: 'gameMenu',
 						params: {}
 					});
 					return;

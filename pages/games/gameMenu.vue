@@ -24,9 +24,10 @@
 		},
 		methods: {
 			gameBegin(type) {
-				uni.navigateTo({
-					url: '/pages/games/gameBegin'
-				});
+				this.$Router.push({
+					name: "gameBegin",
+					params: {}
+				})
 			},
 		}
 	}

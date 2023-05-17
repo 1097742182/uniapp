@@ -7,20 +7,8 @@
 	},
 
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		// {
-		// 	"path": "pages/index/index_back",
-		// 	"name": "index",
-		// 	"aliasPath": "/",
-		// 	"meta": {
-		// 		"title": "首页"
-		// 	},
-		// 	"style": {
-		// 		"navigationStyle": "custom"
-		// 	}
-		// },
-
 		{
-			"path": "pages/index/index",
+			"path": "pages/index/index_back",
 			"name": "index",
 			"aliasPath": "/",
 			"meta": {
@@ -32,30 +20,37 @@
 		},
 
 		{
-			"path": "pages/games/gameMenu",
-			"name": "gameMenu",
+			"path": "pages/index/index",
+			"name": "index",
 			"aliasPath": "/",
 			"meta": {
-				"title": "游戏目录"
+				"title": "首页"
 			},
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-
-		{
+		}, {
+			"path": "pages/games/gameMenu",
+			"name": "gameMenu",
+			"aliasPath": "/gameMenu",
+			"meta": {
+				"title": "游戏目录"
+			},
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "游戏目录"
+			}
+		}, {
 			"path": "pages/games/gameBegin",
 			"name": "gameBegin",
-			"aliasPath": "/",
+			"aliasPath": "/gameBegin",
 			"meta": {
 				"title": "游戏开始"
 			},
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-
-		{
+		}, {
 			"path": "pages/newpage/newpage",
 			"name": "newpage",
 			"aliasPath": "/newpage/:id",
