@@ -1,9 +1,9 @@
 <template>
 	<view class="u-page">
+		<cl-header :key="0" title="正常导航栏" />
 		<view class="prompt"> </view>
 
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">密码神探</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__button-item">
 					<u-button @click="goPage(1)" text="开始游戏" size="normal" type="primary" />
@@ -12,6 +12,11 @@
 					<u-button @click="goPage(1)" text="游戏规则" size="normal" type="primary" />
 				</view>
 			</view>
+		</view>
+
+		<view class="footer">
+			<text class="u-demo-block__title">密码神探</text>
+			<text class="info">本程序仅供娱乐，请勿用于非法活动</text>
 		</view>
 	</view>
 </template>
@@ -91,7 +96,6 @@
 		}
 
 		&__title {
-			margin-top: 50%;
 			display: block;
 			font-size: 20px;
 			color: #40485B;
@@ -125,6 +129,24 @@
 
 		&>view {
 			margin-top: 10rpx;
+		}
+	}
+
+	.footer {
+		position: absolute;
+		bottom: 30px;
+		display: block;
+		text-align: center;
+		width: 100%;
+		
+
+
+		.info {
+			font-size: 12px;
+			color: #444444;
+			text-align: center;
+			display: block;
+			margin-top: -10px;
 		}
 	}
 </style>

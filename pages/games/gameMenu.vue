@@ -1,6 +1,10 @@
 <template>
 	<view class="u-page">
-		<view class="prompt"> </view>
+		<cl-header :key="0" title="正常导航栏"  />
+		
+		<view class="prompt">
+			<u-button @click="backBtnClick()" text="返回" size="normal" type="primary" style="width: 100px; margin-left: 0;" />
+		</view>
 
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">游戏目录</text>
@@ -23,6 +27,9 @@
 			}
 		},
 		methods: {
+			backBtnClick() {
+				uni.navigateBack()
+			},
 			gameBegin(type) {
 				this.$Router.push({
 					name: "gameBegin",
@@ -116,15 +123,7 @@
 	}
 
 	.prompt {
-		background-color: rgba(242, 238, 214, 0.4);
-		font-size: 28rpx;
-		color: #d9063f;
-		padding: 5rpx 15rpx 15rpx;
-		margin-bottom: 30rpx;
-		border-radius: 8rpx;
-
-		&>view {
-			margin-top: 10rpx;
-		}
+		text-align: left;
+		
 	}
 </style>

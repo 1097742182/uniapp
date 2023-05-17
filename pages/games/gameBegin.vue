@@ -1,10 +1,13 @@
 <template>
 	<view id="app" style="margin-top: 20px;">
+		<cl-header title="正常导航栏" />
+		
 		<h1>猜数字游戏</h1>
 		<view>
 			<form @submit.prevent="checkAnswer">
 				<label>请输入四个数字，用空格分隔：</label>
-				<input type="text" v-model="inputNumbers" />
+				<!-- <input type="text" v-model="inputNumbers" /> -->
+				<number-content></number-content>
 				<button type="submit" @click="checkAnswer">提交</button>
 			</form>
 		</view>
@@ -20,8 +23,9 @@
 </template>
 
 <script>
+	import NumberContent from "./components/NumberContent.vue"
+	
 	export default {
-
 		data() {
 			return {
 				// 正确的数字序列
@@ -39,6 +43,10 @@
 				// 最大猜测次数
 				maxCount: 10
 			}
+		},
+		
+		components: {
+			NumberContent
 		},
 
 		methods: {
