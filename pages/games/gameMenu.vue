@@ -9,9 +9,18 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">游戏目录</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__button-item">
-					<u-button @click="gameBegin(1)" text="第一关" size="normal" type="primary" />
-				</view>
+			<view class="u-page__button-item">
+				<u-button @click="gameBegin(1)" text="第一关" size="normal" type="primary" />
+			</view>
+			<view class="u-page__button-item">
+				<u-button @click="gameBegin(1)" text="第二关" size="normal" type="primary" />
+			</view>
+			<view class="u-page__button-item">
+				<u-button @click="gameBegin(1)" text="第三关" size="normal" type="primary" />
+			</view>
+			<view class="u-page__button-item">
+				<u-button @click="gameBegin(1)" text="第四关" size="normal" type="primary" />
+			</view>
 			</view>
 		</view>
 

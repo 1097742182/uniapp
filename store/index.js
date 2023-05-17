@@ -21,7 +21,14 @@ const saveLifeData = function(key, value) {
 
 const store = new Vuex.Store({
 	state: {
-		vuex_token: 'hello world'
+		vuex_token: 'hello world',
+		HistoryNumberList: [{
+			numberList: [1, 2, 3, 4],
+			status: {
+				right: 4,
+				nearlyRight: 0
+			}
+		}]
 	},
 	getters: {
 
