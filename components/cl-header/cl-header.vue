@@ -6,9 +6,12 @@
 				color: realTextColor
 			}">
 			<view class="header-content">
-				<image v-if="isBack" @click="back" src="./back-btn.png" mode="widthFix" class="back-btn" />
+				<!-- <image  src="./back-btn.png" mode="widthFix" /> -->
 				<!-- 图标库使用方式 （可以根据color来切换） -->
 				<!-- <dbb-icon style="" type="iconbianzubeifen" size="32" :color="realTextColor" /> -->
+				<view class="back-btn">
+					<u-icon v-if="isBack" size="20" @click="back" name="arrow-left"></u-icon>
+				</view>
 				<slot v-if="!title"></slot>
 				<text v-else class="nav-text">{{ title }}</text>
 			</view>
@@ -175,7 +178,7 @@
 
 	.nav-text {
 		font-size: 34rpx;
-		margin-left: 20rpx;
+		// margin-left: 20rpx;
 	}
 
 	.back-btn {
@@ -183,5 +186,6 @@
 		left: 0;
 		left: 30rpx;
 		width: 20rpx;
+		height: 20px;
 	}
 </style>

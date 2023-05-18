@@ -1,7 +1,7 @@
 <template>
 	<view class="MainImage">
 		<view class="imageContent">
-			<image class="imageClass" alt="logo" src="https://uviewui.com/common/logo.png" />
+			<image class="imageClass" alt="logo" src="https://img0.baidu.com/it/u=3425868493,3104015061&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1684515600&t=f0e004c528de99c0fbb88513d98ca8da" />
 			<view class="svgClass">
 				<u-icon name='camera' size="28"></u-icon>
 			</view>

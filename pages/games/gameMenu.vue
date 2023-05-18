@@ -1,11 +1,7 @@
 <template>
 	<view class="u-page">
-		<cl-header :key="0" title="正常导航栏"  />
+		<cl-header :key="0" title="游戏目录"  />
 		
-		<view class="prompt">
-			<u-button @click="backBtnClick()" text="返回" size="normal" type="primary" style="width: 100px; margin-left: 0;" />
-		</view>
-
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">游戏目录</text>
 			<view class="u-demo-block__content">
