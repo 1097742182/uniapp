@@ -9,6 +9,7 @@
 				<!-- <input type="text" v-model="inputNumbers" /> -->
 				<number-content></number-content>
 				<history-number-content></history-number-content>
+				<button-content></button-content>
 				<view class="">
 					<button type="primary" style="width: 200px; background-color: #3c8adf;" @click="checkAnswer">提交</button>
 				</view>
@@ -28,6 +29,7 @@
 <script>
 	import NumberContent from "./components/NumberContent.vue"
 	import HistoryNumberContent from "./components/HistoryNumberContent.vue"
+	import ButtonContent from "./components/ButtonContent.vue"
 
 	export default {
 		data() {
@@ -51,7 +53,8 @@
 
 		components: {
 			NumberContent,
-			HistoryNumberContent
+			HistoryNumberContent,
+			ButtonContent
 		},
 
 		methods: {

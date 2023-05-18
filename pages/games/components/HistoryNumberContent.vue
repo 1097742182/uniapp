@@ -1,6 +1,6 @@
 <template>
 	<view class="HistoryNumberContent">
-		<history-number-content-item v-for="item in count" :value='item' :key="item"
+		<history-number-content-item v-for="item in countList" :value='item' :key="item"
 			class="contentItem"></history-number-content-item>
 	</view>
 </template>
@@ -10,16 +10,19 @@
 
 	export default {
 		data() {
-			return {}
-		},
-		mounted() {
-			console.log(this.HistoryNumberList);
+			return {
+				countList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+			}
 		},
 		props: {
 			count: {
 				type: Number,
 				default: 10
 			}
+		},
+		mounted() {
+			// 根据传入的count对countList进行分隔
+			this.countList = this.countList.slice(0, this.count)
 		},
 		components: {
 			HistoryNumberContentItem
