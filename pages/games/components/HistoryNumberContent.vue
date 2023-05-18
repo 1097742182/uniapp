@@ -1,5 +1,5 @@
 <template>
-	<view id="HistoryNumberContent">
+	<view class="HistoryNumberContent">
 		<history-number-content-item v-for="item in count" :value='item' :key="item"
 			class="contentItem"></history-number-content-item>
 	</view>
@@ -28,7 +28,7 @@
 </script>
 
 <style>
-	#HistoryNumberContent {
+	.HistoryNumberContent {
 		/* height: 300px; */
 		border: 1px solid red;
 		margin: 10px;

@@ -10,7 +10,7 @@
 		<uview-demo-component v-show="tabIndex == 0" />
 
 		<!-- iconfont 示例 -->
-		<index v-show="tabIndex == 1" />
+		<IconFontComponent v-show="tabIndex == 1" />
 
 		<!-- UniSimpleRouter 示例 -->
 		<uni-simple-router-component v-show="tabIndex == 2" />

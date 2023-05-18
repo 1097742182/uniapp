@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<cl-header :key="0" title="正常导航栏" />
-		<view class="prompt"> </view>
+		<main-image></main-image>
 
 		<view class="u-demo-block">
 			<view class="u-demo-block__content">
@@ -10,6 +10,9 @@
 				</view>
 				<view class="u-page__button-item">
 					<u-button @click="goPage(1)" text="游戏规则" size="normal" type="primary" />
+				</view>
+				<view class="u-page__button-item">
+					<u-button @click="indexBack(1)" text="首页备份" size="normal" type="primary" />
 				</view>
 			</view>
 		</view>
@@ -22,11 +25,16 @@
 </template>
 
 <script>
+	import MainImage from "./MainImage.vue"
+
 	export default {
 		data() {
 			return {
 
 			}
+		},
+		components: {
+			MainImage
 		},
 		methods: {
 			goPage(type) {
@@ -35,6 +43,11 @@
 					params: {}
 				})
 			},
+			indexBack() {
+				this.$Router.push({
+					name: "index_back"
+				})
+			}
 		}
 	}
 </script>
@@ -107,9 +120,16 @@
 
 
 	.u-page {
+		height: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
 		&__button-item {
 			width: 100%;
-			margin: 0 15px 15px 0;
+			margin: 0 0 15px 0;
 		}
 	}
 
@@ -119,18 +139,6 @@
 		align-items: center;
 	}
 
-	.prompt {
-		background-color: rgba(242, 238, 214, 0.4);
-		font-size: 28rpx;
-		color: #d9063f;
-		padding: 5rpx 15rpx 15rpx;
-		margin-bottom: 30rpx;
-		border-radius: 8rpx;
-
-		&>view {
-			margin-top: 10rpx;
-		}
-	}
 
 	.footer {
 		position: absolute;
@@ -138,7 +146,7 @@
 		display: block;
 		text-align: center;
 		width: 100%;
-		
+
 
 
 		.info {

@@ -1,5 +1,5 @@
 <template>
-	<view id="HistoryNumberContentItem">
+	<view class="HistoryNumberContentItem">
 
 	</view>
 </template>
@@ -21,7 +21,7 @@
 </script>
 
 <style>
-	#HistoryNumberContentItem {
+	.HistoryNumberContentItem {
 		height: 50px;
 		border: 1px solid blue;
 		border-radius: 5px;
