@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		<number-content-item v-for="(item, index) in numberList" :key="index" :value="item" :viewIndex='index'
-			@changeIndex="changeIndex" :actived="currentIndex === index"></number-content-item>
+		<number-content-item v-for="(item, index) in NumberList" :key="index" :value="item" :viewIndex='index'
+			@changeIndex="changeIndex" :actived="CurrentIndex === index"></number-content-item>
 	</view>
 </template>
 
@@ -11,16 +11,19 @@
 	export default {
 		data() {
 			return {
-				numberList: ["1", "2", "3", "4"],
-				currentIndex: 0
+				// numberList: ["1", "2", "3", "4"],
+				// currentIndex: 0
 			}
 		},
 		components: {
 			NumberContentItem
 		},
+		watch: {
+
+		},
 		methods: {
 			changeIndex(i) {
-				this.currentIndex = i;
+				uni.$u.vuex('CurrentIndex', i);
 			}
 		}
 	}

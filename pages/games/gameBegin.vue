@@ -1,12 +1,9 @@
 <template>
 	<view id="app" style="margin-top: 20px;">
-		<cl-header title="正常导航栏" />
+		<cl-header title="第一关" />
 
-		<h1>猜数字游戏</h1>
 		<view>
 			<form @submit.prevent="checkAnswer">
-				<label>请输入四个数字，用空格分隔：</label>
-				<!-- <input type="text" v-model="inputNumbers" /> -->
 				<number-content></number-content>
 				<history-number-content></history-number-content>
 				<button-content></button-content>
@@ -23,6 +20,8 @@
 			<h2>游戏结束！</h2>
 			<p>{{ gameResult }}</p>
 		</view>
+
+		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -36,8 +35,6 @@
 			return {
 				// 正确的数字序列
 				secretNumbers: [1, 2, 3, 4],
-				// 用户输入的数字序列
-				inputNumbers: '',
 				// 本次游戏结果
 				result: '',
 				// 是否游戏结束
@@ -60,9 +57,19 @@
 		methods: {
 			// 检查用户输入数字并显示结果
 			checkAnswer() {
-				this.inputNumbers = this.inputNumbers.trim()
-				// 将用户输入的数字序列转换为数字数组
-				const inputArray = this.inputNumbers.split(' ').map(num => Number(num));
+
+				for (let item of this.NumberList) {
+					if (!item) {
+						this.$refs.uToast.show({
+							message: "请输入完整数字",
+							type: "error",
+							position: "top",
+							duration: 100000
+						})
+						return;
+					}
+				}
+
 				// 检查输入数字的长度和合法性
 				if (inputArray.length !== 4 || inputArray.some(num => isNaN(num))) {
 					alert('请输入合法的四个数字！');

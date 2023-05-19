@@ -1,6 +1,6 @@
 <template>
 	<view class="u-page">
-		<cl-header :key="0" title="首页" :isBack="false" />
+		<cl-header :key="0" title="密码神探" :isBack="false" />
 		<main-image></main-image>
 
 		<view class="u-demo-block">

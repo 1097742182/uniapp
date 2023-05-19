@@ -23,7 +23,8 @@
 		},
 		methods: {
 			emitIndex() {
-				this.$emit("changeIndex", this.viewIndex)
+				this.$emit("changeIndex", this.viewIndex);
+			
 			}
 		}
 	}
