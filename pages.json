@@ -18,16 +18,6 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/index/index_back",
-			"name": "index_back",
-			"aliasPath": "/index_back",
-			"meta": {
-				"title": "首页"
-			},
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
 			"path": "pages/games/gameMenu",
 			"name": "gameMenu",
 			"aliasPath": "/gameMenu",
@@ -48,78 +38,8 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}, {
-			"path": "pages/newpage/newpage",
-			"name": "newpage",
-			"aliasPath": "/newpage/:id",
-			"meta": {
-				"title": "测试"
-			},
-			"style": {
-				"navigationBarTitleText": "测试",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/index/zPagingList",
-			"name": "zPagingList",
-			"aliasPath": "/zPagingList",
-			"meta": {
-				"title": "列表"
-			},
-			"style": {
-				"navigationBarTitleText": "列表",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			// query 方式传参
-			"path": "pages/public/richPage/richPage",
-			// params 传参
-			"name": "richPage",
-			"meta": {
-				"title": "富文本页"
-			},
-			"style": {
-				"navigationBarTitleText": "富文本页",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/index/NormalHeader",
-			"name": "NormalHeader",
-			"style": {
-				"navigationBarTitleText": "NormalHeader",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-			}
 		}
 	],
-	"subPackages": [{
-		"root": "pagesA",
-		"pages": [{
-			"path": "list/list",
-			"name": "pagesAList",
-			"meta": {
-				"title": "pagesA 分包页面"
-			},
-			"style": {
-				"navigationBarTitleText": "pagesA 分包页面",
-				"enablePullDownRefresh": false
-			}
-		}]
-	}, {
-		"root": "pagesB",
-		"pages": [{
-			"path": "detail/detail",
-			"name": "pagesBDetail",
-			"meta": {
-				"title": "pagesB 分包页面"
-			},
-			"style": {
-				"navigationBarTitleText": "pagesB 分包页面",
-				"enablePullDownRefresh": false
-			}
-		}]
-	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
