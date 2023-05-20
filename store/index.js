@@ -22,15 +22,10 @@ const saveLifeData = function(key, value) {
 const store = new Vuex.Store({
 	state: {
 		vuex_token: 'hello world',
-		CurrentIndex: 0,
-		NumberList: ["1", "2", "3", ""],
-		HistoryNumberList: [{
-			numberList: ["1", "2", "3", "4"],
-			status: {
-				right: 4,
-				nearlyRight: 0
-			}
-		}]
+		UserName: "微信用户", // 用户名称
+		CurrentIndex: 0, // 当前选中输入框
+		NumberList: ["1", "2", "3", ""], // 输入框的值
+		HistoryNumberList: [],	// 历史数据
 	},
 	getters: {
 

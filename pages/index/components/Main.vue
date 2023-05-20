@@ -11,9 +11,6 @@
 				<view class="u-page__button-item">
 					<u-button @click="goPage(1)" text="游戏规则" size="normal" type="primary" />
 				</view>
-				<view class="u-page__button-item">
-					<u-button @click="indexBack(1)" text="首页备份" size="normal" type="primary" />
-				</view>
 			</view>
 		</view>
 
@@ -44,9 +41,7 @@
 				})
 			},
 			indexBack() {
-				this.$Router.push({
-					name: "index_back"
-				})
+			
 			}
 		}
 	}

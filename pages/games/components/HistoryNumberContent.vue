@@ -1,6 +1,6 @@
 <template>
 	<view class="HistoryNumberContent">
-		<history-number-content-item v-for="item in countList" :value='item' :key="item"
+		<history-number-content-item v-for="item in countList" :value="item" :key="item"
 			class="contentItem"></history-number-content-item>
 	</view>
 </template>
@@ -20,6 +20,7 @@
 				default: 10
 			}
 		},
+	
 		mounted() {
 			// 根据传入的count对countList进行分隔
 			this.countList = this.countList.slice(0, this.count)

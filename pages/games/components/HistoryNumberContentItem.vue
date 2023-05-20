@@ -1,7 +1,7 @@
 <template>
 	<view class="HistoryNumberContentItem">
 		<view class="numberList">
-			<view class="numberItem" v-for="(item,index) in numberList" :key="index">
+			<view class="numberItem" v-for="(item, index) in numberList" :key="index">
 				<text>{{ item }}</text>
 			</view>
 		</view>
@@ -32,12 +32,22 @@
 				type: Number
 			}
 		},
+		watch: {
+			HistoryNumberList() {
+				this._initNumberList()
+			}
+		},
 		mounted() {
-			this.numberDetail = this.HistoryNumberList[this.value]
+			this._initNumberList()
+		},
+		methods: {
+			_initNumberList() {
+				this.numberDetail = this.HistoryNumberList[this.value]
 
-			if (this.numberDetail) {
-				this.numberList = this.numberDetail["numberList"]
-				this.numberStatus = this.numberDetail["status"]
+				if (this.numberDetail) {
+					this.numberList = this.numberDetail["numberList"]
+					this.numberStatus = this.numberDetail["status"]
+				}
 			}
 		}
 	}
@@ -86,6 +96,5 @@
 				border-bottom: 1px solid #333333;
 			}
 		}
-
 	}
 </style>

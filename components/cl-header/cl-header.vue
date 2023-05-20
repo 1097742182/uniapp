@@ -118,7 +118,7 @@
 			back() {
 				let pages = getCurrentPages(); //获取当前页面信息栈
 				let prevPage = pages[pages.length - 2]; //获取上一个页面信息栈
-
+				
 				try {
 					if (prevPage) {
 						uni.navigateBack({
