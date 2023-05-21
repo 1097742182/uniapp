@@ -44,9 +44,17 @@
 			_initNumberList() {
 				this.numberDetail = this.HistoryNumberList[this.value]
 
+				// 获取历史记录，如果找到对应数据，则放入对应数据
 				if (this.numberDetail) {
 					this.numberList = this.numberDetail["numberList"]
 					this.numberStatus = this.numberDetail["status"]
+				} else {
+					// 如果没有找到对应数据，则重置数据
+					this.numberList = ["", "", "", ""]
+					this.numberStatus = {
+						right: "",
+						nearlyRight: ""
+					}
 				}
 			}
 		}

@@ -11,6 +11,14 @@
 				<view class="u-page__button-item">
 					<u-button @click="goPage(1)" text="游戏规则" size="normal" type="primary" />
 				</view>
+				<view>
+					<button @tap="onGetUserInfo">微信登录</button>
+				</view>
+				<view>
+					<button @tap="getUserInfo()">设置用户信息</button>
+					<!-- <button type="primary" class="btn-login" open-type="getUserInfo" @getuserinfo="getUserInfo">一键登录</button> -->
+
+				</view>
 			</view>
 		</view>
 
@@ -40,9 +48,33 @@
 					params: {}
 				})
 			},
-			indexBack() {
-			
-			}
+			getUserInfo() {
+				this.$Router.push({
+					name: "logo",
+					params: {}
+				})
+			},
+			onGetUserInfo(event) {
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: (res) => {
+								console.log(res.userInfo) // 用户信息
+							}
+						})
+					}
+				})
+			},
+			// 获取微信用户的基本信息
+			// getUserInfo(e) {
+			// 	// 判断是否获取用户信息成功
+			// 	if (e.detail.errMsg === 'getUserInfo:fail auth deny') return uni.$showMsg('您取消了登录授权！')
+
+			// 	// 获取用户信息成功， e.detail.userInfo 就是用户的基本信息
+			// 	console.log(e.detail.userInfo)
+			// }
 		}
 	}
 </script>

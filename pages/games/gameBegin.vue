@@ -95,6 +95,8 @@
 					this.gameOver = true;
 					this.gameResult = '恭喜你猜对了！';
 				} else if (this.count === this.maxCount) {
+					this.gameOver = true;
+					this.showPopup = true;
 					this.gameResult = `很遗憾，你没有在规定的${this.maxCount}次内猜中答案。正确答案是${this.secretNumbers.join(' ')}`;
 				}
 

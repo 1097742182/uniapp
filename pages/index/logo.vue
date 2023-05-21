@@ -1,7 +1,8 @@
 <template>
 	<view>
+		<cl-header :key="0" title="密码神探" :isBack="false" />
 		<view class="avatarUrl">
-			<button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
+			<button type="primary" class="btn-login" open-type="getUserInfo" @getuserinfo="getUserInfo">
 				<image :src="avatarUrl" class="refreshIcon" style="margin-top: 30rpx; width:500rpx;height:500rpx;"></image>
 			</button>
 		</view>
@@ -14,9 +15,6 @@
 		<button type="primary" @click="save" style="width:710rpx;margin-left: 20rpx;margin-top: 20rpx;">
 			保存
 		</button>
-
-		<button type="primary" open-type="getUserInfo" @getuserinfo="onGetUserInfo">获取用户信息</button>
-
 	</view>
 </template>
 
@@ -34,24 +32,6 @@
 				console.log('nickName', e)
 				this.nickName = e.detail.value;
 			},
-			// 监听用户信息授权事件
-			onGetUserInfo(e) {
-				if (e.detail.errMsg === 'getUserInfo:ok') {
-					// 获取用户信息成功，可以在这里进行后续操作
-					console.log(e.detail.userInfo);
-					wx.showToast({
-						title: '已授权',
-						icon: 'none'
-					})
-				} else {
-					// 用户拒绝授权，需要做出相应的提示
-					wx.showToast({
-						title: '未授权',
-						icon: 'none'
-					})
-				}
-			},
-
 			//昵称输入框input
 			bindinput(e) {
 				console.log('nickName', e)
@@ -61,6 +41,16 @@
 			onChooseavatar(e) {
 				console.log(e.detail);
 				this.avatarUrl = e.detail.avatarUrl;
+			},
+			getUserInfo(e) {
+				// 判断是否获取用户信息成功
+				if (e.detail.errMsg === 'getUserInfo:fail auth deny') return uni.$showMsg('您取消了登录授权！')
+
+				// 获取用户信息成功， e.detail.userInfo 就是用户的基本信息
+				console.log(e.detail.userInfo)
+				this.avatarUrl = e.detail.userInfo.avatarUrl
+				this.nickName = e.detail.userInfo.nickName
+				
 			},
 			//保存头像和昵称
 			save() {
