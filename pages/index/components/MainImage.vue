@@ -86,10 +86,12 @@
 			.weui-input {
 				width: 100%;
 				padding: 10px;
+				box-sizing: border-box;
+				height: 46px;
 				border: 1px solid #444444;
 				border-radius: 10px;
 			}
-			
+
 			.tips {
 				color: #aaaaaa;
 				margin: 20px;

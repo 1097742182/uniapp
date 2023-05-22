@@ -11,14 +11,6 @@
 				<view class="u-page__button-item">
 					<u-button @click="goPage(1)" text="游戏规则" size="normal" type="primary" />
 				</view>
-				<view>
-					<button @tap="onGetUserInfo">微信登录</button>
-				</view>
-				<view>
-					<button @tap="getUserInfo()">设置用户信息</button>
-					<!-- <button type="primary" class="btn-login" open-type="getUserInfo" @getuserinfo="getUserInfo">一键登录</button> -->
-
-				</view>
 			</view>
 		</view>
 
@@ -157,6 +149,7 @@
 
 		&__button-item {
 			width: 100%;
+			min-width: 250px;
 			margin: 0 0 15px 0;
 		}
 	}
@@ -165,6 +158,7 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		align-items: center;
+		justify-content: center;
 	}
 
 

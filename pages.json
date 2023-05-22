@@ -39,6 +39,7 @@
 				"title": "游戏目录"
 			},
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "游戏目录",
 				"enablePullDownRefresh": false
 			}
@@ -49,7 +50,9 @@
 				"title": "游戏开始"
 			},
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "游戏开始",
+				"enablePullDownRefresh": false
 			}
 		}]
 	}],

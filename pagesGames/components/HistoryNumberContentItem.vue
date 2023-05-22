@@ -8,9 +8,9 @@
 
 		<view class="numberStatus">
 			<text class="statusNumber">{{ numberStatus.right }}</text>
-			<text>A</text>
+			<text style="color: green;">V</text>
 			<text class="statusNumber">{{ numberStatus.nearlyRight }}</text>
-			<text>B</text>
+			<text style="color: blue;">O</text>
 		</view>
 	</view>
 </template>
@@ -50,7 +50,8 @@
 					this.numberStatus = this.numberDetail["status"]
 				} else {
 					// 如果没有找到对应数据，则重置数据
-					this.numberList = ["", "", "", ""]
+
+					this.numberList = this.NumberList.map(item => "")
 					this.numberStatus = {
 						right: "",
 						nearlyRight: ""

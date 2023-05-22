@@ -21,11 +21,15 @@ const saveLifeData = function(key, value) {
 
 const store = new Vuex.Store({
 	state: {
+		GameBeginTitle: "关卡",
 		vuex_token: 'hello world',
 		UserName: "微信用户", // 用户名称
 		CurrentIndex: 0, // 当前选中输入框
-		NumberList: ["1", "2", "3", ""], // 输入框的值
-		HistoryNumberList: [],	// 历史数据
+		NumberList: ["", "", "", ""], // 输入框的值
+		NumberCount: 4, // 输入数字的总数
+		HistoryNumberList: [], // 历史数据
+		HistoryNumberCount: 10, // 历史数据次数
+		ButtonCount: 10, // 按钮的数量，默认为10
 	},
 	getters: {
 
