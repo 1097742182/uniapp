@@ -1,6 +1,6 @@
 <template>
 	<view class="u-page">
-		<cl-header :key="0" title="游戏目录"  />
+		<!-- <cl-header :key="0" title="游戏目录"  /> -->
 		
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">游戏目录</text>

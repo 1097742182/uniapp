@@ -18,27 +18,6 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/games/gameMenu",
-			"name": "gameMenu",
-			"aliasPath": "/gameMenu",
-			"meta": {
-				"title": "游戏目录"
-			},
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "游戏目录"
-			}
-		}, {
-			"path": "pages/games/gameBegin",
-			"name": "gameBegin",
-			"aliasPath": "/gameBegin",
-			"meta": {
-				"title": "游戏开始"
-			},
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
 			"path": "pages/index/logo",
 			"name": "logo",
 			"aliasPath": "/logo",
@@ -50,6 +29,30 @@
 			}
 		}
 	],
+
+	"subPackages": [{
+		"root": "pagesGames",
+		"pages": [{
+			"path": "gameMenu",
+			"name": "gameMenu",
+			"meta": {
+				"title": "游戏目录"
+			},
+			"style": {
+				"navigationBarTitleText": "游戏目录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "gameBegin",
+			"name": "gameBegin",
+			"meta": {
+				"title": "游戏开始"
+			},
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "猜四个数字",
