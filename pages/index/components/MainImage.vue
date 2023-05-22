@@ -1,16 +1,13 @@
 <template>
-	<view class="MainImage">
-		<view class="imageContent">
-			<image class="imageClass" alt="logo"
-				src="https://img0.baidu.com/it/u=3425868493,3104015061&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1684515600&t=f0e004c528de99c0fbb88513d98ca8da" />
-			<view class="svgClass">
-				<u-icon name='camera' size="28"></u-icon>
-			</view>
+	<view class="containar">
+		<view class="avatarUrl">
+			<button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
+				<image :src="avatarUrl" class="refreshIcon"></image>
+			</button>
 		</view>
-
-		<view class="inputContent">
-			<input type="text" v-model="userName">
-			<text class="tips">建议修改成微信头像与微信名称</text>
+		<view class="nickname">
+			<input type="nickname" class="weui-input" :value="nickName" @blur="bindblur" @input="bindinput" />
+			<text class="tips">建议修改为微信头像昵称</text>
 		</view>
 	</view>
 </template>
@@ -19,75 +16,83 @@
 	export default {
 		data() {
 			return {
-				userName: ""
-			}
+				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+				nickName: ''
+			};
 		},
-		watch: {
-			userName(val) {
-				uni.$u.vuex('UserName', val);
-			}
-		},
-		mounted() {
-			this.userName = this.UserName
-		},
+		onLoad(option) {},
 		methods: {
-
+			bindblur(e) {
+				// 获取微信昵称
+				console.log('nickName', e)
+				this.nickName = e.detail.value;
+			},
+			bindinput(e) {
+				console.log('nickName', e)
+				//这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
+				this.nickName = e.detail.value;
+			},
+			onChooseavatar(e) {
+				this.avatarUrl = e.detail.avatarUrl;
+			},
 		}
-
-	}
+	};
 </script>
-
 <style lang="scss">
-	.MainImage {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		align-items: center;
-		margin-bottom: 40px;
-		margin-top: 20px;
+	.containar {
+		width: 100%;
 
-		.imageContent {
-			margin: 10px 20px;
-			position: relative;
-			display: inline-block;
-			text-align: center;
+		.avatarUrl {
+			padding: 0 0 20rpx;
+			background: #fff;
 
-			.imageClass {
-				width: 120px;
-				height: 120px;
-				object-fit: cover;
-				border-radius: 50%;
-				box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
+			button {
+				background: #fff;
+				line-height: 80rpx;
+				height: auto;
+				width: auto;
+				padding: 20rpx 30rpx;
+				margin: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+
+				.refreshIcon {
+					width: 260rpx;
+					height: 260rpx;
+					border-radius: 50%;
+				}
+
+				.jt {
+					width: 14rpx;
+					height: 28rpx;
+				}
 			}
 		}
 
-		.svgClass {
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			background-color: #ffffff;
-			border-radius: 50%;
-			opacity: 0.8;
+		// botton 去除边框
+		button::after {
+			border: none;
 		}
 
-		.inputContent {
-			padding: 10px 40px;
-			width: 100%;
+		.nickname {
 			text-align: center;
+			margin: 30px;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
 
-
-			input {
-				height: 40px;
-				text-align: center;
-				box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+			.weui-input {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #444444;
+				border-radius: 10px;
 			}
-
+			
 			.tips {
-				font-size: 12px;
-				color: #999999;
-				margin: 10px 0;
-				display: block;
-				text-align: center;
+				color: #aaaaaa;
+				margin: 20px;
 			}
 		}
 	}

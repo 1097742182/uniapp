@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<cl-header :key="0" title="密码神探" :isBack="false" />
-		<main-image></main-image>
+		<main-image style="width: 100%;"></main-image>
 
 		<view class="u-demo-block">
 			<view class="u-demo-block__content">
@@ -124,6 +124,7 @@
 
 	.u-demo-block {
 		flex: 1;
+		margin: 20px 30px;
 		margin-bottom: 23px;
 
 		&__content {

@@ -1,20 +1,19 @@
 <template>
-	<view>
-		<cl-header :key="0" title="密码神探" :isBack="false" />
+	<view class="containar">
 		<view class="avatarUrl">
-			<button type="primary" class="btn-login" open-type="getUserInfo" @getuserinfo="getUserInfo">
-				<image :src="avatarUrl" class="refreshIcon" style="margin-top: 30rpx; width:500rpx;height:500rpx;"></image>
+			<button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
+				<image :src="avatarUrl" class="refreshIcon"></image>
 			</button>
 		</view>
-		<view class="nickname" style="display: flex;flex-direction: row;margin-top: 20rpx;">
-			<text class="weui-text">昵称：</text>
+		<view class="nickname">
+			<text>昵称：</text>
 			<input type="nickname" class="weui-input" :value="nickName" @blur="bindblur" placeholder="请输入昵称"
 				@input="bindinput" />
 		</view>
 
-		<button type="primary" @click="save" style="width:710rpx;margin-left: 20rpx;margin-top: 20rpx;">
-			保存
-		</button>
+		<view class="btn">
+			<view class="btn-sub" @click="onSubmit">保存</view>
+		</view>
 	</view>
 </template>
 
@@ -24,107 +23,117 @@
 			return {
 				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
 				nickName: ''
-			}
+			};
 		},
+		onLoad(option) {},
 		methods: {
-			//昵称输入框blur
 			bindblur(e) {
+				// 获取微信昵称
 				console.log('nickName', e)
 				this.nickName = e.detail.value;
 			},
-			//昵称输入框input
 			bindinput(e) {
 				console.log('nickName', e)
+				//这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
 				this.nickName = e.detail.value;
 			},
-			//选择头像
 			onChooseavatar(e) {
-				console.log(e.detail);
 				this.avatarUrl = e.detail.avatarUrl;
 			},
-			getUserInfo(e) {
-				// 判断是否获取用户信息成功
-				if (e.detail.errMsg === 'getUserInfo:fail auth deny') return uni.$showMsg('您取消了登录授权！')
-
-				// 获取用户信息成功， e.detail.userInfo 就是用户的基本信息
-				console.log(e.detail.userInfo)
-				this.avatarUrl = e.detail.userInfo.avatarUrl
-				this.nickName = e.detail.userInfo.nickName
-				
-			},
-			//保存头像和昵称
-			save() {
-				//判断输入数据
-				if (this.nickName.length < 2) {
+			onSubmit() {
+				if (this.nickName === '') {
 					uni.showToast({
-						title: "昵称最少两个字",
-						icon: "error",
+						icon: 'none',
+						title: '请输入昵称'
 					})
 					return false;
 				}
-
-				if (this.avatarUrl ==
-					'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
-				) {
-					uni.showToast({
-						title: "请选择头像",
-						icon: "error",
-					})
-					return false;
-				}
-
-				//保存到线上
 				uni.showLoading({
-					title: '加载中'
+					title: '头像上传中...'
 				});
-				uni.uploadFile({
-					url: 'http://api.lhdtest.com/auth/save',
-					filePath: this.avatarUrl,
-					name: 'file',
-					formData: {
-						nickname: this.nickName,
-					},
-					header: {},
-					success: res => {
-						// 注意：这里返回的res.data类型是string  需要自己去转换为JSON
-						let data = JSON.parse(res.data);
-						if (data.code == 0) {
-							//this.avatarUrl = data.data.url;
-							uni.showToast({
-								title: "保存成功！",
-							})
-						}
-					},
-					fail: (error) => {
-						uni.showToast({
-							title: error,
-							duration: 2000
-						});
-					},
-					complete: () => {
-						uni.hideLoading();
-					}
-				});
-			},
+				this.$uploadFile({
+					url: '', // 自己请求后台地址
+					filePath: this.avatarUrl
+				}).then((res) => {
+					console.log(res)
+					uni.showToast({
+						title: '上传成功',
+						icon: 'success'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1,
+						})
+					}, 1000)
+
+				})
+
+			}
 		}
-	}
+	};
 </script>
+<style lang="scss">
+	.containar {
+		.avatarUrl {
+			padding: 80rpx 0 40rpx;
+			background: #fff;
 
-<style>
-	.weui-input {
-		border: 1px solid gray;
-		border-radius: 10rpx;
-		height: 66rpx;
-		font-size: 50rpx;
-		width: 540rpx;
-		margin-left: 20rpx;
-	}
+			button {
+				background: #fff;
+				line-height: 80rpx;
+				height: auto;
+				width: auto;
+				padding: 20rpx 30rpx;
+				margin: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 
-	.weui-text {
-		height: 66rpx;
-		font-size: 40rpx;
-		line-height: 66rpx;
-		width: 140rpx;
-		margin-left: 20rpx;
+
+				.refreshIcon {
+					width: 160rpx;
+					height: 160rpx;
+					border-radius: 50%;
+				}
+
+				.jt {
+					width: 14rpx;
+					height: 28rpx;
+				}
+			}
+		}
+
+		// botton 去除边框
+		button::after {
+			border: none;
+		}
+
+		.nickname {
+			background: #fff;
+			padding: 20rpx 30rpx 80rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.weui-input {
+				padding-left: 60rpx;
+			}
+		}
+
+		.btn {
+			width: 100%;
+
+			.btn-sub {
+				width: 670rpx;
+				margin: 80rpx auto 0;
+				height: 90rpx;
+				background: #DF8585;
+				border-radius: 45rpx;
+				line-height: 90rpx;
+				text-align: center;
+				font-size: 36rpx;
+				color: #fff;
+			}
+		}
 	}
 </style>
