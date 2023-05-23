@@ -29,6 +29,10 @@
 			}
 		}
 	],
+	
+	"window": {
+		"enableShareAppMessage": true
+	},
 
 	"subPackages": [{
 		"root": "pagesGames",

@@ -17,6 +17,10 @@ import {
 } from './common/router.js';
 Vue.use(router);
 
+// 引入分享功能
+import share from "./share.js"
+Vue.mixin(share)
+
 // 引入uview
 import uView from '@/uni_modules/uview-ui';
 Vue.use(uView);
