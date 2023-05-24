@@ -2,7 +2,14 @@
 	<view class="containar">
 		<view class="avatarUrl">
 			<button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
-				<image :src="avatarUrl" class="refreshIcon"></image>
+				<view class="imageContent" style="position: relative;">
+					<image :src="avatarUrl" class="refreshIcon">
+						<view class="svgClass">
+							<u-icon name='camera' size="28"></u-icon>
+						</view>
+					</image>
+				</view>
+
 			</button>
 		</view>
 		<view class="nickname">
@@ -13,11 +20,14 @@
 </template>
 
 <script>
+	const avatarUrl =
+		'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+
 	export default {
 		data() {
 			return {
-				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
-				nickName: ''
+				avatarUrl: uni.getStorageSync("avatarUrl") || avatarUrl,
+				nickName: uni.getStorageSync("nickName") || ""
 			};
 		},
 		onLoad(option) {},
@@ -26,14 +36,19 @@
 				// 获取微信昵称
 				console.log('nickName', e)
 				this.nickName = e.detail.value;
+				console.log(this.nickName);
+				if (this.nickName) uni.setStorageSync("nickName", this.nickName)
 			},
 			bindinput(e) {
 				console.log('nickName', e)
 				//这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
 				this.nickName = e.detail.value;
+				if (this.nickName) uni.setStorageSync("nickName", this.nickName)
 			},
 			onChooseavatar(e) {
 				this.avatarUrl = e.detail.avatarUrl;
+				console.log(this.avatarUrl);
+				if (this.avatarUrl) uni.setStorageSync("avatarUrl", this.avatarUrl)
 			},
 		}
 	};
@@ -62,6 +77,16 @@
 					width: 260rpx;
 					height: 260rpx;
 					border-radius: 50%;
+					position: relative;
+				}
+
+				.svgClass {
+					position: absolute;
+					right: 10px;
+					bottom: 20px;
+					background-color: #ffffff;
+					border-radius: 50%;
+					opacity: 0.8;
 				}
 
 				.jt {

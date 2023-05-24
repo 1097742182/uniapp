@@ -78,7 +78,7 @@
 		.numberList {
 			flex: 1;
 			display: flex;
-			justify-content: space-between;
+			justify-content: space-around;
 			height: 50px;
 			line-height: 50px;
 			padding-left: 4px;
