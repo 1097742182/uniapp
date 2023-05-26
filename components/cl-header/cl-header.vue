@@ -128,15 +128,28 @@ export default {
   methods: {
     back() {
       let pages = getCurrentPages(); //获取当前页面信息栈
+      let currentPage = pages[pages.length - 1]; // 当前页面栈
       let prevPage = pages[pages.length - 2]; //获取上一个页面信息栈
 
       try {
-        if (prevPage) {
-          uni.navigateBack({
-            delta: 1,
-          });
+        // 进行判断，如果有上一个页面，并且上一个页面不等于当前页面
+        if (prevPage && prevPage.route != currentPage.route) {
+          uni.navigateBack({ delta: 1 });
+        } else if (prevPage) {
+          // 如果有上一个页面，但是页面相等
+          let pageNames = [];
+          pages.forEach((page) => pageNames.push(page.route));
+
+          let delta = 0;
+          for (let page of pageNames.reverse()) {
+            // 如果上一个页面与当前页面相同，则返回
+            if (page === currentPage.route) delta += 1;
+            else break;
+          }
+
+          uni.navigateBack({ delta });
         } else {
-          // uni.switchTab({ url: "/pages/tabs/home/index" });
+          // 如果没有上一个页面，则回到首页
           uni.reLaunch({ url: "/pages/index/index" });
         }
       } catch (err) {
