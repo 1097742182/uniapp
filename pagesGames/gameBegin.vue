@@ -12,14 +12,15 @@
             type="primary"
             style="background-color: #3c8adf"
             @click="checkAnswer"
-            >提交</u-button
           >
+            提交
+          </u-button>
         </view>
 
         <view class="" style="width: 200px" v-if="gameOver">
-          <u-button type="success" @click="returnMenuBtnClick()"
-            >返回菜单</u-button
-          >
+          <u-button type="success" @click="returnMenuBtnClick()">
+            返回菜单
+          </u-button>
 
           <u-popup
             :show="showPopup"
@@ -30,13 +31,29 @@
           >
             <view class="popupContent">
               <view class="popupText">{{ gameResult }}</view>
-              <u-button type="primary" class="popupBtn" v-if="gameStatus">
+              <u-button
+                type="primary"
+                class="popupBtn"
+                v-if="gameStatus && GameBeginTitle != '第四关'"
+                @click="nextLevel()"
+              >
                 下一关
               </u-button>
-              <u-button type="primary" class="popupBtn" v-if="!gameStatus">
+              <u-button
+                type="primary"
+                class="popupBtn"
+                v-if="!gameStatus"
+                @click="reloadLevel()"
+              >
                 重新开始
               </u-button>
-              <u-button type="success" class="popupBtn">返回菜单</u-button>
+              <u-button
+                type="success"
+                class="popupBtn"
+                @click="returnMenuBtnClick()"
+              >
+                返回菜单
+              </u-button>
             </view>
           </u-popup>
         </view>
@@ -213,8 +230,68 @@ export default {
     },
 
     returnMenuBtnClick() {
-      uni.navigateBack({
-        delta: 1,
+      let pages = getCurrentPages(); //获取当前页面信息栈
+      let currentPage = pages[pages.length - 1]; // 当前页面栈
+      let prevPage = pages[pages.length - 2]; //获取上一个页面信息栈
+
+      try {
+        // 进行判断，如果有上一个页面，并且上一个页面不等于当前页面
+        if (prevPage && prevPage.route != currentPage.route) {
+          uni.navigateBack({ delta: 1 });
+        } else if (prevPage) {
+          // 如果有上一个页面，但是页面相等
+          let pageNames = [];
+          pages.forEach((page) => pageNames.push(page.route));
+
+          let delta = 0;
+          for (let page of pageNames.reverse()) {
+            // 如果上一个页面与当前页面相同，则返回
+            if (page === currentPage.route) delta += 1;
+            else break;
+          }
+
+          uni.navigateBack({ delta });
+        } else {
+          // 如果没有上一个页面，则回到首页
+          uni.reLaunch({ url: "/pages/index/index" });
+        }
+      } catch (err) {
+        // uni.switchTab({ url: "/pages/tabs/home/index" });
+        uni.reLaunch({ url: "/pages/index/index" });
+      }
+    },
+
+    nextLevel() {
+      if (this.GameBeginTitle === "第一关") {
+        uni.$u.vuex("NumberCount", 3);
+        uni.$u.vuex("HistoryNumberCount", 5);
+        uni.$u.vuex("ButtonCount", 5);
+        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第二关"), 0);
+      }
+
+      if (this.GameBeginTitle === "第二关") {
+        uni.$u.vuex("NumberCount", 4);
+        uni.$u.vuex("HistoryNumberCount", 7);
+        uni.$u.vuex("ButtonCount", 6);
+        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第三关"), 0);
+      }
+
+      if (this.GameBeginTitle === "第三关") {
+        uni.$u.vuex("NumberCount", 4);
+        uni.$u.vuex("HistoryNumberCount", 10);
+        uni.$u.vuex("ButtonCount", 10);
+        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第四关"), 0);
+      }
+
+      this.$Router.push({
+        name: "gameBegin",
+        params: {},
+      });
+    },
+    reloadLevel() {
+      this.$Router.push({
+        name: "gameBegin",
+        params: {},
       });
     },
   },
