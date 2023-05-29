@@ -3,6 +3,7 @@
     <cl-header :title="GameBeginTitle" />
     <u-toast ref="uToast"></u-toast>
     <view class="content">
+      <user-info></user-info>
       <number-content></number-content>
       <history-number-content></history-number-content>
       <button-content></button-content>
@@ -63,9 +64,11 @@
 </template>
 
 <script>
+import UserInfo from "./components/UserInfo.vue";
 import NumberContent from "./components/NumberContent.vue";
 import HistoryNumberContent from "./components/HistoryNumberContent.vue";
 import ButtonContent from "./components/ButtonContent.vue";
+
 import logoVue from "../pages/index/logo.vue";
 
 function equals(list1, list2) {
@@ -94,6 +97,7 @@ export default {
   },
 
   components: {
+    UserInfo,
     NumberContent,
     HistoryNumberContent,
     ButtonContent,
@@ -299,6 +303,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.gameBegin {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(132, 193, 247) 0%,
+    white 100%
+  );
+  background-size: 100% 200px;
+  background-repeat: no-repeat;
+
+  margin-bottom: 20px;
+}
+
 .content {
   display: flex;
   flex-direction: column;
