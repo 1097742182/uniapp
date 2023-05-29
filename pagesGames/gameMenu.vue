@@ -52,38 +52,20 @@ export default {
       uni.navigateBack();
     },
     gameBegin(level) {
-      if (level == 1) {
-        uni.$u.vuex("NumberCount", 2);
-        uni.$u.vuex("HistoryNumberCount", 4);
-        uni.$u.vuex("ButtonCount", 3);
-        uni.$u.vuex("GameBeginTitle", "第一关");
-      }
+      if (level == 1) this.$store.dispatch("setLevelOne");
 
-      if (level == 2) {
-        uni.$u.vuex("NumberCount", 3);
-        uni.$u.vuex("HistoryNumberCount", 5);
-        uni.$u.vuex("ButtonCount", 5);
-        uni.$u.vuex("GameBeginTitle", "第二关");
-      }
+      if (level == 2) this.$store.dispatch("setLevelTwo");
 
-      if (level == 3) {
-        uni.$u.vuex("NumberCount", 4);
-        uni.$u.vuex("HistoryNumberCount", 7);
-        uni.$u.vuex("ButtonCount", 6);
-        uni.$u.vuex("GameBeginTitle", "第三关");
-      }
+      if (level == 3) this.$store.dispatch("setLevelThree");
 
-      if (level == 4) {
-        uni.$u.vuex("NumberCount", 4);
-        uni.$u.vuex("HistoryNumberCount", 10);
-        uni.$u.vuex("ButtonCount", 10);
-        uni.$u.vuex("GameBeginTitle", "第四关");
-      }
+      if (level == 4) this.$store.dispatch("setLevelFour");
 
-      this.$Router.push({
-        name: "gameBegin",
-        params: {},
-      });
+      setTimeout(() => {
+        this.$Router.push({
+          name: "gameBegin",
+          params: {},
+        });
+      }, 100);
     },
   },
 };

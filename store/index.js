@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 // 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-let saveStateKeys = ['vuex_token'];
+let saveStateKeys = ['Token'];
 
 // 保存变量到本地存储中
 const saveLifeData = function(key, value) {
@@ -22,7 +22,7 @@ const saveLifeData = function(key, value) {
 const store = new Vuex.Store({
     state: {
         GameBeginTitle: "关卡",
-        vuex_token: 'hello world',
+        Token: 'hello world',
         UserName: "微信用户", // 用户名称
         UserCount: 100, // 用户总分
 
@@ -56,10 +56,60 @@ const store = new Vuex.Store({
             }
             // 保存变量到本地，见顶部函数定义
             saveLifeData(saveKey, state[saveKey])
-        }
+        },
+        SET_GameBeginTitle(state, GameBeginTitle) {
+            state.GameBeginTitle = GameBeginTitle
+        },
+        SET_UserName(state, UserName) {
+            state.UserName = UserName
+        },
+        SET_UserCount(state, UserCount) {
+            state.UserCount = UserCount
+        },
+        SET_CurrentIndex(state, CurrentIndex) {
+            state.CurrentIndex = CurrentIndex
+        },
+        SET_NumberList(state, NumberList) {
+            state.NumberList = NumberList
+        },
+        SET_NumberCount(state, NumberCount) {
+            state.NumberCount = NumberCount
+        },
+        SET_HistoryNumberList(state, HistoryNumberList) {
+            state.HistoryNumberList = HistoryNumberList
+        },
+        SET_HistoryNumberCount(state, HistoryNumberCount) {
+            state.HistoryNumberCount = HistoryNumberCount
+        },
+        SET_ButtonCount(state, ButtonCount) {
+            state.ButtonCount = ButtonCount
+        },
     },
     actions: {
-
+        setLevelOne({ commit }) {
+            commit("SET_NumberCount", 2);
+            commit("SET_HistoryNumberCount", 4);
+            commit("SET_ButtonCount", 3);
+            commit("SET_GameBeginTitle", "第一关");
+        },
+        setLevelTwo({ commit }) {
+            commit("SET_NumberCount", 3);
+            commit("SET_HistoryNumberCount", 5);
+            commit("SET_ButtonCount", 5);
+            commit("SET_GameBeginTitle", "第二关");
+        },
+        setLevelThree({ commit }) {
+            commit("SET_NumberCount", 4);
+            commit("SET_HistoryNumberCount", 7);
+            commit("SET_ButtonCount", 6);
+            commit("SET_GameBeginTitle", "第三关");
+        },
+        setLevelFour({ commit }) {
+            commit("SET_NumberCount", 4);
+            commit("SET_HistoryNumberCount", 10);
+            commit("SET_ButtonCount", 10);
+            commit("SET_GameBeginTitle", "第四关");
+        }
     },
     modules: {
 
