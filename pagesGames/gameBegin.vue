@@ -32,29 +32,26 @@
           >
             <view class="popupContent">
               <view class="popupText">{{ gameResult }}</view>
-              <u-button
-                type="primary"
+              <view
                 class="popupBtn"
                 v-if="gameStatus && GameBeginTitle != '第四关'"
-                @click="nextLevel()"
               >
-                下一关
-              </u-button>
-              <u-button
-                type="primary"
-                class="popupBtn"
-                v-if="!gameStatus"
-                @click="reloadLevel()"
-              >
-                重新开始
-              </u-button>
-              <u-button
-                type="success"
-                class="popupBtn"
-                @click="returnMenuBtnClick()"
-              >
-                返回菜单
-              </u-button>
+                <u-button type="primary" @click="nextLevel()">
+                  下一关
+                </u-button>
+              </view>
+
+              <view class="popupBtn" v-if="!gameStatus">
+                <u-button type="primary" @click="reloadLevel()">
+                  重新开始
+                </u-button>
+              </view>
+
+              <view class="popupBtn">
+                <u-button type="success" @click="returnMenuBtnClick()">
+                  返回菜单
+                </u-button>
+              </view>
             </view>
           </u-popup>
         </view>
@@ -267,24 +264,15 @@ export default {
 
     nextLevel() {
       if (this.GameBeginTitle === "第一关") {
-        uni.$u.vuex("NumberCount", 3);
-        uni.$u.vuex("HistoryNumberCount", 5);
-        uni.$u.vuex("ButtonCount", 5);
-        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第二关"), 0);
+        this.$store.dispatch("setLevelTwo");
       }
 
       if (this.GameBeginTitle === "第二关") {
-        uni.$u.vuex("NumberCount", 4);
-        uni.$u.vuex("HistoryNumberCount", 7);
-        uni.$u.vuex("ButtonCount", 6);
-        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第三关"), 0);
+        this.$store.dispatch("setLevelThree");
       }
 
       if (this.GameBeginTitle === "第三关") {
-        uni.$u.vuex("NumberCount", 4);
-        uni.$u.vuex("HistoryNumberCount", 10);
-        uni.$u.vuex("ButtonCount", 10);
-        setTimeout(() => uni.$u.vuex("GameBeginTitle", "第四关"), 0);
+        this.$store.dispatch("setLevelFour");
       }
 
       this.$Router.push({
@@ -340,6 +328,10 @@ export default {
   margin-top: 20px;
   padding: 20px;
   width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .popupText {
     font-size: 20px;
@@ -355,6 +347,7 @@ export default {
   .popupBtn {
     width: 200px;
     margin-bottom: 10px;
+    text-align: center;
   }
 }
 </style>

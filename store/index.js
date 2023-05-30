@@ -90,25 +90,25 @@ const store = new Vuex.Store({
             commit("SET_NumberCount", 2);
             commit("SET_HistoryNumberCount", 4);
             commit("SET_ButtonCount", 3);
-            commit("SET_GameBeginTitle", "第一关");
+            setTimeout(() => commit("SET_GameBeginTitle", "第一关"), 0);
         },
         setLevelTwo({ commit }) {
             commit("SET_NumberCount", 3);
             commit("SET_HistoryNumberCount", 5);
             commit("SET_ButtonCount", 5);
-            commit("SET_GameBeginTitle", "第二关");
+            setTimeout(() => commit("SET_GameBeginTitle", "第二关"), 0);
         },
         setLevelThree({ commit }) {
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 7);
             commit("SET_ButtonCount", 6);
-            commit("SET_GameBeginTitle", "第三关");
+            setTimeout(() => commit("SET_GameBeginTitle", "第三关"), 0);
         },
         setLevelFour({ commit }) {
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 10);
             commit("SET_ButtonCount", 10);
-            commit("SET_GameBeginTitle", "第四关");
+            setTimeout(() => commit("SET_GameBeginTitle", "第四关"), 0);
         }
     },
     modules: {
