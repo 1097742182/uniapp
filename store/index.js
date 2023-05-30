@@ -24,7 +24,7 @@ const store = new Vuex.Store({
         GameBeginTitle: "关卡",
         Token: 'hello world',
         UserName: "微信用户", // 用户名称
-        UserCount: 100, // 用户总分
+        UserCount: -1, // 用户总分
 
         CurrentIndex: 0, // 当前选中输入框
         NumberList: ["", "", "", ""], // 输入框的值
@@ -32,10 +32,9 @@ const store = new Vuex.Store({
         HistoryNumberList: [], // 历史数据
         HistoryNumberCount: 10, // 历史数据次数
         ButtonCount: 10, // 按钮的数量，默认为10
+        LevelCount: 100, // 关卡分数
     },
-    getters: {
-
-    },
+    getters: {},
     mutations: {
         $uStore(state, payload) {
             // 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
@@ -84,31 +83,45 @@ const store = new Vuex.Store({
         SET_ButtonCount(state, ButtonCount) {
             state.ButtonCount = ButtonCount
         },
+        SET_LevelCount(state, LevelCount) {
+            state.LevelCount = LevelCount
+        },
     },
     actions: {
         setLevelOne({ commit }) {
             commit("SET_NumberCount", 2);
             commit("SET_HistoryNumberCount", 4);
             commit("SET_ButtonCount", 3);
+            commit("SET_LevelCount", 100);
             setTimeout(() => commit("SET_GameBeginTitle", "第一关"), 0);
         },
         setLevelTwo({ commit }) {
             commit("SET_NumberCount", 3);
             commit("SET_HistoryNumberCount", 5);
             commit("SET_ButtonCount", 5);
+            commit("SET_LevelCount", 300);
             setTimeout(() => commit("SET_GameBeginTitle", "第二关"), 0);
         },
         setLevelThree({ commit }) {
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 7);
             commit("SET_ButtonCount", 6);
+            commit("SET_LevelCount", 600);
             setTimeout(() => commit("SET_GameBeginTitle", "第三关"), 0);
         },
         setLevelFour({ commit }) {
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 10);
             commit("SET_ButtonCount", 10);
+            commit("SET_LevelCount", 1000);
             setTimeout(() => commit("SET_GameBeginTitle", "第四关"), 0);
+        },
+        ADD_UserCount({ state, commit }, LevelCount) {
+            let userCount = parseInt(state.UserCount);
+            userCount = userCount + parseInt(LevelCount);
+
+            if (userCount) commit("SET_UserCount", userCount);
+            if (userCount) uni.setStorageSync('UserCount', userCount)
         }
     },
     modules: {

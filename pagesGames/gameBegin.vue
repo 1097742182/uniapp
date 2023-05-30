@@ -61,24 +61,14 @@
 </template>
 
 <script>
+// 子组件
 import UserInfo from "./components/UserInfo.vue";
 import NumberContent from "./components/NumberContent.vue";
 import HistoryNumberContent from "./components/HistoryNumberContent.vue";
 import ButtonContent from "./components/ButtonContent.vue";
 
-import logoVue from "../pages/index/logo.vue";
-
-function equals(list1, list2) {
-  if (list1.length !== list2.length) {
-    return false;
-  }
-  for (let i = 0; i < list1.length; i++) {
-    if (list1[i] !== list2[i]) {
-      return false;
-    }
-  }
-  return true;
-}
+// 方法
+import { equals } from "@/utils/index.js";
 
 export default {
   data() {
@@ -90,6 +80,7 @@ export default {
       count: 0, // 已猜测次数
       showPopup: false,
       firstCheck: true, // 第一次检查，不可直接成功
+      subCount: -1, // 用户每次失败扣除的分数
     };
   },
 
@@ -105,6 +96,10 @@ export default {
   },
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
+
+    setTimeout(() => {
+      this.subCount = this.LevelCount / (this.HistoryNumberCount + 2);
+    }, 1000);
   },
 
   methods: {
@@ -139,33 +134,19 @@ export default {
       let A = 0,
         B = 0;
       for (let i = 0; i < this.NumberCount; i++) {
-        if (this.NumberList[i] == this.secretNumbers[i])
-          A++; // 数字和位置都正确
+        // 数字和位置都正确
+        if (this.NumberList[i] == this.secretNumbers[i]) A++;
         else if (this.secretNumbers.includes(this.NumberList[i])) B++; // 数字正确但位置不正确
       }
 
       // 保存数据到history中
-      const status = {
-        right: A,
-        nearlyRight: B,
-      };
+      const status = { right: A, nearlyRight: B };
       this._setHistoryNumberList(status); // 将数据保存到history中
 
-      this.count++;
-      // 如果猜测次数已满10次或者已猜对，则游戏结束
-      if (A === this.NumberCount) {
-        this.showPopup = true;
-        this.gameOver = true;
-        this.gameStatus = true; // true代表游戏胜利
-        this.gameResult = "恭喜你猜对了！";
-      } else if (this.count === this.HistoryNumberCount) {
-        this.gameOver = true;
-        this.showPopup = true;
-        this.gameStatus = false; // false代表输掉游戏
-        this.gameResult = `很遗憾，你没有在规定的${
-          this.HistoryNumberCount
-        }次内猜中答案。正确答案是${this.secretNumbers.join(" ")}`;
-      }
+      this.count++; // 游戏次数+1
+      this._checkGameStatus(A); // 查看游戏是否已经结束
+
+      this._checkUserCount();
 
       // 清空输入数字
       const numberBack = this.NumberList.map((item) => "");
@@ -228,6 +209,39 @@ export default {
         uni.$u.vuex("HistoryNumberList", historyNumberList);
         uni.$u.vuex("HistoryRefresh", !this.HistoryRefresh);
       }
+    },
+    // 检查游戏是否已经结束
+    _checkGameStatus(A) {
+      // 如果猜测次数已满10次或者已猜对，则游戏结束
+      if (A === this.NumberCount) {
+        this.gameOver = true;
+        this.showPopup = true;
+        this.gameStatus = true; // true代表游戏胜利
+        this.gameResult = "恭喜你猜对了！";
+      } else if (this.count === this.HistoryNumberCount) {
+        this.gameOver = true;
+        this.showPopup = true;
+        this.gameStatus = false; // false代表输掉游戏
+        this.gameResult = `很遗憾，你没有在规定的${
+          this.HistoryNumberCount
+        }次内猜中答案。正确答案是${this.secretNumbers.join(" ")}`;
+      }
+    },
+
+    // 检查用户分数，扣分逻辑
+    _checkUserCount() {
+      // 如果是游戏结束了，并且失败了，则直接返回
+      if (this.gameOver && !this.gameStatus) return;
+
+      // 如果游戏结束了，并且成功了，则加上用户总分上
+      if (this.gameOver && this.gameStatus) {
+        this.$store.dispatch("ADD_UserCount", this.LevelCount);
+        return;
+      }
+
+      let levelCount = this.LevelCount - this.subCount;
+      levelCount = parseInt(levelCount);
+      this.$store.commit("SET_LevelCount", levelCount);
     },
 
     returnMenuBtnClick() {

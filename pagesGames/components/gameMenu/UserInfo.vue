@@ -6,7 +6,7 @@
     </view>
 
     <view class="right">
-      <text class="userCount">关卡积分：{{ LevelCount }}</text>
+      <text class="userCount">用户积分：{{ UserCount }}</text>
     </view>
   </view>
 </template>
@@ -22,7 +22,9 @@ export default {
       nickName: uni.getStorageSync("nickName") || "",
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$store);
+  },
 };
 </script>
 
@@ -45,7 +47,7 @@ export default {
   .nickName {
     height: 40px;
     line-height: 40px;
-    font-size: 24px;
+    font-size: 22px;
     display: inline-block;
     color: #ffffff;
   }
