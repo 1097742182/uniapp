@@ -32,7 +32,7 @@ const store = new Vuex.Store({
         HistoryNumberList: [], // 历史数据
         HistoryNumberCount: 10, // 历史数据次数
         ButtonCount: 10, // 按钮的数量，默认为10
-        LevelCount: 100, // 关卡分数
+        LevelCount: -1, // 关卡分数
     },
     getters: {},
     mutations: {
@@ -116,6 +116,7 @@ const store = new Vuex.Store({
             commit("SET_LevelCount", 1000);
             setTimeout(() => commit("SET_GameBeginTitle", "第四关"), 0);
         },
+        // 更新用户积分
         ADD_UserCount({ state, commit }, LevelCount) {
             let userCount = parseInt(state.UserCount);
             userCount = userCount + parseInt(LevelCount);

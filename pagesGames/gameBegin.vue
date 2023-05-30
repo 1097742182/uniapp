@@ -289,16 +289,20 @@ export default {
         this.$store.dispatch("setLevelFour");
       }
 
-      this.$Router.push({
-        name: "gameBegin",
-        params: {},
-      });
+      this.$Router.push({ name: "gameBegin", params: {} });
     },
     reloadLevel() {
-      this.$Router.push({
-        name: "gameBegin",
-        params: {},
-      });
+      if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelOne");
+
+      if (this.GameBeginTitle === "第二关") this.$store.dispatch("setLevelTwo");
+
+      if (this.GameBeginTitle === "第三关")
+        this.$store.dispatch("setLevelThree");
+
+      if (this.GameBeginTitle === "第四关")
+        this.$store.dispatch("setLevelFour");
+
+      this.$Router.push({ name: "gameBegin", params: {} });
     },
   },
 };
