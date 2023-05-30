@@ -1,6 +1,6 @@
 <template>
   <view class="UserInfo">
-    <view class="left" style="display: flex">
+    <view class="left" style="display: flex" @click="resetUserCount()">
       <image :src="avatarUrl" class="userAvatal"> </image>
       <view class="nickName" style="margin-left: 10px"> {{ nickName }} </view>
     </view>
@@ -24,6 +24,12 @@ export default {
   },
   mounted() {
     console.log(this.$store);
+  },
+  methods: {
+    resetUserCount() {
+      this.$store.commit("SET_UserCount", 100);
+      uni.setStorageSync("UserCount", 100);
+    },
   },
 };
 </script>

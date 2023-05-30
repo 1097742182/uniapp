@@ -12,15 +12,27 @@
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(2)" text="第二关" type="primary" /> -->
-          <ice-button @click="gameBegin(2)" buttonText="第二关" />
+          <ice-button
+            @click="gameBegin(2)"
+            :buttonType="getButtonType(2)"
+            buttonText="第二关"
+          />
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(3)" text="第三关" type="primary" /> -->
-          <ice-button @click="gameBegin(3)" buttonText="第三关" />
+          <ice-button
+            @click="gameBegin(3)"
+            :buttonType="getButtonType(3)"
+            buttonText="第三关"
+          />
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(4)" text="第四关" type="primary" /> -->
-          <ice-button @click="gameBegin(4)" buttonText="第四关" />
+          <ice-button
+            @click="gameBegin(4)"
+            :buttonType="getButtonType(4)"
+            buttonText="第四关"
+          />
         </view>
       </view>
     </view>
@@ -35,7 +47,7 @@ export default {
   data() {
     return {};
   },
-  components: { UserInfo, IceButton, IceButton },
+  components: { UserInfo, IceButton },
   methods: {
     backBtnClick() {
       uni.navigateBack();
@@ -50,11 +62,13 @@ export default {
       if (level == 4) this.$store.dispatch("setLevelFour");
 
       setTimeout(() => {
-        this.$Router.push({
-          name: "gameBegin",
-          params: {},
-        });
+        this.$Router.push({ name: "gameBegin", params: {} });
       }, 100);
+    },
+    getButtonType(level) {
+      if (level == 2) return this.UserCount > 200 ? "ice" : "disabled";
+      if (level == 3) return this.UserCount > 500 ? "ice" : "disabled";
+      if (level == 4) return this.UserCount > 800 ? "ice" : "disabled";
     },
   },
 };
