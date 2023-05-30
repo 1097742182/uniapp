@@ -15,6 +15,14 @@
     >
       {{ buttonText }}
     </button>
+
+    <button
+      @click="disabledButtonClick()"
+      v-if="buttonType === 'disabled'"
+      class="button disabled"
+    >
+      {{ buttonText }}
+    </button>
   </view>
 </template>
 
@@ -30,6 +38,19 @@ export default {
   methods: {
     ButtonClick() {
       this.$emit("click");
+    },
+    disabledButtonClick() {
+      if (this.buttonText === "第二关") {
+        uni.$showMsg("当前关卡需要积分200分");
+      }
+
+      if (this.buttonText === "第三关") {
+        uni.$showMsg("当前关卡需要积分500分");
+      }
+
+      if (this.buttonText === "第四关") {
+        uni.$showMsg("当前关卡需要积分800分");
+      }
     },
   },
 };
@@ -73,7 +94,7 @@ export default {
   border-color: #ffeca8;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 138, 48, 0.6),
+    rgba(161, 161, 161, 1),
     rgba(240, 96, 29, 0.6)
   );
   box-shadow: 0 0 70px rgba(255, 138, 48, 0.6),
@@ -84,6 +105,22 @@ export default {
 .button.fire:before {
   box-shadow: inset 0 0 30px 0 #ffeca8;
 }
+
+.button.disabled {
+  border-color: #ffeca8;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6),
+    rgba(5, 5, 5, 0.6)
+  );
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.6), 0 5px 20px rgba(0, 0, 0, 0.6),
+    inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+  color: #ffeca8;
+}
+.button.disabled:before {
+  box-shadow: inset 0 0 30px 0 #ffeca8;
+}
+
 .button.ice {
   border-color: #a8ecff;
   background-image: linear-gradient(
