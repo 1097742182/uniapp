@@ -7,16 +7,20 @@
       <text class="u-demo-block__title">游戏目录</text>
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
-          <u-button @click="gameBegin(1)" text="第一关" type="primary" />
+          <!-- <u-button @click="gameBegin(1)" text="第一关" type="primary" /> -->
+          <ice-button @click="gameBegin(1)" buttonText="第一关" />
         </view>
         <view class="u-page__button-item">
-          <u-button @click="gameBegin(2)" text="第二关" type="primary" />
+          <!-- <u-button @click="gameBegin(2)" text="第二关" type="primary" /> -->
+          <ice-button @click="gameBegin(2)" buttonText="第二关" />
         </view>
         <view class="u-page__button-item">
-          <u-button @click="gameBegin(3)" text="第三关" type="primary" />
+          <!-- <u-button @click="gameBegin(3)" text="第三关" type="primary" /> -->
+          <ice-button @click="gameBegin(3)" buttonText="第三关" />
         </view>
         <view class="u-page__button-item">
-          <u-button @click="gameBegin(4)" text="第四关" type="primary" />
+          <!-- <u-button @click="gameBegin(4)" text="第四关" type="primary" /> -->
+          <ice-button @click="gameBegin(4)" buttonText="第四关" />
         </view>
       </view>
     </view>
@@ -25,12 +29,13 @@
 
 <script>
 import UserInfo from "./components/gameMenu/UserInfo.vue";
+import IceButton from "@/components/IceButton/IceButton.vue";
 
 export default {
   data() {
     return {};
   },
-  components: { UserInfo },
+  components: { UserInfo, IceButton, IceButton },
   methods: {
     backBtnClick() {
       uni.navigateBack();
