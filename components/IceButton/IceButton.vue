@@ -40,17 +40,16 @@ export default {
       this.$emit("click");
     },
     disabledButtonClick() {
-      if (this.buttonText === "第二关") {
-        uni.$showMsg("当前关卡需要积分200分");
-      }
-
-      if (this.buttonText === "第三关") {
-        uni.$showMsg("当前关卡需要积分500分");
-      }
-
-      if (this.buttonText === "第四关") {
-        uni.$showMsg("当前关卡需要积分800分");
-      }
+      uni.$showMsg("请先完成上一个关卡");
+      // if (this.buttonText === "第二关") {
+      //   uni.$showMsg("当前关卡需要积分200分");
+      // }
+      // if (this.buttonText === "第三关") {
+      //   uni.$showMsg("当前关卡需要积分500分");
+      // }
+      // if (this.buttonText === "第四关") {
+      //   uni.$showMsg("当前关卡需要积分800分");
+      // }
     },
   },
 };
