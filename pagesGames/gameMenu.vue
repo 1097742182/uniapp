@@ -2,7 +2,7 @@
   <view class="u-page gradient">
     <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
-    <user-count-card />
+    <UserCountCard />
 
     <view class="u-demo-block">
       <text class="u-demo-block__title">游戏目录</text>
@@ -42,7 +42,7 @@
 
 <script>
 import UserInfo from "./components/gameMenu/UserInfo.vue";
-// import UserCountCard from "./components/gameMenu/UserCountCard.vue";
+// import UserCountCard from "./components/gameMenu/UserCountCard.vue"
 import UserCountCard from "@/pagesGames/components/gameMenu/UserCountCard.vue";
 import IceButton from "@/components/IceButton/IceButton.vue";
 
