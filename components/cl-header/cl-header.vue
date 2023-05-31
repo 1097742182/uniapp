@@ -18,6 +18,9 @@
             size="20"
             @click="back"
             name="arrow-left"
+            :style="{
+              color: realTextColor,
+            }"
           ></u-icon>
         </view>
         <slot v-if="!title"></slot>
@@ -100,6 +103,7 @@ export default {
       if (this.transparent) {
         let { r, g, b } = this.backgrounRGBObject;
         return `rgba(${r},${g},${b},${this.transparentAlpha})`;
+        // return `rgba(${r},${g},${b},0)`;
       }
       return this.backgroundColor;
     },

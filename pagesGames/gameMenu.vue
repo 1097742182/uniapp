@@ -1,6 +1,6 @@
 <template>
-  <view class="u-page">
-    <cl-header :key="0" title="游戏目录" />
+  <view class="u-page gradient">
+    <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
 
     <view class="u-demo-block">
@@ -75,6 +75,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.gradient {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(165, 207, 244) 0%,
+    white 100%
+  );
+  background-size: 100% 200px;
+  background-repeat: no-repeat;
+}
+
 .u-view {
   padding: 40px 20px 0px 20px;
 
