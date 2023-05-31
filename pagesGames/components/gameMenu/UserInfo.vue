@@ -31,8 +31,25 @@ export default {
   },
   methods: {
     resetUserCount() {
-      this.$store.commit("SET_UserCount", 100);
-      uni.setStorageSync("UserCount", 100);
+      uni.showModal({
+        cancelText: "取消", // 取消按钮的文字
+        confirmText: "确认", // 确认按钮文字
+        title: "提示",
+        content: "是否重置积分以及关卡?",
+        confirmColor: "#3B8BFF",
+        cancelColor: "#222222",
+        success: (res) => {
+          if (res.confirm) {
+            this.$store.commit("SET_UserCount", 100);
+            this.$store.commit("SET_LevelStep", 1);
+            uni.setStorageSync("UserCount", 100);
+            uni.setStorageSync("LevelStep", 1);
+          } else if (res.cancel) {
+            // 取消
+            console.log("cancel");
+          }
+        },
+      });
     },
     personalCenterClick() {
       this.$Router.push({ name: "personalCenter", params: {} });

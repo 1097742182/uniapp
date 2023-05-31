@@ -18,6 +18,7 @@
             size="20"
             @click="back"
             name="arrow-left"
+            color="#ffffff"
             :style="{
               color: realTextColor,
             }"

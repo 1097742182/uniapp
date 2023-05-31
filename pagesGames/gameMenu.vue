@@ -69,9 +69,10 @@ export default {
       }, 100);
     },
     getButtonType(level) {
-      if (level == 2) return this.UserCount > 200 ? "ice" : "disabled";
-      if (level == 3) return this.UserCount > 500 ? "ice" : "disabled";
-      if (level == 4) return this.UserCount > 800 ? "ice" : "disabled";
+      return this.LevelStep >= level ? "ice" : "disabled";
+      // if (level == 2) return this.LevelStep > 200 ? "ice" : "disabled";
+      // if (level == 3) return this.UserCount > 500 ? "ice" : "disabled";
+      // if (level == 4) return this.UserCount > 800 ? "ice" : "disabled";
     },
   },
 };
@@ -144,7 +145,7 @@ export default {
   }
 
   &__title {
-    margin-top: 100px;
+    margin-top: 50px;
     display: block;
     font-size: 20px;
     color: #40485b;

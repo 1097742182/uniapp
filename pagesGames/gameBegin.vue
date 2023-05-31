@@ -218,6 +218,7 @@ export default {
         this.showPopup = true;
         this.gameStatus = true; // true代表游戏胜利
         this.gameResult = "恭喜你猜对了！";
+        this.$store.dispatch("setLevelStep"); // 游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
         this.gameOver = true;
         this.showPopup = true;

@@ -25,6 +25,7 @@ const store = new Vuex.Store({
         Token: 'hello world',
         UserName: "微信用户", // 用户名称
         UserCount: -1, // 用户总分
+        LevelStep: -1, // 当前用户的关卡
 
         CurrentIndex: 0, // 当前选中输入框
         NumberList: ["", "", "", ""], // 输入框的值
@@ -86,8 +87,33 @@ const store = new Vuex.Store({
         SET_LevelCount(state, LevelCount) {
             state.LevelCount = LevelCount
         },
+        SET_LevelStep(state, LevelStep) {
+            state.LevelStep = LevelStep
+        },
     },
     actions: {
+        // 初始化用户状态
+        initUserStatus({ state, commit }) {
+            // 初始化UserStep
+            if (state.LevelStep === -1) {
+                let levelStep = uni.getStorageSync("LevelStep")
+                levelStep = levelStep ? levelStep : 1
+                commit("SET_LevelStep", levelStep);
+            }
+
+            // 初始化UserCount
+            let userCount = state.UserCount;
+            if (!userCount || userCount === -1) {
+                const storageUserCount = uni.getStorageSync('UserCount'); // 从缓存里面获取分数
+                userCount = storageUserCount ? storageUserCount : 100 // 如果缓存里面的分数为空，则默认为100
+
+                if (!storageUserCount) uni.setStorageSync('UserCount', userCount)
+                commit("SET_UserCount", userCount)
+            }
+
+            console.log(state.UserCount)
+            console.log(state.LevelStep)
+        },
         setLevelOne({ commit }) {
             commit("SET_NumberCount", 2);
             commit("SET_HistoryNumberCount", 4);
@@ -123,6 +149,12 @@ const store = new Vuex.Store({
 
             if (userCount) commit("SET_UserCount", userCount);
             if (userCount) uni.setStorageSync('UserCount', userCount)
+        },
+        setLevelStep({ state, commit }) {
+            let levelStep = parseInt(state.LevelStep);
+            if (levelStep < 4) levelStep += 1;
+            commit("SET_LevelStep", levelStep);
+            uni.setStorageSync('LevelStep', levelStep)
         }
     },
     modules: {
