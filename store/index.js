@@ -21,6 +21,7 @@ const saveLifeData = function(key, value) {
 
 const store = new Vuex.Store({
     state: {
+        ErrorAvatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
         GameBeginTitle: "关卡",
         Token: 'hello world',
         UserName: "微信用户", // 用户名称

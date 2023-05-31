@@ -12,17 +12,16 @@
 </template>
 
 <script>
-const avatarUrl =
-  "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0";
-
 export default {
   data() {
     return {
-      avatarUrl: uni.getStorageSync("avatarUrl") || avatarUrl,
+      avatarUrl: uni.getStorageSync("avatarUrl"),
       nickName: uni.getStorageSync("nickName") || "",
     };
   },
-  mounted() {},
+  mounted() {
+    if (!this.avatarUrl) this.avatarUrl = this.ErrorAvatarUrl;
+  },
 };
 </script>
 

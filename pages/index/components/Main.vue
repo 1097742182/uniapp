@@ -29,20 +29,10 @@
     <view class="u-demo-block">
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
-          <u-button
-            @click="goPage(1)"
-            text="开始游戏"
-            size="normal"
-            type="primary"
-          />
+          <u-button @click="goPage(1)" text="开始游戏" type="primary" />
         </view>
         <view class="u-page__button-item">
-          <u-button
-            @click="popupShow = true"
-            text="游戏规则"
-            size="normal"
-            type="primary"
-          />
+          <u-button @click="popupShow = true" text="游戏规则" type="primary" />
         </view>
       </view>
     </view>
@@ -68,29 +58,7 @@ export default {
   },
   methods: {
     goPage(type) {
-      this.$Router.push({
-        name: "gameMenu",
-        params: {},
-      });
-    },
-    getUserInfo() {
-      this.$Router.push({
-        name: "logo",
-        params: {},
-      });
-    },
-    onGetUserInfo(event) {
-      uni.login({
-        provider: "weixin",
-        success: (res) => {
-          uni.getUserInfo({
-            provider: "weixin",
-            success: (res) => {
-              console.log(res.userInfo); // 用户信息
-            },
-          });
-        },
-      });
+      this.$Router.push({ name: "gameMenu", params: {} });
     },
 
     close() {

@@ -17,16 +17,6 @@
             "style": {
                 "navigationStyle": "custom"
             }
-        }, {
-            "path": "pages/index/logo",
-            "name": "logo",
-            "aliasPath": "/logo",
-            "meta": {
-                "title": "游戏开始"
-            },
-            "style": {
-                "navigationStyle": "custom"
-            }
         }
     ],
 
