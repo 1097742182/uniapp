@@ -1,6 +1,6 @@
 <template>
-  <view class="gameBegin" style="margin-top: 20px">
-    <cl-header :title="GameBeginTitle" />
+  <view class="gameBegin">
+    <cl-header :title="GameBeginTitle" :transparent="true" />
     <u-toast ref="uToast"></u-toast>
     <view class="content">
       <user-info></user-info>
@@ -62,10 +62,10 @@
 
 <script>
 // 子组件
-import UserInfo from "./components/UserInfo.vue";
-import NumberContent from "./components/NumberContent.vue";
-import HistoryNumberContent from "./components/HistoryNumberContent.vue";
-import ButtonContent from "./components/ButtonContent.vue";
+import UserInfo from "./components/gameBegin/UserInfo.vue";
+import NumberContent from "./components/gameBegin/NumberContent.vue";
+import HistoryNumberContent from "./components/gameBegin/HistoryNumberContent.vue";
+import ButtonContent from "./components/gameBegin/ButtonContent.vue";
 
 // 方法
 import { equals } from "@/utils/index.js";
