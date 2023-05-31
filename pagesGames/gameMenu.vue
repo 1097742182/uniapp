@@ -2,6 +2,7 @@
   <view class="u-page gradient">
     <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
+    <user-count-card />
 
     <view class="u-demo-block">
       <text class="u-demo-block__title">游戏目录</text>
@@ -41,13 +42,15 @@
 
 <script>
 import UserInfo from "./components/gameMenu/UserInfo.vue";
+// import UserCountCard from "./components/gameMenu/UserCountCard.vue";
+import UserCountCard from "@/pagesGames/components/gameMenu/UserCountCard.vue";
 import IceButton from "@/components/IceButton/IceButton.vue";
 
 export default {
   data() {
     return {};
   },
-  components: { UserInfo, IceButton },
+  components: { UserInfo, UserCountCard, IceButton },
   methods: {
     backBtnClick() {
       uni.navigateBack();
@@ -141,7 +144,7 @@ export default {
   }
 
   &__title {
-    margin-top: 50%;
+    margin-top: 100px;
     display: block;
     font-size: 20px;
     color: #40485b;
