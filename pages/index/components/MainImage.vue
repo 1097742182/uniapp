@@ -22,6 +22,7 @@
         :value="nickName"
         @blur="bindblur"
         @input="bindinput"
+        placeholder="xxxxxx"
       />
       <text class="tips">建议修改为微信头像昵称</text>
     </view>
@@ -42,13 +43,10 @@ export default {
   methods: {
     bindblur(e) {
       // 获取微信昵称
-      console.log("nickName", e);
       this.nickName = e.detail.value;
-      console.log(this.nickName);
       if (this.nickName) uni.setStorageSync("nickName", this.nickName);
     },
     bindinput(e) {
-      console.log("nickName", e);
       //这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
       this.nickName = e.detail.value;
       if (this.nickName) uni.setStorageSync("nickName", this.nickName);
