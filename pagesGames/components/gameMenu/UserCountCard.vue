@@ -5,7 +5,11 @@
       <view class="UserCount">{{ UserCount }}</view>
     </view>
     <view class="right">
-      <view class="iconContent" @click="reloadBtnClick()">
+      <view
+        class="iconContent"
+        :class="{ rotate: isRotating }"
+        @click="reloadBtnClick()"
+      >
         <u-icon name="reload" color="#ffffff" size="32"></u-icon>
       </view>
     </view>
@@ -27,10 +31,16 @@ export default {
   data() {
     return {
       UserRank: 1,
+      isRotating: false,
     };
   },
   methods: {
     reloadBtnClick() {
+      this.isRotating = true; // 改变 isRotating 状态，标记为正在旋转
+      setTimeout(() => {
+        this.isRotating = false; // 2 秒钟后标记为停止旋转
+        uni.$showMsg("用户积分已更新");
+      }, 1000);
       const userCount = uni.getStorageSync("UserCount");
       this.$store.commit("SET_UserCount", userCount);
     },
@@ -141,6 +151,18 @@ export default {
 
     transform: rotate(45deg);
     position: absolute;
+  }
+}
+
+.rotate {
+  animation: rotate 0.5s infinite linear;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
   }
 }
 </style>
