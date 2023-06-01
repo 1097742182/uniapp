@@ -103,6 +103,18 @@ const store = new Vuex.Store({
     actions: {
         // 初始化用户状态
         initUserStatus({ state, commit }) {
+            // 初始化NickName
+            if (!state.NickName) {
+                let nickName = uni.getStorageSync("nickName")
+                commit("SET_NickName", nickName);
+            }
+
+            // 初始化AvatarUrl
+            if (!state.AvatarUrl) {
+                let avatarUrl = uni.getStorageSync("avatarUrl")
+                commit("SET_AvatarUrl", avatarUrl);
+            }
+
             // 初始化UserStep
             if (state.LevelStep === -1) {
                 let levelStep = uni.getStorageSync("LevelStep")

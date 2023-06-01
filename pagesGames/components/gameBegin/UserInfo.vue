@@ -15,12 +15,18 @@
 export default {
   data() {
     return {
-      avatarUrl: uni.getStorageSync("avatarUrl"),
-      nickName: uni.getStorageSync("nickName") || "",
+      avatarUrl: "",
+      nickName: "",
     };
   },
   mounted() {
-    if (!this.avatarUrl) this.avatarUrl = this.ErrorAvatarUrl;
+    this._initUserInfo();
+  },
+  methods: {
+    _initUserInfo() {
+      this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
+      this.nickName = this.NickName || "";
+    },
   },
 };
 </script>

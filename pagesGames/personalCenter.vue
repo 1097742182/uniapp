@@ -64,8 +64,8 @@
 export default {
   data() {
     return {
-      avatarUrl: uni.getStorageSync("avatarUrl"),
-      nickName: uni.getStorageSync("nickName") || "",
+      avatarUrl: "",
+      nickName: "",
       pickerType: "",
       pickerShow: false,
       columns: [],
@@ -77,12 +77,13 @@ export default {
     };
   },
   mounted() {
-    if (!this.avatarUrl) this.avatarUrl = this.ErrorAvatarUrl;
     this._initUserDetail();
     this._initCityColumns();
   },
   methods: {
     _initUserDetail() {
+      this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
+      this.nickName = this.NickName || "";
       this.genderValue = this.UserDetail["genderValue"];
       this.cityValue = this.UserDetail["cityValue"];
     },
@@ -141,6 +142,10 @@ export default {
 
       uni.$showMsg("修改用户信息成功");
       uni.navigateBack({ delta: 1 });
+    },
+    onChooseavatar(e) {
+      this.avatarUrl = e.detail.avatarUrl;
+      // if (this.avatarUrl) uni.setStorageSync("avatarUrl", this.avatarUrl);
     },
   },
 };

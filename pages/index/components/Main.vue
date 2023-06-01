@@ -60,8 +60,7 @@ export default {
   },
   methods: {
     goPage(type) {
-      const nickName = uni.getStorageSync("nickName");
-      if (!nickName) return uni.$showMsg("请先填写用户名");
+      if (!this.NickName) return uni.$showMsg("请先填写用户名");
 
       this.$Router.push({ name: "gameMenu", params: {} });
     },

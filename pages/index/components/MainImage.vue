@@ -22,7 +22,7 @@
         :value="nickName"
         @blur="bindblur"
         @input="bindinput"
-        placeholder="xxxxxx"
+        placeholder="xx"
       />
       <text class="tips">建议修改为微信头像昵称</text>
     </view>
@@ -33,14 +33,18 @@
 export default {
   data() {
     return {
-      avatarUrl: uni.getStorageSync("avatarUrl"),
-      nickName: uni.getStorageSync("nickName") || "",
+      avatarUrl: "",
+      nickName: "",
     };
   },
   mounted() {
-    if (!this.avatarUrl) this.avatarUrl = this.ErrorAvatarUrl;
+    this._initUserInfo();
   },
   methods: {
+    _initUserInfo() {
+      this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
+      this.nickName = this.NickName || "";
+    },
     bindblur(e) {
       // 获取微信昵称
       this.nickName = e.detail.value;
