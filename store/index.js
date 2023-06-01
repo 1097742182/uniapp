@@ -24,7 +24,9 @@ const store = new Vuex.Store({
         ErrorAvatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
         GameBeginTitle: "关卡",
         Token: 'hello world',
-        UserName: "微信用户", // 用户名称
+        NickName: "", // 用户名称
+        AvatarUrl: "", // 用户头像
+        UserDetail: {}, // 用户补充信息
         UserCount: -1, // 用户总分
         LevelStep: -1, // 当前用户的关卡
 
@@ -61,8 +63,14 @@ const store = new Vuex.Store({
         SET_GameBeginTitle(state, GameBeginTitle) {
             state.GameBeginTitle = GameBeginTitle
         },
-        SET_UserName(state, UserName) {
-            state.UserName = UserName
+        SET_NickName(state, NickName) {
+            state.NickName = NickName
+        },
+        SET_AvatarUrl(state, AvatarUrl) {
+            state.AvatarUrl = AvatarUrl
+        },
+        SET_UserDetail(state, UserDetail) {
+            state.UserDetail = UserDetail
         },
         SET_UserCount(state, UserCount) {
             state.UserCount = UserCount
@@ -102,6 +110,13 @@ const store = new Vuex.Store({
                 commit("SET_LevelStep", levelStep);
             }
 
+            // 初始化UserDetail
+            if (Object.keys(state.UserDetail).length === 0) {
+                let genderValue = uni.getStorageSync("genderValue")
+                let cityValue = uni.getStorageSync("cityValue")
+                commit("SET_UserDetail", { genderValue, cityValue })
+            }
+
             // 初始化UserCount
             let userCount = state.UserCount;
             if (!userCount || userCount === -1) {
@@ -111,9 +126,6 @@ const store = new Vuex.Store({
                 if (!storageUserCount) uni.setStorageSync('UserCount', userCount)
                 commit("SET_UserCount", userCount)
             }
-
-            console.log(state.UserCount)
-            console.log(state.LevelStep)
         },
         setLevelOne({ commit }) {
             commit("SET_NumberCount", 2);
@@ -156,6 +168,17 @@ const store = new Vuex.Store({
             if (levelStep < 4) levelStep += 1;
             commit("SET_LevelStep", levelStep);
             uni.setStorageSync('LevelStep', levelStep)
+        },
+        setUserDetail({ commit }, userDetail) {
+            const { nickName, avatarUrl, cityValue, genderValue } = userDetail;
+            commit("SET_UserDetail", { cityValue, genderValue })
+            commit("SET_NickName", nickName)
+            commit("SET_AvatarUrl", avatarUrl)
+
+            uni.setStorageSync('cityValue', cityValue)
+            uni.setStorageSync('genderValue', genderValue)
+            uni.setStorageSync('nickName', nickName)
+            uni.setStorageSync('avatarUrl', avatarUrl)
         }
     },
     modules: {

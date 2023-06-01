@@ -44,6 +44,10 @@
       </u-cell>
     </u-cell-group>
 
+    <view style="margin: 20px" @click="submitBtnClick()">
+      <u-button type="primary" text="提交修改"></u-button>
+    </view>
+
     <u-picker
       ref="uPicker"
       :show="pickerShow"
@@ -65,7 +69,7 @@ export default {
       pickerType: "",
       pickerShow: false,
       columns: [],
-      genderValue: "男",
+      genderValue: "",
       genderColumns: [["男", "女"]],
       cityValue: "",
       cityColumns: [["广东"]],
@@ -74,9 +78,14 @@ export default {
   },
   mounted() {
     if (!this.avatarUrl) this.avatarUrl = this.ErrorAvatarUrl;
+    this._initUserDetail();
     this._initCityColumns();
   },
   methods: {
+    _initUserDetail() {
+      this.genderValue = this.UserDetail["genderValue"];
+      this.cityValue = this.UserDetail["cityValue"];
+    },
     _initCityColumns() {
       const allCity = this.$api.user.getCity();
       const firstColumns = Object.keys(allCity);
@@ -120,6 +129,18 @@ export default {
     },
     cancel() {
       this.pickerShow = false;
+    },
+    submitBtnClick() {
+      const nickName = this.nickName;
+      const avatarUrl = this.avatarUrl;
+      const cityValue = this.cityValue;
+      const genderValue = this.genderValue;
+
+      const userDetail = { nickName, avatarUrl, cityValue, genderValue };
+      this.$store.dispatch("setUserDetail", userDetail);
+
+      uni.$showMsg("修改用户信息成功");
+      uni.navigateBack({ delta: 1 });
     },
   },
 };
