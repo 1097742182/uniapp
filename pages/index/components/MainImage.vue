@@ -44,16 +44,15 @@ export default {
     bindblur(e) {
       // 获取微信昵称
       this.nickName = e.detail.value;
-      if (this.nickName) uni.setStorageSync("nickName", this.nickName);
+      uni.setStorageSync("nickName", this.nickName);
     },
     bindinput(e) {
       //这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
       this.nickName = e.detail.value;
-      if (this.nickName) uni.setStorageSync("nickName", this.nickName);
+      uni.setStorageSync("nickName", this.nickName);
     },
     onChooseavatar(e) {
       this.avatarUrl = e.detail.avatarUrl;
-      console.log(this.avatarUrl);
       if (this.avatarUrl) uni.setStorageSync("avatarUrl", this.avatarUrl);
     },
   },
