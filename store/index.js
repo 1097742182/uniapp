@@ -6,7 +6,7 @@ Vue.use(Vuex);
 let saveStateKeys = ['Token'];
 
 // 保存变量到本地存储中
-const saveLifeData = function(key, value) {
+const saveLifeData = function (key, value) {
     // 判断变量名是否在需要存储的数组中
     if (saveStateKeys.indexOf(key) != -1) {
         // 获取本地存储的lifeData对象，将变量添加到对象中
@@ -22,7 +22,6 @@ const saveLifeData = function(key, value) {
 const store = new Vuex.Store({
     state: {
         ErrorAvatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
-        GameBeginTitle: "关卡",
         Token: 'hello world',
         NickName: "", // 用户名称
         AvatarUrl: "", // 用户头像
@@ -30,6 +29,7 @@ const store = new Vuex.Store({
         UserCount: -1, // 用户总分
         LevelStep: -1, // 当前用户的关卡
 
+        GameBeginTitle: "关卡",
         CurrentIndex: 0, // 当前选中输入框
         NumberList: ["", "", "", ""], // 输入框的值
         NumberCount: 4, // 输入数字的总数
