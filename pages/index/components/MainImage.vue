@@ -49,11 +49,13 @@ export default {
       // 获取微信昵称
       this.nickName = e.detail.value;
       uni.setStorageSync("nickName", this.nickName);
+      this.$store.commit("SET_NickName", this.nickName);
     },
     bindinput(e) {
       //这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
       this.nickName = e.detail.value;
       uni.setStorageSync("nickName", this.nickName);
+      this.$store.commit("SET_NickName", this.nickName);
     },
     onChooseavatar(e) {
       this.avatarUrl = e.detail.avatarUrl;
