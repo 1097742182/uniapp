@@ -36,6 +36,13 @@
         <view class="u-page__button-item">
           <u-button @click="popupShow = true" text="游戏规则" type="primary" />
         </view>
+        <!-- <view class="u-page__button-item">
+          <u-button
+            @click="OneClickSubmitBtnClick()"
+            text="一键登录"
+            type="primary"
+          />
+        </view> -->
       </view>
     </view>
 
@@ -58,6 +65,9 @@ export default {
   components: {
     MainImage,
   },
+  mounted() {
+    this.OneClickSubmitBtnClick();
+  },
   methods: {
     goPage(type) {
       if (!this.NickName) return uni.$showMsg("请先填写用户名");
@@ -73,6 +83,18 @@ export default {
     },
     btnClick() {
       this.popupShow = true;
+    },
+    OneClickSubmitBtnClick() {
+      uni.login({
+        provider: "weixin",
+        success: (res) => {
+          var code = res.code;
+          // 将 code 发送到后台获取 openid
+          this.$api.user.getUserInfo(code).then((res) => {
+            console.log(res);
+          });
+        },
+      });
     },
     // 获取微信用户的基本信息
     // getUserInfo(e) {
