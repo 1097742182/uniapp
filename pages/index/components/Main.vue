@@ -1,7 +1,7 @@
 <template>
   <view class="u-page">
     <cl-header :key="0" title="密码神探" :isBack="false" />
-    <main-image style="width: 100%"></main-image>
+    <main-image style="width: 100%" :key="mainImageKey"></main-image>
     <view class="loginPopup">
       <u-popup
         :show="popupShow"
@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       popupShow: false,
+      mainImageKey: false, // key
     };
   },
   components: {
@@ -91,7 +92,11 @@ export default {
           var code = res.code;
           // 将 code 发送到后台获取 openid
           this.$api.user.getUserInfo(code).then((res) => {
-            console.log(res);
+            const userInfo = res;
+            this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);
+            setTimeout(() => {
+              this.mainImageKey = !this.mainImageKey;
+            }, 100);
           });
         },
       });

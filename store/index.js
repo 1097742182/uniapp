@@ -23,9 +23,10 @@ const store = new Vuex.Store({
     state: {
         ErrorAvatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
         Token: 'hello world',
+        OpenId: "", // 用户openid
         NickName: "", // 用户名称
         AvatarUrl: "", // 用户头像
-        UserDetail: {}, // 用户补充信息
+        UserDetail: {}, // 用户补充信息(city, gender)
         UserCount: -1, // 用户总分
         LevelStep: -1, // 当前用户的关卡
 
@@ -62,6 +63,9 @@ const store = new Vuex.Store({
         },
         SET_GameBeginTitle(state, GameBeginTitle) {
             state.GameBeginTitle = GameBeginTitle
+        },
+        SET_OpenId(state, Openid) {
+            state.Openid = Openid
         },
         SET_NickName(state, NickName) {
             state.NickName = NickName
@@ -138,6 +142,35 @@ const store = new Vuex.Store({
                 if (!storageUserCount) uni.setStorageSync('UserCount', userCount)
                 commit("SET_UserCount", userCount)
             }
+        },
+        updateUserInfoByInterfaceData({ state, commit, dispatch }, userInfo) {
+            const openid = userInfo["openid"]
+            const nickname = userInfo["nickname"]
+            const avatarUrl = userInfo["avatarUrl"]
+            const cityValue = userInfo["cityValue"]
+            const genderValue = userInfo["genderValue"]
+            const UserCount = userInfo["UserCount"]
+            const LevelStep = userInfo["LevelStep"]
+
+            // 存到Vuex中
+            if (openid) commit("SET_OpenId", openid);
+            if (nickname) commit("SET_NickName", nickname);
+            if (avatarUrl) commit("SET_AvatarUrl", avatarUrl);
+            if (UserCount) commit("SET_UserCount", UserCount)
+            if (LevelStep) commit("SET_LevelStep", LevelStep);
+            if (genderValue || cityValue) commit("SET_UserDetail", { genderValue, cityValue })
+
+            // 存到storeage中
+            if (openid) uni.setStorageSync('openid', openid)
+            if (nickname) uni.setStorageSync('nickName', nickname)
+            if (avatarUrl) uni.setStorageSync('avatarUrl', avatarUrl)
+            if (cityValue) uni.setStorageSync('cityValue', cityValue)
+            if (genderValue) uni.setStorageSync('genderValue', genderValue)
+            if (UserCount) uni.setStorageSync('UserCount', UserCount)
+            if (LevelStep) uni.setStorageSync('LevelStep', LevelStep)
+
+            console.log(state);
+
         },
         setLevelOne({ commit }) {
             commit("SET_NumberCount", 2);
