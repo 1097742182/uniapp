@@ -1,14 +1,19 @@
 // test user request api
 const http = uni.$u.http;
 
-// test get api
-export function getUserInfo(params) {
-    return http.get('/http/getUserInfo', params)
-}
+// // test get api
+// export function getUserInfo(params) {
+//     return http.get('/http/getUserInfo', params)
+// }
 
 // test post api
 export function postGoodsInfo(params) {
     return http.post('/http/goodInfos', params)
+}
+
+// 根据wx.login的code获取用户信息
+export function getUserInfo(code) {
+    return http.post('/number/get_user_info', { code })
 }
 
 export function getCity() {
