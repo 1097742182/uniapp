@@ -59,7 +59,10 @@ export default {
     },
     onChooseavatar(e) {
       this.avatarUrl = e.detail.avatarUrl;
-      if (this.avatarUrl) uni.setStorageSync("avatarUrl", this.avatarUrl);
+      if (this.avatarUrl) {
+        uni.setStorageSync("avatarUrl", this.avatarUrl);
+        this.$store.commit("SET_AvatarUrl", this.avatarUrl);
+      }
     },
   },
 };
