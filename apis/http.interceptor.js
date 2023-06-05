@@ -66,6 +66,8 @@ const install = (Vue, vm) => {
 				title: config.custom.LoadingText || '正在加载',
 				mask: config.custom.LoadingMask || false
 			});
+
+			setTimeout(() => uni.hideLoading(), 3000);
 		}
 		// 引用token
 		// 方式一，存放在vuex的token，假设使用了uView封装的vuex方式
@@ -95,9 +97,8 @@ const install = (Vue, vm) => {
 	// 响应拦截，如配置，每次请求结束都会执行本方法
 	uni.$u.http.interceptors.response.use((res) => {
 
-		if (res.config.custom.ShowLoading) {
-			uni.hideLoading();
-		}
+		if (res.config.custom.ShowLoading) uni.hideLoading();
+
 
 		// if 状态码是否正常
 		if (res.statusCode == 200) {
@@ -115,6 +116,8 @@ const install = (Vue, vm) => {
 			vm.$u.toast(errorMessage);
 		}
 		return false;
+
+
 	});
 }
 
