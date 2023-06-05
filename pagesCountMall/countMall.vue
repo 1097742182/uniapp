@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import MallTicket from "./components/MallTicket";
+import MallTicket from "@/pagesCountMall/components/MallTicket.vue";
 import UserCountCard from "@/pagesGames/components/gameMenu/UserCountCard.vue";
 
 export default {
