@@ -1,7 +1,7 @@
 <template>
   <view class="u-page">
     <cl-header :key="0" title="密码神探" :isBack="false" />
-    <main-image style="width: 100%" :key="mainImageKey"></main-image>
+    <main-image style="width: 100%" ref="MainImage"></main-image>
     <view class="loginPopup">
       <u-popup
         :show="popupShow"
@@ -60,7 +60,6 @@ export default {
   data() {
     return {
       popupShow: false,
-      mainImageKey: false, // key
     };
   },
   components: {
@@ -94,7 +93,7 @@ export default {
           this.$api.user.getUserInfo(code).then((res) => {
             const userInfo = res;
             this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);
-            setTimeout(() => (this.mainImageKey = !this.mainImageKey), 100);
+            setTimeout(() => this.$refs.MainImage._initUserInfo(), 100);
           });
         },
       });
