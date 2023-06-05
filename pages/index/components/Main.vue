@@ -94,9 +94,7 @@ export default {
           this.$api.user.getUserInfo(code).then((res) => {
             const userInfo = res;
             this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);
-            setTimeout(() => {
-              this.mainImageKey = !this.mainImageKey;
-            }, 100);
+            setTimeout(() => (this.mainImageKey = !this.mainImageKey), 100);
           });
         },
       });
