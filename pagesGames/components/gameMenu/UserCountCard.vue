@@ -45,7 +45,7 @@ export default {
       this.$store.commit("SET_UserCount", userCount);
     },
     countMallBtnClick() {
-      this.$router.push({ name: "countMall" });
+      this.$Router.push({ name: "countMall", params: {} });
     },
   },
 };
