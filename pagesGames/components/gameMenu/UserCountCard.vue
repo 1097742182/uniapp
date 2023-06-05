@@ -16,7 +16,7 @@
 
     <view class="bottom">
       <view class="bottomLeft">我的排名：{{ UserRank }}</view>
-      <view class="bottomRight">积分明细 ></view>
+      <view class="bottomRight" @click="countMallBtnClick()">积分商城 ></view>
     </view>
 
     <view class="screen_background">
@@ -43,6 +43,9 @@ export default {
       }, 1000);
       const userCount = uni.getStorageSync("UserCount");
       this.$store.commit("SET_UserCount", userCount);
+    },
+    countMallBtnClick() {
+      this.$router.push({ name: "countMall" });
     },
   },
 };
