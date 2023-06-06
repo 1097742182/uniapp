@@ -34,7 +34,7 @@ export default {
 .HistoryNumberContent {
   /* height: 300px; */
   border: 1px solid red;
-  margin: 10px;
+  margin: 0 10px;
   padding: 10px;
   border-radius: 5px;
   padding-bottom: 0;
@@ -43,7 +43,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
 
-  max-height: 400px;
+  max-height: 440px;
   overflow: auto;
 }
 

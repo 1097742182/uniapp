@@ -36,7 +36,9 @@ export default {
   },
 
   mounted() {
-    if (this.ButtonCount > 5) {
+    if (this.ButtonCount == 6) {
+      this.buttonFirstRow = this.buttonList.slice(0, this.ButtonCount);
+    } else if (this.ButtonCount > 5) {
       this.buttonList = this.buttonList.slice(0, this.ButtonCount);
       const rowCount = this.ButtonCount / 2;
       this.buttonFirstRow = this.buttonList.slice(0, rowCount);

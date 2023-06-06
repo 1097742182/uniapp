@@ -7,12 +7,10 @@
       </view>
     </view>
 
-    <view class="numberStatus" v-if="numberDetail">
+    <view class="numberStatus">
       <text class="right" v-for="item in rightListCount" :key="item"> √ </text>
-      <text class="nearly" v-for="item in nearlyRightListCount" :key="item">
-        O
-      </text>
-      <text class="error" v-for="item in errorListCount" :key="item"> - </text>
+      <text class="nearly" v-for="item in nearlyRightListCount" :key="item"> O </text>
+      <text class="error" v-for="item in errorListCount" :key="item"> ~ </text>
     </view>
   </view>
 </template>
@@ -34,16 +32,10 @@ export default {
   },
   computed: {
     rightListCount() {
-      return Array.from(
-        { length: this.numberStatus.right - 0 },
-        (_, index) => index + 1
-      );
+      return Array.from({ length: this.numberStatus.right - 0 }, (_, index) => index + 1);
     },
     nearlyRightListCount() {
-      return Array.from(
-        { length: this.numberStatus.nearlyRight - 0 },
-        (_, index) => index + 10
-      );
+      return Array.from({ length: this.numberStatus.nearlyRight - 0 }, (_, index) => index + 10);
     },
     errorListCount() {
       const all = this.numberList.length;
@@ -97,7 +89,7 @@ export default {
     // border: 1px solid blue;
     border-radius: 5px;
 
-    width: 200px;
+    max-width: 200px;
     height: 50px;
     line-height: 50px;
     padding-left: 4px;
@@ -116,7 +108,7 @@ export default {
   .numberStatus {
     // border: 1px solid saddlebrown;
     padding: 4px;
-    width: 120px;
+    // width: 120px;
     border-radius: 6px;
     display: flex;
     // justify-content: space-between;
