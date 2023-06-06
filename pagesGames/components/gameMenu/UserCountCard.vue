@@ -15,8 +15,10 @@
     </view>
 
     <view class="bottom">
-      <view class="bottomLeft">我的排名：{{ UserRank }}</view>
-      <view class="bottomRight" @click="countMallBtnClick()">积分商城 ></view>
+      <slot name="bottom">
+        <view class="bottomLeft">我的排名：{{ UserRank }}</view>
+        <view class="bottomRight" @click="countMallBtnClick()">积分商城 ></view>
+      </slot>
     </view>
 
     <view class="screen_background">
