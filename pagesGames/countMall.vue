@@ -5,8 +5,12 @@
       <UserCountCard />
     </view>
 
-    <view>
-      <mall-ticket />
+    <view style="margin: 10px">
+      <mall-ticket
+        v-for="(item, index) in ticketList"
+        :ticketDetail="item"
+        :key="index"
+      />
     </view>
   </view>
 </template>
@@ -17,7 +21,20 @@ import UserCountCard from "@/pagesGames/components/gameMenu/UserCountCard.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      ticketList: [
+        {
+          money: 10,
+          saleTips: "无门槛使用",
+          needUserCount: 1000,
+        },
+        {
+          money: 100,
+          saleTips: "满300元使用",
+          needUserCount: 8000,
+        },
+      ],
+    };
   },
   components: {
     MallTicket,

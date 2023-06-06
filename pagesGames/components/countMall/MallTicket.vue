@@ -1,92 +1,90 @@
 <template>
   <div class="demo">
-    <!-- 效果1 begin -->
-    <div class="stamp stamp01">
-      <div class="par">
-        <p>XXXXXX折扣店</p>
-        <sub class="sign">￥</sub><span>50.00</span><sub>优惠券</sub>
-        <p>订单满100.00元</p>
-      </div>
-      <div class="copy">
-        副券
-        <p>2015-08-13<br />2016-08-13</p>
-      </div>
-      <i></i>
-    </div>
-    <!-- 效果1 end -->
-
-    <!-- 效果2 begin -->
-    <div class="stamp stamp02">
-      <div class="par">
-        <p>XXXXXX折扣店</p>
-        <sub class="sign">￥</sub><span>50.00</span><sub>优惠券</sub>
-        <p>订单满100.00元</p>
-      </div>
-      <div class="copy">
-        副券
-        <p>2015-08-13<br />2016-08-13</p>
-      </div>
-      <i></i>
-    </div>
-    <!-- 效果2 end -->
-
-    <!-- 效果3 begin -->
     <div class="stamp stamp03">
-      <div class="par">
-        <p>XXXXXX折扣店</p>
-        <sub class="sign">￥</sub><span>50.00</span><sub>优惠券</sub>
-        <p>订单满100.00元</p>
+      <div class="left">
+        <p>杞小白官方旗舰店</p>
+        <view class="saleMoneyContent">
+          <span class="saleMoney">{{ ticketDetail.money }}.00</span>
+        </view>
+        <p class="saleTips">{{ ticketDetail.saleTips }}</p>
       </div>
-      <div class="copy">
-        副券
-        <p>2015-08-13<br />2016-08-13</p>
-        <a href="#">立即使用</a>
+      <div class="right" style="z-index: 10">
+        <!-- <span class="rightTitle">有效期</span>
+        <p>
+          2015-08-13
+          <br />
+          2016-08-13
+        </p> -->
+        <p style="font-size: 16px">需{{ ticketDetail.needUserCount }}积分</p>
+        <a @click="getTicketBtnClick()"> 立即兑换 </a>
       </div>
       <i></i>
     </div>
-    <!-- 效果3 end -->
 
-    <!-- 效果4 begin -->
-    <div class="stamp stamp04">
-      <div class="par">
-        <p>XXXXXX折扣店</p>
-        <sub class="sign">￥</sub><span>50.00</span><sub>优惠券</sub>
-        <p>订单满100.00元</p>
-      </div>
-      <div class="copy">
-        副券
-        <p>2015-08-13<br />2016-08-13</p>
-        <a href="#">立即使用</a>
-      </div>
-      <i></i>
-    </div>
-    <!-- 效果4 end -->
+    <success-popup-vue v-if="popupShow" @hidePopup="popupShow = false" />
   </div>
 </template>
 
 <script>
-export default {};
+import successPopupVue from "./successPopup.vue";
+
+export default {
+  data() {
+    return {
+      popupShow: false,
+    };
+  },
+  props: {
+    ticketDetail: {
+      type: Object,
+      default: () => ({
+        money: 10,
+        saleTips: "无门槛使用",
+        needUserCount: 1000,
+      }),
+    },
+  },
+  components: { successPopupVue },
+  methods: {
+    getTicketBtnClick() {
+      uni.showModal({
+        title: "是否兑换优惠券？",
+        content: "使用优惠券可享受更多优惠哦！",
+        success: (res) => {
+          if (res.confirm) {
+            // setTimeout(() => (this.popupShow = true), 200);
+            uni.$showMsg("兑换成功");
+          } else if (res.cancel) {
+            console.log("取消兑换");
+          }
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .demo {
-  width: 410px;
+  width: 100%;
   margin: 0 auto;
 }
 .stamp * {
   padding: 0;
   margin: 0;
   list-style: none;
-  font-family: "Microsoft YaHei", "Source Code Pro", Menlo, Consolas, Monaco,
-    monospace;
 }
+
 .stamp {
-  width: 387px;
+  width: 100%;
   height: 140px;
   padding: 0 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
 }
 .stamp:before {
   content: "";
@@ -97,6 +95,8 @@ export default {};
   right: 10px;
   z-index: -1;
 }
+
+// i标签，是一个背景样式，斜向下的背景样式
 .stamp i {
   position: absolute;
   left: 20%;
@@ -106,33 +106,46 @@ export default {};
   background-color: rgba(255, 255, 255, 0.15);
   transform: rotate(-30deg);
 }
-.stamp .par {
+.stamp .left {
   float: left;
   padding: 16px 15px;
   width: 220px;
   border-right: 2px dashed rgba(255, 255, 255, 0.3);
   text-align: left;
 }
-.stamp .par p {
+
+.stamp .left p {
   color: #fff;
   font-size: 16px;
   line-height: 21px;
 }
-.stamp .par span {
-  font-size: 50px;
-  color: #fff;
-  margin-right: 5px;
-  line-height: 65px;
+
+.saleMoneyContent {
+  display: flex;
+  align-items: center;
+
+  // 销售金额
+  .saleMoney {
+    font-size: 40px;
+    line-height: 50px;
+    color: #fff;
+    margin-right: 5px;
+    margin-top: 10px;
+
+    &::before {
+      content: "￥";
+      font-size: 34px;
+    }
+
+    &::after {
+      content: "优惠券";
+      font-size: 16px;
+      margin-left: 4px;
+    }
+  }
 }
-.stamp .par .sign {
-  font-size: 34px;
-}
-.stamp .par sub {
-  position: relative;
-  top: -5px;
-  color: rgba(255, 255, 255, 0.8);
-}
-.stamp .copy {
+
+.stamp .right {
   display: inline-block;
   padding: 21px 14px;
   width: 100px;
@@ -141,31 +154,11 @@ export default {};
   color: rgb(255, 255, 255);
   text-align: center;
   line-height: initial;
+  margin: auto;
 }
-.stamp .copy p {
+.stamp .right p {
   font-size: 16px;
   margin-top: 15px;
-}
-.stamp01 {
-  //   background: radial-gradient(
-  //     rgba(0, 0, 0, 0) 0,
-  //     rgba(0, 0, 0, 0) 5px,
-  //     #f39b00 5px
-  //   );
-  background: #f39b00;
-  background-size: 15px 15px;
-  background-position: 9px 3px;
-}
-.stamp01:before {
-  background-color: #f39b00;
-}
-.stamp02 {
-  background: radial-gradient(transparent 0, transparent 5px, #d24161 5px);
-  background-size: 15px 15px;
-  background-position: 9px 3px;
-}
-.stamp02:before {
-  background-color: #d24161;
 }
 .stamp03 {
   background: radial-gradient(transparent 0, transparent 5px, #7eab1e 5px);
@@ -175,49 +168,16 @@ export default {};
 .stamp03:before {
   background-color: #7eab1e;
 }
-.stamp03 .copy {
+.stamp03 .right {
   padding: 10px 6px 10px 12px;
   font-size: 24px;
 }
-.stamp03 .copy p {
+.stamp03 .right p {
   font-size: 14px;
   margin-top: 5px;
   margin-bottom: 8px;
 }
-.stamp03 .copy a {
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  display: block;
-}
-.stamp04 {
-  width: 390px;
-  background: radial-gradient(
-    rgba(0, 0, 0, 0) 0,
-    rgba(0, 0, 0, 0) 4px,
-    #50add3 4px
-  );
-  background-size: 12px 8px;
-  background-position: -5px 10px;
-}
-.stamp04:before {
-  background-color: #50add3;
-  left: 5px;
-  right: 5px;
-}
-.stamp04 .copy {
-  padding: 10px 6px 10px 12px;
-  font-size: 24px;
-}
-.stamp04 .copy p {
-  font-size: 14px;
-  margin-top: 5px;
-  margin-bottom: 8px;
-}
-.stamp04 .copy a {
+.stamp03 .right a {
   background-color: #fff;
   color: #333;
   font-size: 14px;
