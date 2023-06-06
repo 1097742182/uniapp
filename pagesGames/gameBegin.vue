@@ -5,8 +5,12 @@
     <view class="content">
       <user-info></user-info>
       <number-content></number-content>
-      <history-number-content></history-number-content>
+
+      <history-number-content v-if="GameBeginTitle === '第四关'" />
+      <new-history-number-content v-else />
+
       <button-content></button-content>
+
       <view class="buttonContent">
         <view class="" style="width: 200px" v-if="!gameOver">
           <u-button
@@ -65,6 +69,7 @@
 import UserInfo from "./components/gameBegin/UserInfo.vue";
 import NumberContent from "./components/gameBegin/NumberContent.vue";
 import HistoryNumberContent from "./components/gameBegin/HistoryNumberContent.vue";
+import NewHistoryNumberContent from "./components/gameBegin/NewHistoryNumberContent/NewHistoryNumberContent.vue";
 import ButtonContent from "./components/gameBegin/ButtonContent.vue";
 
 // 方法
@@ -88,6 +93,7 @@ export default {
     UserInfo,
     NumberContent,
     HistoryNumberContent,
+    NewHistoryNumberContent,
     ButtonContent,
   },
   created() {
