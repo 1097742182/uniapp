@@ -36,12 +36,12 @@ export default {
   },
 
   mounted() {
-   this._initButtonRow()
+    this._initButtonRow();
   },
   methods: {
     _initButtonRow() {
-      let buttonList = JSON.parse(JSON.stringfy(this.buttonList))
-      if(this.ButtonCount <= 6) buttonList.shift()
+      let buttonList = JSON.parse(JSON.stringify(this.buttonList));
+      if (this.ButtonCount <= 6) buttonList.shift();
 
       if (this.ButtonCount == 6) {
         this.buttonFirstRow = buttonList.slice(0, this.ButtonCount);

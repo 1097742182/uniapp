@@ -13,19 +13,13 @@
 
       <view class="buttonContent">
         <view class="" style="width: 200px" v-if="!gameOver">
-          <u-button
-            type="primary"
-            style="background-color: #3c8adf"
-            @click="checkAnswer"
-          >
+          <u-button type="primary" style="background-color: #3c8adf" @click="checkAnswer">
             提交
           </u-button>
         </view>
 
         <view class="" style="width: 200px" v-if="gameOver">
-          <u-button type="success" @click="returnMenuBtnClick()">
-            返回菜单
-          </u-button>
+          <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
 
           <u-popup
             :show="showPopup"
@@ -36,25 +30,16 @@
           >
             <view class="popupContent">
               <view class="popupText">{{ gameResult }}</view>
-              <view
-                class="popupBtn"
-                v-if="gameStatus && GameBeginTitle != '第四关'"
-              >
-                <u-button type="primary" @click="nextLevel()">
-                  下一关
-                </u-button>
+              <view class="popupBtn" v-if="gameStatus && GameBeginTitle != '第四关'">
+                <u-button type="primary" @click="nextLevel()"> 下一关 </u-button>
               </view>
 
               <view class="popupBtn" v-if="!gameStatus">
-                <u-button type="primary" @click="reloadLevel()">
-                  重新开始
-                </u-button>
+                <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
               </view>
 
               <view class="popupBtn">
-                <u-button type="success" @click="returnMenuBtnClick()">
-                  返回菜单
-                </u-button>
+                <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
               </view>
             </view>
           </u-popup>
@@ -114,6 +99,7 @@ export default {
       // NumberCount为store里面的数据，是可输入的总数
       while (nums.length < this.NumberCount) {
         const num = Math.floor(Math.random() * this.ButtonCount); // 值为button的值
+        if (this.ButtonCount <= 6 && num == 0) continue;
         if (!nums.includes(num)) nums.push(num);
       }
       this.secretNumbers = nums.map((item) => item.toString());
@@ -191,8 +177,7 @@ export default {
     _checkFirstCheck() {
       if (!this.firstCheck) return; // 如果不是第一次检查，则直接返回
 
-      if (equals(this.NumberList, this.secretNumbers))
-        this._initSecretNumbers();
+      if (equals(this.NumberList, this.secretNumbers)) this._initSecretNumbers();
       if (equals(this.NumberList, this.secretNumbers)) this._checkFirstCheck();
 
       this.firstCheck = false;
@@ -205,9 +190,7 @@ export default {
         status: status,
       };
 
-      const historyNumberList = JSON.parse(
-        JSON.stringify(this.HistoryNumberList)
-      );
+      const historyNumberList = JSON.parse(JSON.stringify(this.HistoryNumberList));
       historyNumberList.push(historyitem);
 
       // 如果数量不大于10，则放入进去
@@ -303,11 +286,9 @@ export default {
 
       if (this.GameBeginTitle === "第二关") this.$store.dispatch("setLevelTwo");
 
-      if (this.GameBeginTitle === "第三关")
-        this.$store.dispatch("setLevelThree");
+      if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelThree");
 
-      if (this.GameBeginTitle === "第四关")
-        this.$store.dispatch("setLevelFour");
+      if (this.GameBeginTitle === "第四关") this.$store.dispatch("setLevelFour");
 
       this.$Router.push({ name: "gameBegin", params: {} });
     },
@@ -317,11 +298,7 @@ export default {
 
 <style lang="scss" scoped>
 .gameBegin {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(132, 193, 247) 0%,
-    white 100%
-  );
+  background-image: linear-gradient(to bottom, rgb(132, 193, 247) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
 
