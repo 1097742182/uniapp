@@ -16,63 +16,77 @@
             "style": {
                 "navigationStyle": "custom"
             }
+        },
+        {
+            "path": "pages/newpage/newpage",
+            "name": "newpage",
+            "aliasPath": "/",
+            "meta": {
+                "title": "首页"
+            },
+            "style": {
+                "navigationStyle": "custom"
+            }
         }
     ],
     "window": {
         "enableShareAppMessage": true
     },
-    "subPackages": [{
-        "root": "pagesGames",
-        "pages": [{
-                "path": "gameMenu",
-                "name": "gameMenu",
-                "meta": {
-                    "title": "游戏目录"
+    "subPackages": [
+        {
+            "root": "pagesGames",
+            "pages": [
+                {
+                    "path": "gameMenu",
+                    "name": "gameMenu",
+                    "meta": {
+                        "title": "游戏目录"
+                    },
+                    "style": {
+                        "navigationStyle": "custom",
+                        "navigationBarTitleText": "游戏目录",
+                        "enablePullDownRefresh": false
+                    }
                 },
-                "style": {
-                    "navigationStyle": "custom",
-                    "navigationBarTitleText": "游戏目录",
-                    "enablePullDownRefresh": false
-                }
-            },
-            {
-                "path": "gameBegin",
-                "name": "gameBegin",
-                "meta": {
-                    "title": "游戏开始"
+                {
+                    "path": "gameBegin",
+                    "name": "gameBegin",
+                    "meta": {
+                        "title": "游戏开始"
+                    },
+                    "style": {
+                        "navigationStyle": "custom",
+                        "navigationBarTitleText": "游戏开始",
+                        "enablePullDownRefresh": false
+                    }
                 },
-                "style": {
-                    "navigationStyle": "custom",
-                    "navigationBarTitleText": "游戏开始",
-                    "enablePullDownRefresh": false
-                }
-            },
-            {
-                "path": "countMall",
-                "name": "countMall",
-                "meta": {
-                    "title": "游戏开始"
+                {
+                    "path": "countMall",
+                    "name": "countMall",
+                    "meta": {
+                        "title": "游戏开始"
+                    },
+                    "style": {
+                        "navigationStyle": "custom",
+                        "navigationBarTitleText": "游戏开始",
+                        "enablePullDownRefresh": false
+                    }
                 },
-                "style": {
-                    "navigationStyle": "custom",
-                    "navigationBarTitleText": "游戏开始",
-                    "enablePullDownRefresh": false
+                {
+                    "path": "personalCenter",
+                    "name": "personalCenter",
+                    "meta": {
+                        "title": "个人中心"
+                    },
+                    "style": {
+                        "navigationStyle": "custom",
+                        "navigationBarTitleText": "个人中心",
+                        "enablePullDownRefresh": false
+                    }
                 }
-            },
-            {
-                "path": "personalCenter",
-                "name": "personalCenter",
-                "meta": {
-                    "title": "个人中心"
-                },
-                "style": {
-                    "navigationStyle": "custom",
-                    "navigationBarTitleText": "个人中心",
-                    "enablePullDownRefresh": false
-                }
-            }
-        ]
-    }],
+            ]
+        }
+    ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "猜四个数字",
