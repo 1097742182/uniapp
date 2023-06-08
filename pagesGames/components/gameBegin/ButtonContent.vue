@@ -36,18 +36,24 @@ export default {
   },
 
   mounted() {
-    if (this.ButtonCount == 6) {
-      this.buttonFirstRow = this.buttonList.slice(0, this.ButtonCount);
-    } else if (this.ButtonCount > 5) {
-      this.buttonList = this.buttonList.slice(0, this.ButtonCount);
-      const rowCount = this.ButtonCount / 2;
-      this.buttonFirstRow = this.buttonList.slice(0, rowCount);
-      this.buttonSecondRow = this.buttonList.slice(rowCount);
-    } else {
-      this.buttonFirstRow = this.buttonList.slice(0, this.ButtonCount);
-    }
+   this._initButtonRow()
   },
   methods: {
+    _initButtonRow() {
+      let buttonList = JSON.parse(JSON.stringfy(this.buttonList))
+      if(this.ButtonCount <= 6) buttonList.shift()
+
+      if (this.ButtonCount == 6) {
+        this.buttonFirstRow = buttonList.slice(0, this.ButtonCount);
+      } else if (this.ButtonCount > 5) {
+        buttonList = buttonList.slice(0, this.ButtonCount);
+        const rowCount = this.ButtonCount / 2;
+        this.buttonFirstRow = buttonList.slice(0, rowCount);
+        this.buttonSecondRow = buttonList.slice(rowCount);
+      } else {
+        this.buttonFirstRow = buttonList.slice(0, this.ButtonCount);
+      }
+    },
     buttonClick(item) {
       uni.vibrateShort(); // 用户点击时，手机震动
       let numberList = this.NumberList;
