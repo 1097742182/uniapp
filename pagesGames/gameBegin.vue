@@ -6,8 +6,17 @@
       <user-info></user-info>
       <number-content></number-content>
 
-      <history-number-content v-if="GameBeginTitle === '第四关'" />
-      <new-history-number-content v-else />
+      <swiper :duration="300" class="swiper-1" easing-function="linear">
+        <swiper-item>
+          <history-number-content />
+        </swiper-item>
+        <swiper-item>
+          <history-number-content />
+        </swiper-item>
+      </swiper>
+
+      <!-- <history-number-content v-if="GameBeginTitle === '第四关'" />
+      <new-history-number-content v-else /> -->
 
       <button-content></button-content>
 
@@ -351,5 +360,9 @@ export default {
     margin-bottom: 10px;
     text-align: center;
   }
+}
+
+.swiper-1 {
+  height: 100%;
 }
 </style>

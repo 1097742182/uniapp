@@ -15,6 +15,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"snapsvg": "^0.5.1",
 		"uni-read-pages": "^1.0.5",
 		"uni-simple-router": "^2.0.4"
 	},
