@@ -67,7 +67,7 @@ const install = (Vue, vm) => {
         mask: config.custom.LoadingMask || false,
       });
 
-      setTimeout(() => uni.hideLoading(), 2500);
+      setTimeout(() => uni.hideLoading(), 500);
     }
     // 引用token
     // 方式一，存放在vuex的token，假设使用了uView封装的vuex方式

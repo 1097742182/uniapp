@@ -1,17 +1,17 @@
 <template>
-  <view class="story-container">
-    <view class="jumpClass jumpHide" @click="jumpBtnClick()">跳过</view>
+  <view class="story-container" :class="containerClass" @click="fastClick()">
+    <view class="jumpClass" :class="jumpBtnClass" @click="jumpBtnClick()">跳过</view>
     <view class="story-content">
-      <text class="text text0"> {{ storyText0 }}</text>
+      <text :class="className0"> {{ storyText0 }}</text>
     </view>
     <view class="story-content">
-      <text class="text text1"> {{ storyText1 }}</text>
+      <text :class="className1"> {{ storyText1 }}</text>
     </view>
     <view class="story-content">
-      <text class="text text2"> {{ storyText2 }}</text>
+      <text :class="className2"> {{ storyText2 }}</text>
     </view>
-    <view v-show="showStartBtn" class="start-btn" @click="goBtnClick()">出发</view>
-    <!-- <game-story-background /> -->
+    <view class="start-btn" :class="startClass" @click="goBtnClick()"> 出发 </view>
+    <game-story-background class="gameBackground" />
   </view>
 </template>
 <script>
@@ -24,13 +24,18 @@ export default {
       storyText1: "黄沙遮天闭日，他们似乎迷失了方向。",
       storyText2:
         "这时候，他们来到了一个三叉路口，路牌却是一串未知的密码，请你帮他们解开密码，指出正确的前进方向！",
-      showStartBtn: false,
+
+      containerClass: "",
+      className0: "opacityNone",
+      className1: "opacityNone",
+      className2: "opacityNone",
+      startClass: "opacityNone",
+      jumpBtnClass: "opacityNone",
     };
   },
   components: { GameStoryBackground },
   mounted() {
     this._initAnimated();
-    this._initListenClick();
   },
   methods: {
     _initAnimated() {
@@ -41,45 +46,28 @@ export default {
     },
 
     text0Animated() {
-      const text0 = document.querySelector(".text0");
-      text0.classList.add("animated");
-      text0.classList.remove("text");
+      this.className0 = "animated";
     },
 
     text1Animated() {
-      const text1 = document.querySelector(".text1");
-      text1.classList.add("animated");
-      text1.classList.remove("text");
+      this.className1 = "animated";
     },
 
     text2Animated() {
-      const text2 = document.querySelector(".text2");
-      text2.classList.add("animated");
-      text2.classList.remove("text");
+      this.className2 = "animated";
     },
 
     startBtnAnimated() {
-      const startBtn = document.querySelector(".start-btn");
-      startBtn.classList.add("animated");
-      this.showStartBtn = true;
+      this.startClass = "animated";
     },
 
-    _initListenClick() {
-      const container = document.querySelector(".story-container");
-      const jumpClass = document.querySelector(".jumpClass");
-
-      container.addEventListener("click", (event) => {
-        jumpClass.classList.add("animated");
-        jumpClass.classList.remove("jumpHide");
-      });
+    fastClick() {
+      this.jumpBtnClass = "animated";
     },
 
     hideGameStory() {
-      const myAnimation = document.querySelector(".story-container");
-      myAnimation.classList.add("hideAnimated");
-      setTimeout(() => {
-        this.$emit("hideGameStory");
-      }, 500);
+      this.containerClass = "hideAnimated";
+      setTimeout(() => this.$emit("hideGameStory"), 500);
     },
 
     goBtnClick() {
@@ -105,24 +93,31 @@ export default {
 .jumpClass {
   position: absolute;
   right: 20px;
-  top: 60px;
+  top: 110px;
   padding: 6px 20px;
   border-radius: 10px;
   border: 1px solid #666666;
   background: #eeeeee;
-}
-
-.jumpHide {
-  opacity: 0;
+  z-index: 10;
 }
 
 .story-content {
   font-size: 20px;
   text-align: center;
   margin-bottom: 50px;
+
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: #5d4f3f;
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.6), 0px 4px 4px rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.2rem;
 }
 
-.text {
+.opacityNone {
   opacity: 0;
 }
 
@@ -168,5 +163,14 @@ export default {
   background-color: #2d8cf0;
   color: #fff;
   cursor: pointer;
+  z-index: 10;
+}
+
+.gameBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 </style>
