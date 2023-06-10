@@ -18,11 +18,16 @@ export default {
       countList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
   },
+  props: {
+    secondHistory: { type: Boolean, default: false },
+  },
 
   mounted() {
     // 根据传入的count对countList进行分隔
     const count = this.HistoryNumberCount;
     this.countList = this.countList.slice(0, count);
+
+    if (this.secondHistory) this.countList = this.countList.map((item) => item + count);
   },
   components: {
     NewHistoryNumberContentItem,
@@ -32,7 +37,7 @@ export default {
 
 <style>
 .HistoryNumberContent {
-  /* height: 300px; */
+  height: 300px;
   border: 1px solid red;
   margin: 0 10px;
   padding: 10px;

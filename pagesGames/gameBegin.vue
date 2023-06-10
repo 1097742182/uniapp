@@ -6,12 +6,14 @@
       <user-info></user-info>
       <number-content></number-content>
 
-      <swiper :duration="300" class="swiper-1" easing-function="linear">
+      <swiper :duration="300" class="swiper-1" easing-function="linear" :indicator-dots="true">
         <swiper-item>
-          <history-number-content />
+          <history-number-content v-if="getCurrentTitle()" />
+          <new-history-number-content v-else />
         </swiper-item>
-        <swiper-item>
-          <history-number-content />
+        <swiper-item v-if="false">
+          <history-number-content v-if="getCurrentTitle()" :secondHistory="true" />
+          <new-history-number-content v-else :secondHistory="true" />
         </swiper-item>
       </swiper>
 
@@ -301,6 +303,13 @@ export default {
 
       this.$Router.push({ name: "gameBegin", params: {} });
     },
+    getCurrentTitle() {
+      if (this.GameBeginTitle === "第三关" || this.GameBeginTitle === "第四关") {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 </script>
@@ -363,6 +372,6 @@ export default {
 }
 
 .swiper-1 {
-  height: 100%;
+  height: 325px;
 }
 </style>
