@@ -1,6 +1,6 @@
 <template>
   <view>
-    <GameStoryVue v-if="gameStoryShow" class="gameStory" @hideGameStory="gameStoryShow = false" />
+    <GameStoryVue v-if="gameStoryShow" class="gameStory" @hideGameStory="hideGameStory" />
     <cl-header title="正常导航栏" />
     <Main />
 
@@ -15,14 +15,24 @@ import Main from "./components/Main.vue";
 export default {
   data() {
     return {
-      gameStoryShow: true,
+      gameStoryShow: false,
     };
   },
-  components: {
-    Main,
-    GameStoryVue,
+  components: { Main, GameStoryVue },
+  mounted() {
+    this._initGameStoryShow();
   },
-  methods: {},
+  methods: {
+    _initGameStoryShow() {
+      const GameStory = uni.getStorageSync("GameStory");
+      if (GameStory === "noShow") this.gameStoryShow = false;
+      else this.gameStoryShow = true;
+    },
+    hideGameStory() {
+      this.gameStoryShow = false;
+      uni.setStorageSync("GameStory", "noShow");
+    },
+  },
 };
 </script>
 
