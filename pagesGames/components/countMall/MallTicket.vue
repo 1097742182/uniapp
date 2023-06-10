@@ -123,6 +123,7 @@ export default {
 .saleMoneyContent {
   display: flex;
   align-items: center;
+  position: relative;
 
   // 销售金额
   .saleMoney {
@@ -139,6 +140,9 @@ export default {
 
     &::after {
       content: "优惠券";
+      position: absolute;
+      bottom: -4px;
+      width: 100px;
       font-size: 16px;
       margin-left: 4px;
     }
