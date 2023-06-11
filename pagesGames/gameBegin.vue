@@ -6,12 +6,20 @@
       <user-info></user-info>
       <number-content></number-content>
 
-      <swiper :duration="300" class="swiper-1" easing-function="linear" :indicator-dots="true">
+      <!-- history区域 -->
+      <swiper
+        id="historySwiper"
+        :duration="300"
+        class="swiper-1"
+        easing-function="linear"
+        :indicator-dots="true"
+        :current="currentSwiper"
+      >
         <swiper-item>
           <history-number-content v-if="getCurrentTitle()" />
           <new-history-number-content v-else />
         </swiper-item>
-        <swiper-item v-if="false">
+        <swiper-item v-if="SecondHistory">
           <history-number-content v-if="getCurrentTitle()" :secondHistory="true" />
           <new-history-number-content v-else :secondHistory="true" />
         </swiper-item>
@@ -31,6 +39,26 @@
 
         <view class="" style="width: 200px" v-if="gameOver">
           <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
+
+          <u-popup
+            :show="confirmSecondHistoryShow"
+            :round="10"
+            mode="center"
+            @close="confirmSecondHistoryShow = false"
+          >
+            <view class="popupContent">
+              <view class="popupText">游戏已经结束，关卡积分已清零，是否继续游戏？</view>
+
+              <!-- 如果游戏已经结束，并且没有开启过“第二次机会” -->
+              <view class="popupBtn">
+                <u-button type="primary" @click="continueBtnClick()"> 继续游戏 </u-button>
+              </view>
+
+              <view class="popupBtn">
+                <u-button type="primary" @click="abandonBtnClick()"> 放弃机会 </u-button>
+              </view>
+            </view>
+          </u-popup>
 
           <u-popup
             :show="showPopup"
@@ -82,6 +110,8 @@ export default {
       showPopup: false,
       firstCheck: true, // 第一次检查，不可直接成功
       subCount: -1, // 用户每次失败扣除的分数
+      currentSwiper: 0, // 默认展示的swiper
+      confirmSecondHistoryShow: false, // 巡检是否开启二次机会的popup
     };
   },
 
@@ -220,8 +250,10 @@ export default {
         this.gameResult = "恭喜你猜对了！";
         this.$store.dispatch("setLevelStep"); // 游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
+        console.log(this.SecondHistory);
         this.gameOver = true;
-        this.showPopup = true;
+        if (!this.SecondHistory) this.confirmSecondHistoryShow = true; // 如果没有开启二次机会，则显示
+        if (this.SecondHistory) this.showPopup = true; // 如果已经开启了二次机会，则不显示
         this.gameStatus = false; // false代表输掉游戏
         this.gameResult = `很遗憾，你没有在规定的${
           this.HistoryNumberCount
@@ -242,6 +274,7 @@ export default {
 
       let levelCount = this.LevelCount - this.subCount;
       levelCount = parseInt(levelCount);
+      if (levelCount <= 0) levelCount = 0;
       this.$store.commit("SET_LevelCount", levelCount);
     },
 
@@ -276,22 +309,32 @@ export default {
         uni.reLaunch({ url: "/pages/index/index" });
       }
     },
-
+    // 下一关按钮点击
     nextLevel() {
-      if (this.GameBeginTitle === "第一关") {
-        this.$store.dispatch("setLevelTwo");
-      }
+      if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelTwo");
 
-      if (this.GameBeginTitle === "第二关") {
-        this.$store.dispatch("setLevelThree");
-      }
+      if (this.GameBeginTitle === "第二关") this.$store.dispatch("setLevelThree");
 
-      if (this.GameBeginTitle === "第三关") {
-        this.$store.dispatch("setLevelFour");
-      }
+      if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelFour");
 
       this.$Router.push({ name: "gameBegin", params: {} });
     },
+    continueBtnClick() {
+      this.$store.commit("SET_SecondHistory", true);
+      this.$store.commit("SET_LevelCount", 0);
+      this.showPopup = false;
+      this.gameOver = false;
+      this.count = 0;
+      setTimeout(() => (this.currentSwiper = 1), 100); // 延迟将页面转换到第二页
+      this.confirmSecondHistoryShow = false;
+    },
+
+    abandonBtnClick() {
+      this.confirmSecondHistoryShow = false;
+      this.showPopup = true;
+    },
+
+    // 重新开始按钮点击
     reloadLevel() {
       if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelOne");
 

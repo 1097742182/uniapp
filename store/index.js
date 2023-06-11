@@ -38,6 +38,7 @@ const store = new Vuex.Store({
         HistoryNumberCount: 10, // 历史数据次数
         ButtonCount: 10, // 按钮的数量，默认为10
         LevelCount: -1, // 关卡分数
+        SecondHistory: false, // 是否开启第二次历史数据，即
     },
     getters: {},
     mutations: {
@@ -102,6 +103,9 @@ const store = new Vuex.Store({
         },
         SET_LevelStep(state, LevelStep) {
             state.LevelStep = LevelStep
+        },
+        SET_SecondHistory(state, SecondHistory) {
+            state.SecondHistory = SecondHistory
         },
     },
     actions: {
@@ -173,6 +177,7 @@ const store = new Vuex.Store({
 
         },
         setLevelOne({ commit }) {
+            commit("SET_SecondHistory", false);
             commit("SET_NumberCount", 2);
             commit("SET_HistoryNumberCount", 4);
             commit("SET_ButtonCount", 3);
@@ -180,6 +185,7 @@ const store = new Vuex.Store({
             setTimeout(() => commit("SET_GameBeginTitle", "第一关"), 0);
         },
         setLevelTwo({ commit }) {
+            commit("SET_SecondHistory", false);
             commit("SET_NumberCount", 3);
             commit("SET_HistoryNumberCount", 5);
             commit("SET_ButtonCount", 5);
@@ -187,6 +193,7 @@ const store = new Vuex.Store({
             setTimeout(() => commit("SET_GameBeginTitle", "第二关"), 0);
         },
         setLevelThree({ commit }) {
+            commit("SET_SecondHistory", false);
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 7);
             commit("SET_ButtonCount", 6);
@@ -194,6 +201,7 @@ const store = new Vuex.Store({
             setTimeout(() => commit("SET_GameBeginTitle", "第三关"), 0);
         },
         setLevelFour({ commit }) {
+            commit("SET_SecondHistory", false);
             commit("SET_NumberCount", 4);
             commit("SET_HistoryNumberCount", 10);
             commit("SET_ButtonCount", 10);
