@@ -44,10 +44,14 @@
             :show="confirmSecondHistoryShow"
             :round="10"
             mode="center"
+            :closeOnClickOverlay="false"
             @close="confirmSecondHistoryShow = false"
           >
             <view class="popupContent">
-              <view class="popupText">游戏已经结束，关卡积分已清零，是否继续游戏？</view>
+              <view class="popupText" style="font-size: 16px">
+                <view style="margin-bottom: 10px">游戏已结束，关卡积分清零。</view>
+                <view>是否使用续命卡，继续游戏？</view>
+              </view>
 
               <!-- 如果游戏已经结束，并且没有开启过“第二次机会” -->
               <view class="popupBtn">
@@ -69,8 +73,15 @@
           >
             <view class="popupContent">
               <view class="popupText">{{ gameResult }}</view>
-              <view class="popupBtn" v-if="gameStatus && GameBeginTitle != '第四关'">
+              <view
+                class="popupBtn"
+                v-if="gameStatus && GameBeginTitle != '第四关' && !SecondHistory"
+              >
                 <u-button type="primary" @click="nextLevel()"> 下一关 </u-button>
+              </view>
+
+              <view class="popupBtn" v-if="gameStatus && SecondHistory">
+                <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
               </view>
 
               <view class="popupBtn" v-if="!gameStatus">
@@ -248,16 +259,16 @@ export default {
         this.showPopup = true;
         this.gameStatus = true; // true代表游戏胜利
         this.gameResult = "恭喜你猜对了！";
-        this.$store.dispatch("setLevelStep"); // 游戏成功，则关卡往前走
+        if (this.SecondHistory) this.gameResult = `${this.gameResult}\n 但使用了续命卡，请重新闯关`;
+        if (!this.SecondHistory) this.$store.dispatch("setLevelStep"); // 如果没有开启二次机会，则游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
         console.log(this.SecondHistory);
         this.gameOver = true;
         if (!this.SecondHistory) this.confirmSecondHistoryShow = true; // 如果没有开启二次机会，则显示
         if (this.SecondHistory) this.showPopup = true; // 如果已经开启了二次机会，则不显示
         this.gameStatus = false; // false代表输掉游戏
-        this.gameResult = `很遗憾，你没有在规定的${
-          this.HistoryNumberCount
-        }次内猜中答案。正确答案是${this.secretNumbers.join(" ")}`;
+        this.gameResult = `很遗憾，你没有在规定的次数内猜中答案。正确答案是
+        ${this.secretNumbers.join(" ")}`;
       }
     },
 
