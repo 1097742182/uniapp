@@ -218,7 +218,12 @@ const store = new Vuex.Store({
         },
         setLevelStep({ state, commit }) {
             let levelStep = parseInt(state.LevelStep);
-            if (levelStep < 4) levelStep += 1;
+            let currentLevelStep = parseInt(state.LevelStep);
+
+            if (state.GameBeginTitle === "第一关" && currentLevelStep === 1) levelStep = 2;
+            if (state.GameBeginTitle === "第二关" && currentLevelStep === 2) levelStep = 3;
+            if (state.GameBeginTitle === "第三关" && currentLevelStep === 3) levelStep = 4;
+
             commit("SET_LevelStep", levelStep);
             uni.setStorageSync('LevelStep', levelStep)
         },
