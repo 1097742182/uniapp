@@ -2,14 +2,13 @@
   <view class="UserCountCard">
     <view class="left">
       <view class="leftTitle">我的积分</view>
-      <view class="UserCount">{{ UserCount }}</view>
+      <view class="UserCount">
+        {{ UserCount }}
+        <span style="font-size: 18px; margin-left: 10px">{{ getUserLevelName() }}</span>
+      </view>
     </view>
     <view class="right">
-      <view
-        class="iconContent"
-        :class="{ rotate: isRotating }"
-        @click="reloadBtnClick()"
-      >
+      <view class="iconContent" :class="{ rotate: isRotating }" @click="reloadBtnClick()">
         <u-icon name="reload" color="#ffffff" size="32"></u-icon>
       </view>
     </view>
@@ -48,6 +47,12 @@ export default {
     },
     countMallBtnClick() {
       this.$Router.push({ name: "countMall", params: {} });
+    },
+    getUserLevelName() {
+      if (this.UserCount < 1000) return "实习探员";
+      if (this.UserCount > 1000 && this.UserCount < 3000) return "探员";
+      if (this.UserCount > 3000 && this.UserCount < 8000) return "副探长";
+      if (this.UserCount > 8000) return "探长";
     },
   },
 };
