@@ -23,6 +23,16 @@ export default {
       nickName: "",
     };
   },
+  computed: {
+    avatarUrlState() {
+      return this.AvatarUrl
+    }
+  },
+  watch: {
+    avatarUrlState() {
+      this._initUserInfo()
+    }
+  },
   mounted() {
     this._initUserInfo();
   },
