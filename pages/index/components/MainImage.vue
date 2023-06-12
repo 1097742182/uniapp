@@ -1,11 +1,7 @@
 <template>
   <view class="containar">
     <view class="avatarUrl">
-      <button
-        type="balanced"
-        open-type="chooseAvatar"
-        @chooseavatar="onChooseavatar"
-      >
+      <button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
         <view class="imageContent" style="position: relative">
           <image :src="avatarUrl" class="refreshIcon">
             <view class="svgClass">
@@ -36,6 +32,22 @@ export default {
       avatarUrl: "",
       nickName: "",
     };
+  },
+  computed: {
+    avatarUrlState() {
+      return this.AvatarUrl;
+    },
+    nickNameState() {
+      return this.NickName;
+    },
+  },
+  watch: {
+    avatarUrlState() {
+      this._initUserInfo();
+    },
+    nickNameState() {
+      this._initUserInfo();
+    },
   },
   mounted() {
     this._initUserInfo();

@@ -25,13 +25,19 @@ export default {
   },
   computed: {
     avatarUrlState() {
-      return this.AvatarUrl
-    }
+      return this.AvatarUrl;
+    },
+    nickNameState() {
+      return this.NickName;
+    },
   },
   watch: {
     avatarUrlState() {
-      this._initUserInfo()
-    }
+      this._initUserInfo();
+    },
+    nickNameState() {
+      this._initUserInfo();
+    },
   },
   mounted() {
     this._initUserInfo();
