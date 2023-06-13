@@ -18,7 +18,7 @@
         :value="nickName"
         @blur="bindblur"
         @input="bindinput"
-        placeholder="xx"
+        placeholder="给自己起个名字，开始你的征程吧"
       />
       <text class="tips">建议修改为微信头像昵称</text>
     </view>
