@@ -49,8 +49,7 @@
           >
             <view class="popupContent">
               <view class="popupText" style="font-size: 16px">
-                <view style="margin-bottom: 10px">游戏已结束，关卡积分清零。</view>
-                <view>是否使用续命卡，继续游戏？</view>
+                <view>您已失败，是否继续本次推理？</view>
               </view>
 
               <!-- 如果游戏已经结束，并且没有开启过“第二次机会” -->
@@ -251,6 +250,7 @@ export default {
         uni.$u.vuex("HistoryRefresh", !this.HistoryRefresh);
       }
     },
+
     // 检查游戏是否已经结束
     _checkGameStatus(A) {
       // 如果猜测次数已满10次或者已猜对，则游戏结束
@@ -259,7 +259,6 @@ export default {
         this.showPopup = true;
         this.gameStatus = true; // true代表游戏胜利
         this.gameResult = "恭喜你猜对了！";
-        if (this.SecondHistory) this.gameResult = `${this.gameResult}\n 但使用了续命卡，请重新闯关`;
         if (!this.SecondHistory) this.$store.dispatch("setLevelStep"); // 如果没有开启二次机会，则游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
         console.log(this.SecondHistory);
@@ -272,7 +271,7 @@ export default {
       }
     },
 
-    // 检查用户分数，扣分逻辑
+    // 检查用户分数，扣分逻辑（每一次提交数字都出发扣分逻辑）
     _checkUserCount() {
       // 如果是游戏结束了，并且失败了，则直接返回
       if (this.gameOver && !this.gameStatus) return;
@@ -283,12 +282,14 @@ export default {
         return;
       }
 
+      // 扣分逻辑
       let levelCount = this.LevelCount - this.subCount;
       levelCount = parseInt(levelCount);
       if (levelCount <= 0) levelCount = 0;
       this.$store.commit("SET_LevelCount", levelCount);
     },
 
+    // 返回菜单按钮点击
     returnMenuBtnClick() {
       let pages = getCurrentPages(); //获取当前页面信息栈
       let currentPage = pages[pages.length - 1]; // 当前页面栈
@@ -320,6 +321,7 @@ export default {
         uni.reLaunch({ url: "/pages/index/index" });
       }
     },
+
     // 下一关按钮点击
     nextLevel() {
       if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelTwo");
@@ -330,6 +332,8 @@ export default {
 
       this.$Router.push({ name: "gameBegin", params: {} });
     },
+
+    // 继续游戏 按钮点击
     continueBtnClick() {
       this.$store.commit("SET_SecondHistory", true);
       this.$store.commit("SET_LevelCount", 0);
@@ -340,6 +344,7 @@ export default {
       this.confirmSecondHistoryShow = false;
     },
 
+    // 放弃机会 按钮点击
     abandonBtnClick() {
       this.confirmSecondHistoryShow = false;
       this.showPopup = true;
@@ -381,7 +386,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80vh;
+  height: 85vh;
 }
 
 .buttonContent {
