@@ -157,7 +157,7 @@ export default {
   },
   watch: {
     currentLevelNumberResultShowState() {
-      this.historyHeight = "400px";
+      this.historyHeight = "430px";
     },
   },
   created() {

@@ -29,7 +29,7 @@ export default {
   },
   watch: {
     currentLevelNumberResultShowState() {
-      this.contentHeight = "370px";
+      this.contentHeight = "400px";
     },
   },
 
