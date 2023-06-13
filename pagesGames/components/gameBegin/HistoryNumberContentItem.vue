@@ -1,8 +1,22 @@
 <template>
-  <view class="HistoryNumberContentItem">
+  <view class="HistoryNumberContentItem" :style="'margin-bottom:' + bottomValue">
     <view class="numberList">
       <view class="numberItem" v-for="(item, index) in numberList" :key="index">
-        <text>{{ item }}</text>
+        <text v-if="item">{{ item }}</text>
+        <text v-else style="color: #ffffff00"> 0</text>
+
+        <!-- 最后出现答案时，展示的密码 -->
+        <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
+          <view v-if="numberListStatus[index] === 'V'" class="right">
+            {{ numberListStatus[index] }}
+          </view>
+          <view v-if="numberListStatus[index] === 'O'" class="nearly">
+            {{ numberListStatus[index] }}
+          </view>
+          <view v-if="numberListStatus[index] === '~'" class="error">
+            {{ numberListStatus[index] }}
+          </view>
+        </view>
       </view>
     </view>
 
@@ -21,10 +35,12 @@ export default {
     return {
       numberDetail: {},
       numberList: ["", "", "", ""],
+      numberListStatus: ["~", "~", "~", "~"],
       numberStatus: {
         right: "",
         nearlyRight: "",
       },
+      bottomValue: "10px",
     };
   },
   props: {
@@ -32,9 +48,21 @@ export default {
       type: Number,
     },
   },
+  computed: {
+    currentLevelNumberResultShowState() {
+      return this.CurrentLevelNumberResultShow;
+    },
+  },
   watch: {
     HistoryNumberList() {
       this._initNumberList();
+    },
+    currentLevelNumberResultShowState() {
+      // 如果等于true
+      if (this.currentLevelNumberResultShowState) {
+        this.bottomValue = "30px";
+        this._checkNumberList();
+      }
     },
   },
   mounted() {
@@ -53,6 +81,15 @@ export default {
 
         this.numberList = this.NumberList.map((item) => "");
         this.numberStatus = { right: "", nearlyRight: "" };
+      }
+    },
+    _checkNumberList() {
+      const currentLevelNumberResult = this.CurrentLevelNumberResult;
+      for (let i = 0; i < this.numberList.length; i++) {
+        const item = this.numberList[i];
+        if (item === currentLevelNumberResult[i]) this.numberListStatus[i] = "V";
+        else if (currentLevelNumberResult.includes(item)) this.numberListStatus[i] = "O";
+        else this.numberListStatus[i] = "~";
       }
     },
   },
@@ -81,6 +118,7 @@ export default {
     padding-right: 10px;
 
     .numberItem {
+      position: relative;
       text {
         border-bottom: 1px solid #333333;
         padding: 2px;
@@ -101,5 +139,27 @@ export default {
       border-bottom: 1px solid #333333;
     }
   }
+}
+
+.numberListStatus {
+  position: absolute;
+  bottom: -15px;
+  left: -4px;
+  line-height: 10px;
+}
+
+.right {
+  color: green;
+  margin: 0 4px;
+}
+
+.nearly {
+  color: blue;
+  margin: 0 4px;
+}
+
+.error {
+  color: red;
+  margin: 0 4px;
 }
 </style>
