@@ -1,9 +1,22 @@
 <template>
-  <view class="HistoryNumberContentItem">
+  <view class="HistoryNumberContentItem" :style="'margin-bottom:' + bottomValue">
     <view class="numberList">
       <view class="numberItem" v-for="(item, index) in numberList" :key="index">
-        <text v-if="item">{{ item }}</text>
+        <text v-if="item" :style="'color: ' + colorList[index]">{{ item }}</text>
         <text v-else style="color: #ffffff">0</text>
+
+        <!-- 最后出现答案时，展示的密码 -->
+        <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
+          <view v-if="numberListStatus[index] === '√'" class="right">
+            {{ numberListStatus[index] }}
+          </view>
+          <view v-if="numberListStatus[index] === 'O'" class="nearly">
+            {{ numberListStatus[index] }}
+          </view>
+          <view v-if="numberListStatus[index] === '~'" class="error">
+            {{ numberListStatus[index] }}
+          </view>
+        </view>
       </view>
     </view>
 
@@ -21,10 +34,13 @@ export default {
     return {
       numberDetail: {},
       numberList: ["", "", "", ""],
+      numberListStatus: ["~", "~", "~", "~"],
+      colorList: [],
       numberStatus: {
         right: "",
         nearlyRight: "",
       },
+      bottomValue: "10px",
     };
   },
   props: {
@@ -44,14 +60,25 @@ export default {
       const error = all - right - nearly;
       return Array.from({ length: error }, (_, index) => index + 100);
     },
+    currentLevelNumberResultShowState() {
+      return this.CurrentLevelNumberResultShow;
+    },
   },
   watch: {
     HistoryNumberList() {
       this._initNumberList();
     },
+    currentLevelNumberResultShowState() {
+      // 如果等于true
+      if (this.currentLevelNumberResultShowState) {
+        this.bottomValue = "30px";
+        this._checkNumberList();
+      }
+    },
   },
   mounted() {
     this._initNumberList();
+    this._initColorList();
   },
   methods: {
     _initNumberList() {
@@ -67,6 +94,46 @@ export default {
         this.numberStatus = { right: "", nearlyRight: "" };
       }
     },
+    _initColorList() {
+      this.colorList.push(this.randomColor());
+      this.colorList.push(this.randomColor());
+      this.colorList.push(this.randomColor());
+      this.colorList.push(this.randomColor());
+      this.colorList.push(this.randomColor());
+    },
+    _checkNumberList() {
+      const currentLevelNumberResult = this.CurrentLevelNumberResult;
+      for (let i = 0; i < this.numberList.length; i++) {
+        const item = this.numberList[i];
+        if (item === currentLevelNumberResult[i]) this.numberListStatus[i] = "√";
+        else if (currentLevelNumberResult.includes(item)) this.numberListStatus[i] = "O";
+        else this.numberListStatus[i] = "~";
+      }
+    },
+    randomColor() {
+      const colorList = [
+        "red",
+        "blue",
+        "green",
+        "darkorchid",
+        "darkblue",
+        "pink",
+        "blueviolet",
+        "cornflowerblue",
+        "black",
+        "cadetblue",
+        "dodgerblue",
+        "saddlebrown",
+        "darkred",
+        "orangered",
+        "palevioletred",
+        "darkcyan",
+      ];
+      const length = colorList.length;
+      const randomR = Math.floor(Math.random() * length);
+
+      return colorList[randomR];
+    },
   },
 };
 </script>
@@ -74,7 +141,6 @@ export default {
 <style lang="scss" scoped>
 .HistoryNumberContentItem {
   height: 50px;
-
   margin-bottom: 10px;
   padding: 0 6px;
   box-sizing: border-box;
@@ -96,9 +162,11 @@ export default {
     padding-right: 10px;
 
     .numberItem {
+      position: relative;
+
       text {
         font-size: 20px;
-        border: 1px solid #333333;
+        border: 1px solid palevioletred;
         border-radius: 5px;
         padding: 12px 18px;
       }
@@ -120,21 +188,28 @@ export default {
       margin: 0px 1px;
       border-bottom: 1px solid #333333;
     }
-
-    .right {
-      color: green;
-      margin: 0 4px;
-    }
-
-    .nearly {
-      color: blue;
-      margin: 0 4px;
-    }
-
-    .error {
-      color: red;
-      margin: 0 4px;
-    }
   }
+}
+
+.numberListStatus {
+  position: absolute;
+  bottom: -15px;
+  left: 15px;
+  line-height: 10px;
+}
+
+.right {
+  color: green;
+  margin: 0 4px;
+}
+
+.nearly {
+  color: blue;
+  margin: 0 4px;
+}
+
+.error {
+  color: red;
+  margin: 0 4px;
 }
 </style>

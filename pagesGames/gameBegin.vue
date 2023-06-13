@@ -259,12 +259,17 @@ export default {
         this.showPopup = true;
         this.gameStatus = true; // true代表游戏胜利
         this.gameResult = "恭喜你猜对了！";
+        this._setCurrentLevelNumberResult(); // 展示答案出来
         if (!this.SecondHistory) this.$store.dispatch("setLevelStep"); // 如果没有开启二次机会，则游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
         console.log(this.SecondHistory);
         this.gameOver = true;
         if (!this.SecondHistory) this.confirmSecondHistoryShow = true; // 如果没有开启二次机会，则显示
         if (this.SecondHistory) this.showPopup = true; // 如果已经开启了二次机会，则不显示
+        if (this.SecondHistory) {
+          // 如果已经用了第二次机会，则直接显示答案
+          this._setCurrentLevelNumberResult();
+        }
         this.gameStatus = false; // false代表输掉游戏
         this.gameResult = `很遗憾，你没有在规定的次数内猜中答案。正确答案是
         ${this.secretNumbers.join(" ")}`;
@@ -287,6 +292,11 @@ export default {
       levelCount = parseInt(levelCount);
       if (levelCount <= 0) levelCount = 0;
       this.$store.commit("SET_LevelCount", levelCount);
+    },
+    // 修改state的参数，设置SET_CurrentLevelNumberResult值
+    _setCurrentLevelNumberResult() {
+      this.$store.commit("SET_CurrentLevelNumberResult", this.secretNumbers);
+      this.$store.commit("SET_CurrentLevelNumberResultShow", true);
     },
 
     // 返回菜单按钮点击
@@ -348,6 +358,7 @@ export default {
     abandonBtnClick() {
       this.confirmSecondHistoryShow = false;
       this.showPopup = true;
+      this._setCurrentLevelNumberResult();
     },
 
     // 重新开始按钮点击
