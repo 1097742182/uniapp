@@ -3,6 +3,7 @@
     <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
     <UserCountCard />
+    <!-- <success-dialog /> -->
 
     <view class="u-demo-block">
       <text class="u-demo-block__title">游戏目录</text>
@@ -13,27 +14,15 @@
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(2)" text="第二关" type="primary" /> -->
-          <ice-button
-            @click="gameBegin(2)"
-            :buttonType="getButtonType(2)"
-            buttonText="第二关"
-          />
+          <ice-button @click="gameBegin(2)" :buttonType="getButtonType(2)" buttonText="第二关" />
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(3)" text="第三关" type="primary" /> -->
-          <ice-button
-            @click="gameBegin(3)"
-            :buttonType="getButtonType(3)"
-            buttonText="第三关"
-          />
+          <ice-button @click="gameBegin(3)" :buttonType="getButtonType(3)" buttonText="第三关" />
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(4)" text="第四关" type="primary" /> -->
-          <ice-button
-            @click="gameBegin(4)"
-            :buttonType="getButtonType(4)"
-            buttonText="第四关"
-          />
+          <ice-button @click="gameBegin(4)" :buttonType="getButtonType(4)" buttonText="第四关" />
         </view>
       </view>
     </view>
@@ -45,12 +34,13 @@ import UserInfo from "./components/gameMenu/UserInfo.vue";
 // import UserCountCard from "./components/gameMenu/UserCountCard.vue"
 import UserCountCard from "@/pagesGames/components/gameMenu/UserCountCard.vue";
 import IceButton from "@/components/IceButton/IceButton.vue";
+import SuccessDialog from "components/SuccessDialog/SuccessDialog.vue";
 
 export default {
   data() {
     return {};
   },
-  components: { UserInfo, UserCountCard, IceButton },
+  components: { UserInfo, UserCountCard, IceButton, SuccessDialog },
   methods: {
     backBtnClick() {
       uni.navigateBack();
@@ -80,11 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 .gradient {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(165, 207, 244) 0%,
-    white 100%
-  );
+  background-image: linear-gradient(to bottom, rgb(165, 207, 244) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
 }
