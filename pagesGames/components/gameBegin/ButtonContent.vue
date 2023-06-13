@@ -61,6 +61,7 @@ export default {
       numberList[currentIndex] = item.toString();
       uni.$u.vuex("NumberList", numberList);
 
+      // 如果当前选择的是小于总数的，则+1，否则默认为0
       if (currentIndex < this.NumberCount - 1) {
         uni.$u.vuex("CurrentIndex", this.CurrentIndex + 1);
       } else {

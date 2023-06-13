@@ -71,6 +71,7 @@ export default {
   methods: {
     _initNumberList() {
       this.numberDetail = this.HistoryNumberList[this.value];
+      console.log(this.numberDetail);
 
       // 获取历史记录，如果找到对应数据，则放入对应数据
       if (this.numberDetail) {

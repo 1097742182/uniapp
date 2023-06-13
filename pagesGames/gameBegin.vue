@@ -11,6 +11,7 @@
         id="historySwiper"
         :duration="300"
         class="swiper-1"
+        :style="'height:' + historyHeight"
         easing-function="linear"
         :indicator-dots="true"
         :current="currentSwiper"
@@ -28,7 +29,8 @@
       <!-- <history-number-content v-if="GameBeginTitle === '第四关'" />
       <new-history-number-content v-else /> -->
 
-      <button-content></button-content>
+      <!-- 当需要展示答案时，按钮就不显示了 -->
+      <button-content v-if="!CurrentLevelNumberResultShow"></button-content>
 
       <view class="buttonContent">
         <view class="" style="width: 200px" v-if="!gameOver">
@@ -38,7 +40,23 @@
         </view>
 
         <view class="" style="width: 200px" v-if="gameOver">
-          <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
+          <!-- <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button> -->
+          <!-- 如果游戏失败了，则显示“重新开始” -->
+          <view class="popupBtn" v-if="!gameStatus">
+            <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
+          </view>
+          <!-- 如果游戏胜利了，但使用过二次机会，则显示“重新开始” -->
+          <view class="popupBtn" v-else-if="gameStatus && SecondHistory">
+            <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
+          </view>
+          <!-- 如果游戏胜利了，并且不是最后一关，并且没有使用过二次机会，则显示“下一关” -->
+          <view class="popupBtn" v-else-if="gameStatus && !checkIsLastLevel() && !SecondHistory">
+            <u-button type="primary" @click="nextLevel()"> 下一关 </u-button>
+          </view>
+          <!-- 如果游戏胜利了，并且是最后一关，则显示“返回菜单” -->
+          <view class="popupBtn" v-else-if="gameStatus && checkIsLastLevel()">
+            <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
+          </view>
 
           <u-popup
             :show="confirmSecondHistoryShow"
@@ -122,15 +140,25 @@ export default {
       subCount: -1, // 用户每次失败扣除的分数
       currentSwiper: 0, // 默认展示的swiper
       confirmSecondHistoryShow: false, // 巡检是否开启二次机会的popup
+      historyHeight: "355px",
     };
   },
-
   components: {
     UserInfo,
     NumberContent,
     HistoryNumberContent,
     NewHistoryNumberContent,
     ButtonContent,
+  },
+  computed: {
+    currentLevelNumberResultShowState() {
+      return this.CurrentLevelNumberResultShow;
+    },
+  },
+  watch: {
+    currentLevelNumberResultShowState() {
+      this.historyHeight = "400px";
+    },
   },
   created() {
     this._initSecretNumbers();
@@ -244,11 +272,8 @@ export default {
       const historyNumberList = JSON.parse(JSON.stringify(this.HistoryNumberList));
       historyNumberList.push(historyitem);
 
-      // 如果数量不大于10，则放入进去
-      if (this.HistoryNumberList.length < 10) {
-        uni.$u.vuex("HistoryNumberList", historyNumberList);
-        uni.$u.vuex("HistoryRefresh", !this.HistoryRefresh);
-      }
+      uni.$u.vuex("HistoryNumberList", historyNumberList);
+      uni.$u.vuex("HistoryRefresh", !this.HistoryRefresh);
     },
 
     // 检查游戏是否已经结束
@@ -380,6 +405,10 @@ export default {
         return false;
       }
     },
+    // 查看是否最后一关
+    checkIsLastLevel() {
+      return this.GameBeginTitle === "第四关";
+    },
   },
 };
 </script>
@@ -442,6 +471,6 @@ export default {
 }
 
 .swiper-1 {
-  height: 325px;
+  height: 345px;
 }
 </style>
