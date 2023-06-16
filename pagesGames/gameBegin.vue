@@ -58,57 +58,40 @@
             <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
           </view>
 
+          <!-- 成功的dialog展示 -->
           <u-popup
-            :show="confirmSecondHistoryShow"
-            :round="10"
+            :show="successDialogShow"
+            :round="30"
             mode="center"
             :closeOnClickOverlay="false"
-            @close="confirmSecondHistoryShow = false"
+            @close="successDialogShow = false"
           >
-            <view class="popupContent">
-              <view class="popupText" style="font-size: 16px">
-                <view>您已失败，是否继续本次推理？</view>
-              </view>
-
-              <!-- 如果游戏已经结束，并且没有开启过“第二次机会” -->
-              <view class="popupBtn">
-                <u-button type="primary" @click="continueBtnClick()"> 继续游戏 </u-button>
-              </view>
-
-              <view class="popupBtn">
-                <u-button type="primary" @click="abandonBtnClick()"> 放弃机会 </u-button>
-              </view>
-            </view>
+            <success-dialog @comfirmBtnClick="successDialogShow = false" />
           </u-popup>
 
+          <!-- 失败的dialog展示 -->
           <u-popup
-            :show="showPopup"
-            :round="10"
+            :show="errorDialogShow"
+            :round="30"
             mode="center"
-            @close="showPopup = false"
-            :closeable="true"
+            :closeOnClickOverlay="false"
+            @close="errorDialogShow = false"
           >
-            <view class="popupContent">
-              <view class="popupText">{{ gameResult }}</view>
-              <view
-                class="popupBtn"
-                v-if="gameStatus && GameBeginTitle != '第四关' && !SecondHistory"
-              >
-                <u-button type="primary" @click="nextLevel()"> 下一关 </u-button>
-              </view>
+            <error-dialog @confirmBtnClick="ErrorConfirmBtnClick()" />
+          </u-popup>
 
-              <view class="popupBtn" v-if="gameStatus && SecondHistory">
-                <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
-              </view>
-
-              <view class="popupBtn" v-if="!gameStatus">
-                <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
-              </view>
-
-              <view class="popupBtn">
-                <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
-              </view>
-            </view>
+          <!-- 失败一次的dialog展示 -->
+          <u-popup
+            :show="warningDialogShow"
+            :round="30"
+            mode="center"
+            :closeOnClickOverlay="false"
+            @close="warningDialogShow = false"
+          >
+            <warning-dialog
+              @continueBtnClick="continueBtnClick()"
+              @abandonBtnClick="abandonBtnClick()"
+            />
           </u-popup>
         </view>
       </view>
@@ -123,6 +106,9 @@ import NumberContent from "./components/gameBegin/NumberContent.vue";
 import HistoryNumberContent from "./components/gameBegin/HistoryNumberContent.vue";
 import NewHistoryNumberContent from "./components/gameBegin/NewHistoryNumberContent/NewHistoryNumberContent.vue";
 import ButtonContent from "./components/gameBegin/ButtonContent.vue";
+import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
+import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
+import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
 
 // 方法
 import { equals } from "@/utils/index.js";
@@ -135,11 +121,13 @@ export default {
       gameResult: "", // 是否游戏结束
       gameStatus: false,
       count: 0, // 已猜测次数
-      showPopup: false,
       firstCheck: true, // 第一次检查，不可直接成功
       subCount: -1, // 用户每次失败扣除的分数
       currentSwiper: 0, // 默认展示的swiper
       confirmSecondHistoryShow: false, // 巡检是否开启二次机会的popup
+      successDialogShow: false, // 游戏成功动画
+      errorDialogShow: false, // 游戏失败动画
+      warningDialogShow: false, // 游戏失败动画
       historyHeight: "355px",
     };
   },
@@ -149,6 +137,9 @@ export default {
     HistoryNumberContent,
     NewHistoryNumberContent,
     ButtonContent,
+    ErrorDialog,
+    SuccessDialog,
+    WarningDialog,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -264,10 +255,7 @@ export default {
 
     // 将数据保存到history中
     _setHistoryNumberList(status) {
-      const historyitem = {
-        numberList: this.NumberList,
-        status: status,
-      };
+      const historyitem = { numberList: this.NumberList, status: status };
 
       const historyNumberList = JSON.parse(JSON.stringify(this.HistoryNumberList));
       historyNumberList.push(historyitem);
@@ -281,7 +269,7 @@ export default {
       // 如果猜测次数已满10次或者已猜对，则游戏结束
       if (A === this.NumberCount) {
         this.gameOver = true;
-        this.showPopup = true;
+        this.successDialogShow = true;
         this.gameStatus = true; // true代表游戏胜利
         this.gameResult = "恭喜你猜对了！";
         this._setCurrentLevelNumberResult(); // 展示答案出来
@@ -289,8 +277,8 @@ export default {
       } else if (this.count === this.HistoryNumberCount) {
         console.log(this.SecondHistory);
         this.gameOver = true;
-        if (!this.SecondHistory) this.confirmSecondHistoryShow = true; // 如果没有开启二次机会，则显示
-        if (this.SecondHistory) this.showPopup = true; // 如果已经开启了二次机会，则不显示
+        if (!this.SecondHistory) this.warningDialogShow = true; // 如果没有开启二次机会，则显示
+        if (this.SecondHistory) this.errorDialogShow = true; // 如果已经开启了二次机会，则不显示
         if (this.SecondHistory) {
           // 如果已经用了第二次机会，则直接显示答案
           this._setCurrentLevelNumberResult();
@@ -372,18 +360,21 @@ export default {
     continueBtnClick() {
       this.$store.commit("SET_SecondHistory", true);
       this.$store.commit("SET_LevelCount", 0);
-      this.showPopup = false;
       this.gameOver = false;
       this.count = 0;
       setTimeout(() => (this.currentSwiper = 1), 100); // 延迟将页面转换到第二页
-      this.confirmSecondHistoryShow = false;
+      this.warningDialogShow = false;
     },
 
     // 放弃机会 按钮点击
     abandonBtnClick() {
-      this.confirmSecondHistoryShow = false;
-      this.showPopup = true;
+      this.warningDialogShow = false;
+      this.errorDialogShow = true;
       this._setCurrentLevelNumberResult();
+    },
+
+    ErrorConfirmBtnClick() {
+      this.errorDialogShow = false;
     },
 
     // 重新开始按钮点击
@@ -472,5 +463,9 @@ export default {
 
 .swiper-1 {
   height: 345px;
+}
+
+/deep/ .u-popup__content {
+  overflow: hidden;
 }
 </style>

@@ -1,20 +1,23 @@
 <template>
   <div class="container">
-    <div class="success-box">
+    <div class="error-box">
       <div class="dot"></div>
       <div class="dot two"></div>
-      <div class="face">
+      <div class="face2">
         <div class="eye"></div>
         <div class="eye right"></div>
-        <div class="mouth happy"></div>
+        <div class="mouth sad"></div>
       </div>
-      <div class="shadow scale"></div>
+      <div class="shadow move"></div>
       <div class="message">
-        <h1 class="alert">恭喜你，解谜成功</h1>
-        <!-- <p>yay, everything is working.</p> -->
+        <h1 class="alert">您已失败</h1>
+        <h1 class="alert">是否继续本次推理？</h1>
       </div>
-      <button class="button-box" @click="confirmBtnClick()">
-        <h1 class="green" style="padding: 0">确认</h1>
+      <button class="button-box" @click="continueBtnClick()">
+        <h1 class="warning">继续推理</h1>
+      </button>
+      <button class="button-box2" @click="abandonBtnClick()">
+        <h1 class="warning">放弃机会</h1>
       </button>
     </div>
   </div>
@@ -23,8 +26,11 @@
 <script>
 export default {
   methods: {
-    confirmBtnClick() {
-      this.$emit("comfirmBtnClick");
+    continueBtnClick() {
+      this.$emit("continueBtnClick");
+    },
+    abandonBtnClick() {
+      this.$emit("abandonBtnClick");
     },
   },
 };
@@ -35,6 +41,7 @@ $white: #fcfcfc;
 $gray: #cbcdd3;
 $dark: #777777;
 $error: #ef8d9c;
+$warning: #e3c420;
 $orange: #ffc39e;
 $success: #b0db7d;
 $secondary: #99dbb4;
@@ -56,14 +63,13 @@ body {
   margin: auto;
   overflow: hidden;
   width: 270px;
-  height: 250px;
+  height: 280px;
 }
 
 h1 {
   font-size: 0.9em;
   font-weight: 100;
   letter-spacing: 3px;
-  padding-top: 5px;
   color: $white;
   padding-bottom: 5px;
   text-transform: uppercase;
@@ -75,6 +81,10 @@ h1 {
 
 .red {
   color: darken($error, 10%);
+}
+
+.warning {
+  color: darken($warning, 10%);
 }
 
 .alert {
@@ -95,16 +105,14 @@ button,
   cursor: pointer;
 }
 
-.success-box {
+.error-box {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom right, $success 40%, $secondary 100%);
+  background: linear-gradient(to bottom left, $warning 40%, $orange 100%);
   border-radius: 20px;
   box-shadow: 5px 5px 20px rgba($gray, 10%);
-  perspective: 40px;
 }
-
 
 .dot {
   width: 8px;
@@ -140,11 +148,11 @@ button,
 .face2 {
   position: absolute;
   width: 22%;
-  height: 22%;
+  height: 20%;
   background: $white;
   border-radius: 50%;
   border: 1px solid $dark;
-  top: 21%;
+  top: 13%;
   left: 37.5%;
   z-index: 2;
   animation: roll 3s ease-in-out infinite;
@@ -193,7 +201,7 @@ button,
   opacity: 0.5;
   background: $dark;
   left: 40%;
-  top: 43%;
+  top: 37%;
   border-radius: 50%;
   z-index: 1;
 }
@@ -210,16 +218,35 @@ button,
   width: 100%;
   text-align: center;
   height: 40%;
-  top: 47%;
+  top: 43%;
 }
 
 .button-box {
   position: absolute;
   background: $white;
   width: 50%;
-  height: 15%;
+  height: 13%;
   border-radius: 20px;
-  top: 73%;
+  top: 65%;
+  left: 25%;
+  outline: 0;
+  border: none;
+  box-shadow: 2px 2px 10px rgba($dark, 0.5);
+  transition: all 0.5s ease-in-out;
+  &:hover {
+    background: darken($white, 5%);
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.button-box2 {
+  position: absolute;
+  background: $white;
+  width: 50%;
+  height: 13%;
+  border-radius: 20px;
+  top: 81%;
   left: 25%;
   outline: 0;
   border: none;

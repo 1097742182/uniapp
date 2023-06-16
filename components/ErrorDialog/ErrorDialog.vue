@@ -1,6 +1,6 @@
 <template>
-  <div id="container">
-    <div id="error-box">
+  <div class="container">
+    <div class="error-box">
       <div class="dot"></div>
       <div class="dot two"></div>
       <div class="face2">
@@ -10,16 +10,24 @@
       </div>
       <div class="shadow move"></div>
       <div class="message">
-        <h1 class="alert">Error!</h1>
-        <p>oh no, something went wrong.</p>
+        <h1 class="alert">Sorry! 你可能掉进坑里了</h1>
+        <h1 class="alert">让我们看看答案吧！</h1>
       </div>
-      <button class="button-box"><h1 class="red">try again</h1></button>
+      <button class="button-box" @click="confirmBtnClick()">
+        <h1 class="red">查看答案</h1>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    confirmBtnClick() {
+      this.$emit("confirmBtnClick");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -43,11 +51,11 @@ body {
   text-align: center;
 }
 
-#container {
+.container {
   position: relative;
   margin: auto;
   overflow: hidden;
-  width: 700px;
+  width: 270px;
   height: 250px;
 }
 
@@ -55,7 +63,6 @@ h1 {
   font-size: 0.9em;
   font-weight: 100;
   letter-spacing: 3px;
-  padding-top: 5px;
   color: $white;
   padding-bottom: 5px;
   text-transform: uppercase;
@@ -87,22 +94,10 @@ button,
   cursor: pointer;
 }
 
-#success-box {
+.error-box {
   position: absolute;
-  width: 35%;
+  width: 100%;
   height: 100%;
-  left: 12%;
-  background: linear-gradient(to bottom right, $success 40%, $secondary 100%);
-  border-radius: 20px;
-  box-shadow: 5px 5px 20px rgba($gray, 10%);
-  perspective: 40px;
-}
-
-#error-box {
-  position: absolute;
-  width: 35%;
-  height: 100%;
-  right: 12%;
   background: linear-gradient(to bottom left, $error 40%, $orange 100%);
   border-radius: 20px;
   box-shadow: 5px 5px 20px rgba($gray, 10%);
