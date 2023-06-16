@@ -4,6 +4,7 @@
       v-for="(item, index) in NumberList"
       :key="index"
       :value="item"
+      :gameOver="gameOver"
       :viewIndex="index"
       @changeIndex="changeIndex"
       :actived="CurrentIndex === index"
@@ -21,6 +22,9 @@ export default {
       // currentIndex: 0
     };
   },
+  props: {
+    gameOver: { type: Boolean, default: false },
+  },
   components: {
     NumberContentItem,
   },
@@ -33,7 +37,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -41,6 +45,7 @@ export default {
   border: 1px solid #a96fa9;
   border-radius: 5px;
   margin: 6px 30px;
-  background-color: #a96fa9;
+  background: linear-gradient(90deg, #3b5dba, #7c78b8);
+  background-repeat: repeat-y;
 }
 </style>

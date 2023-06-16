@@ -4,7 +4,7 @@
     <u-toast ref="uToast"></u-toast>
     <view class="content">
       <user-info></user-info>
-      <number-content></number-content>
+      <number-content :gameOver="gameOver"></number-content>
 
       <!-- history区域 -->
       <swiper
@@ -310,6 +310,9 @@ export default {
     _setCurrentLevelNumberResult() {
       this.$store.commit("SET_CurrentLevelNumberResult", this.secretNumbers);
       this.$store.commit("SET_CurrentLevelNumberResultShow", true);
+      setTimeout(() => {
+        this.$store.commit("SET_NumberList", this.secretNumbers);
+      }, 100);
     },
 
     // 返回菜单按钮点击
