@@ -353,7 +353,7 @@ export default {
 
       if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelFour");
 
-      this.$Router.push({ name: "gameBegin", params: {} });
+      this.$Router.replace({ name: "gameBegin", params: {} });
     },
 
     // 继续游戏 按钮点击
