@@ -159,7 +159,7 @@ const store = new Vuex.Store({
     updateUserInfoByInterfaceData({ state, commit, dispatch }, userInfo) {
       const openId = userInfo["openId"];
       const nickname = userInfo["nickname"];
-      const avatarUrl = userInfo["avatarUrl"];
+      // const avatarUrl = userInfo["avatarUrl"];
       const cityValue = userInfo["cityValue"];
       const genderValue = userInfo["genderValue"];
       const UserCount = userInfo["UserCount"];
@@ -168,7 +168,7 @@ const store = new Vuex.Store({
       // 存到Vuex中
       if (openId) commit("SET_OpenId", openId);
       if (nickname) commit("SET_NickName", nickname);
-      if (avatarUrl) commit("SET_AvatarUrl", avatarUrl);
+      // if (avatarUrl) commit("SET_AvatarUrl", avatarUrl);
       if (UserCount) commit("SET_UserCount", UserCount);
       if (LevelStep) commit("SET_LevelStep", LevelStep);
       if (genderValue || cityValue) commit("SET_UserDetail", { genderValue, cityValue });
@@ -176,7 +176,7 @@ const store = new Vuex.Store({
       // 存到storeage中
       if (openId) uni.setStorageSync("openId", openId);
       if (nickname) uni.setStorageSync("nickName", nickname);
-      if (avatarUrl) uni.setStorageSync("avatarUrl", avatarUrl);
+      // if (avatarUrl) uni.setStorageSync("avatarUrl", avatarUrl);
       if (cityValue) uni.setStorageSync("cityValue", cityValue);
       if (genderValue) uni.setStorageSync("genderValue", genderValue);
       if (UserCount) uni.setStorageSync("UserCount", UserCount);
