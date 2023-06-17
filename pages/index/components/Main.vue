@@ -70,6 +70,10 @@ export default {
     goPage(type) {
       if (!this.NickName) return uni.$showMsg("请先填写用户名");
 
+      // 更新用户信息到数据库
+      const data = { openId: this.OpenId, nickname: this.NickName };
+      this.$api.user.updateUserInfo(data);
+
       this.$Router.push({ name: "gameMenu", params: {} });
     },
 
