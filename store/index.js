@@ -221,7 +221,7 @@ const store = new Vuex.Store({
       commit("SET_LevelCount", 1000);
       setTimeout(() => commit("SET_GameBeginTitle", "第四关"), 0);
     },
-    // 更新用户积分
+    // 更新用户积分(旧)
     ADD_UserCount({ state, commit }, LevelCount) {
       let userCount = parseInt(state.UserCount);
       userCount = userCount + parseInt(LevelCount);
@@ -229,6 +229,12 @@ const store = new Vuex.Store({
       if (userCount) commit("SET_UserCount", userCount);
       if (userCount) uni.setStorageSync("UserCount", userCount);
     },
+    // 更新用户积分
+    UPDATE_UserCount({ commit }, UserCount) {
+      if (UserCount) commit("SET_UserCount", UserCount);
+      if (UserCount) uni.setStorageSync("UserCount", UserCount);
+    },
+
     setLevelStep({ state, commit }) {
       let levelStep = parseInt(state.LevelStep);
       let currentLevelStep = parseInt(state.LevelStep);

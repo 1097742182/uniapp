@@ -296,7 +296,20 @@ export default {
 
       // 如果游戏结束了，并且成功了，则加上用户总分上
       if (this.gameOver && this.gameStatus) {
-        this.$store.dispatch("ADD_UserCount", this.LevelCount);
+        // 计算总分
+        let userCount = parseInt(this.UserCount);
+        userCount = userCount + parseInt(this.LevelCount);
+
+        // 保存积分到VueX
+        this.$store.dispatch("UPDATE_UserCount", userCount);
+
+        // 保存积分到数据库中
+        const data = {
+          openId: this.OpenId,
+          nickname: this.NickName,
+          UserCount: userCount,
+        };
+        this.$api.user.setUserCount(data);
         return;
       }
 
