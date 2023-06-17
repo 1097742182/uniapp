@@ -1,7 +1,6 @@
 <template>
   <view
     @click="emitIndex()"
-    :style="getRightBackground()"
     :class="{ inputClass: true, isActived: actived }"
   >
     {{ value }}
