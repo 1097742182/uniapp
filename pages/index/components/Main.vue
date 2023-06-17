@@ -14,9 +14,7 @@
         <view class="popup">
           <view class="popup-title">游戏规则</view>
           <view class="popup-content">
-            <view class="popup-content-item">
-              每一关的密码是由不同的数字组成，数字可以重复。
-            </view>
+            <view class="popup-content-item"> 每一关的密码是由不同的数字组成，数字可以重复。 </view>
             <view class="popup-content-item">
               破译者猜测其中的数字，确定后根据系统提示的“√”、或“O”、或“—”，修改写出下一轮的密码，并根据系统的提示，继续推理出下一轮的密码。
             </view>
@@ -89,7 +87,7 @@ export default {
         provider: "weixin",
         success: (res) => {
           var code = res.code;
-          // 将 code 发送到后台获取 openid
+          // 将 code 发送到后台获取 openId
           this.$api.user.getUserInfo(code).then((res) => {
             const userInfo = res;
             this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);

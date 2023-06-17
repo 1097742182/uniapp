@@ -17,31 +17,12 @@
       </u-cell>
 
       <u-cell icon="order" title="用户名" isLink>
-        <input
-          type="nickname"
-          slot="value"
-          style="text-align: right"
-          v-model="nickName"
-        />
+        <input type="nickname" slot="value" style="text-align: right" v-model="nickName" />
       </u-cell>
 
-      <u-cell
-        @click="chooseGender()"
-        icon="man"
-        title="性别"
-        :value="genderValue"
-        isLink
-      >
-      </u-cell>
+      <u-cell @click="chooseGender()" icon="man" title="性别" :value="genderValue" isLink> </u-cell>
 
-      <u-cell
-        @click="chooseCity()"
-        icon="map"
-        title="城市"
-        :value="cityValue"
-        isLink
-      >
-      </u-cell>
+      <u-cell @click="chooseCity()" icon="map" title="城市" :value="cityValue" isLink> </u-cell>
     </u-cell-group>
 
     <view style="margin: 20px" @click="submitBtnClick()">
@@ -139,6 +120,7 @@ export default {
 
       const userDetail = { nickName, avatarUrl, cityValue, genderValue };
       this.$store.dispatch("setUserDetail", userDetail);
+      this._updateUserInfo(userDetail);
 
       uni.$showMsg("修改用户信息成功");
       uni.navigateBack({ delta: 1 });
@@ -147,17 +129,29 @@ export default {
       this.avatarUrl = e.detail.avatarUrl;
       // if (this.avatarUrl) uni.setStorageSync("avatarUrl", this.avatarUrl);
     },
+
+    // 更新用户数据
+    _updateUserInfo(userDetail) {
+      console.log(this.OpenId);
+      const { nickName, avatarUrl, cityValue, genderValue } = userDetail;
+      const data = {
+        openId: this.OpenId,
+        nickname: nickName,
+        avatarUrl,
+        cityValue,
+        genderValue,
+      };
+      this.$api.user.updateUserInfo(data).then((res) => {
+        console.log(res);
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .personalCenter {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(165, 207, 244) 0%,
-    white 100%
-  );
+  background-image: linear-gradient(to bottom, rgb(165, 207, 244) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
 }

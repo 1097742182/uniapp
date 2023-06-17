@@ -85,6 +85,7 @@ const install = (Vue, vm) => {
     // const token = uni.getStorageSync('token');
     // config.header.token = token;
     config.header.Token = "xxxxxx";
+    config.header["Content-Type"] = "application/x-www-form-urlencoded";
 
     // 可以对某个url进行特别处理，此url参数为this.$u.get(url)中的url值
     if (config.url == "/user/login") config.header.noToken = true;
