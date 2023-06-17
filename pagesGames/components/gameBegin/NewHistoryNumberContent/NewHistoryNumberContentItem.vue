@@ -7,7 +7,7 @@
 
         <!-- 最后出现答案时，展示的密码 -->
         <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
-          <view v-if="numberListStatus[index] === '√'" class="right">
+          <view v-if="numberListStatus[index] === 'V'" class="right">
             {{ numberListStatus[index] }}
           </view>
           <view v-if="numberListStatus[index] === 'O'" class="nearly">
@@ -21,7 +21,7 @@
     </view>
 
     <view class="numberStatus">
-      <text class="right" v-for="item in rightListCount" :key="item"> √ </text>
+      <text class="right" v-for="item in rightListCount" :key="item"> V </text>
       <text class="nearly" v-for="item in nearlyRightListCount" :key="item"> O </text>
       <text class="error" v-for="item in errorListCount" :key="item"> ~ </text>
     </view>
@@ -105,7 +105,7 @@ export default {
       const currentLevelNumberResult = this.CurrentLevelNumberResult;
       for (let i = 0; i < this.numberList.length; i++) {
         const item = this.numberList[i];
-        if (item === currentLevelNumberResult[i]) this.numberListStatus[i] = "√";
+        if (item === currentLevelNumberResult[i]) this.numberListStatus[i] = "V";
         else if (currentLevelNumberResult.includes(item)) this.numberListStatus[i] = "O";
         else this.numberListStatus[i] = "~";
       }

@@ -16,7 +16,7 @@
           <view class="popup-content">
             <view class="popup-content-item"> 每一关的密码是由不同的数字组成，数字可以重复。 </view>
             <view class="popup-content-item">
-              破译者猜测其中的数字，确定后根据系统提示的“√”、或“O”、或“—”，修改写出下一轮的密码，并根据系统的提示，继续推理出下一轮的密码。
+              破译者猜测其中的数字，确定后根据系统提示的“V”、或“O”、或“—”，修改写出下一轮的密码，并根据系统的提示，继续推理出下一轮的密码。
             </view>
             <view class="popup-content-item">
               在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。
