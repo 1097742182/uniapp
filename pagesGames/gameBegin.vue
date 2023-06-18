@@ -65,6 +65,7 @@
             mode="center"
             :closeOnClickOverlay="false"
             @close="successDialogShow = false"
+            :safeAreaInsetBottom="false"
           >
             <success-dialog @comfirmBtnClick="successDialogShow = false" />
           </u-popup>
@@ -76,17 +77,19 @@
             mode="center"
             :closeOnClickOverlay="false"
             @close="errorDialogShow = false"
+            :safeAreaInsetBottom="false"
           >
             <error-dialog @confirmBtnClick="ErrorConfirmBtnClick()" />
           </u-popup>
 
-          <!-- 失败一次的dialog展示 -->
+          <!-- 失败一次的dialog展示，进行warning展示 -->
           <u-popup
             :show="warningDialogShow"
             :round="30"
             mode="center"
             :closeOnClickOverlay="false"
             @close="warningDialogShow = false"
+            :safeAreaInsetBottom="false"
           >
             <warning-dialog
               @continueBtnClick="continueBtnClick()"
