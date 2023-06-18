@@ -103,6 +103,7 @@ export default {
         height: 260rpx;
         border-radius: 50%;
         position: relative;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       }
 
       .svgClass {
