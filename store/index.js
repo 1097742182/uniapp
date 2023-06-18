@@ -42,6 +42,8 @@ const store = new Vuex.Store({
     SecondHistory: false, // 是否开启第二次历史数据
     CurrentLevelNumberResult: [], // 当前关卡的答案
     CurrentLevelNumberResultShow: false, // 是否显示答案
+
+    musicPlayer: null, // 展示音乐的
   },
   getters: {},
   mutations: {
@@ -115,6 +117,10 @@ const store = new Vuex.Store({
     },
     SET_CurrentLevelNumberResultShow(state, CurrentLevelNumberResultShow) {
       state.CurrentLevelNumberResultShow = CurrentLevelNumberResultShow;
+    },
+
+    setMusicPlayer: (state, musicPlayer) => {
+      state.musicPlayer = musicPlayer;
     },
   },
   actions: {
@@ -256,6 +262,14 @@ const store = new Vuex.Store({
       uni.setStorageSync("genderValue", genderValue);
       uni.setStorageSync("nickName", nickName);
       uni.setStorageSync("avatarUrl", avatarUrl);
+    },
+
+    createMusicPlayer({ commit }) {
+      const musicPlayer = uni.createInnerAudioContext();
+      musicPlayer.autoplay = true;
+      musicPlayer.loop = true;
+      musicPlayer.src = "https://assets.mixkit.co/active_storage/sfx/1000/1000-preview.mp3";
+      commit("setMusicPlayer", musicPlayer);
     },
   },
   modules: {},

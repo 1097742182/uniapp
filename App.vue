@@ -1,13 +1,21 @@
 <script>
+import { mapActions } from "vuex";
+
 export default {
   onLaunch: function () {
     console.log("App Launch");
+    this.createMusicPlayer();
   },
   onShow: function () {
-    // console.log('App Show')
+    if (this.$store.state.musicPlayer) {
+      // this.$store.state.musicPlayer.play();
+    }
   },
   onHide: function () {
     // console.log('App Hide')
+  },
+  methods: {
+    ...mapActions(["createMusicPlayer"]),
   },
 };
 </script>
