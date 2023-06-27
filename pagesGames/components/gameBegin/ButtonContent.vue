@@ -95,7 +95,11 @@ export default {
   .buttonClass {
     width: 50px;
     height: 50px;
-    background-color: #3c8adf;
+    // background-color: #3c8adf;
+
+    // background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
+    // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
+    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
   }
 }
 </style>

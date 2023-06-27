@@ -42,10 +42,13 @@ export default {
   display: flex;
   justify-content: space-evenly;
   padding: 10px;
-  border: 1px solid #a96fa9;
+  // border: 1px solid #a96fa9;
   border-radius: 5px;
   margin: 6px 30px;
-  background: linear-gradient(90deg, #3b5dba, #7c78b8);
-  background-repeat: repeat-y;
+
+  // background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
+  // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
+
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
 }
 </style>

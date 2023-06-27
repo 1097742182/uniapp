@@ -33,10 +33,8 @@
       <button-content v-if="!CurrentLevelNumberResultShow"></button-content>
 
       <view class="buttonContent">
-        <view class="" style="width: 200px" v-if="!gameOver">
-          <u-button type="primary" style="background-color: #3c8adf" @click="checkAnswer">
-            提交
-          </u-button>
+        <view style="width: 200px" v-if="!gameOver">
+          <button type="primary" class="submitClass" @click="checkAnswer">提交</button>
         </view>
 
         <view class="" style="width: 200px" v-if="gameOver">
@@ -486,5 +484,13 @@ export default {
 
 /deep/ .u-popup__content {
   overflow: hidden;
+}
+
+.submitClass {
+  background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
+  // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
+  border-color: #e0b6de;
+
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
 }
 </style>
