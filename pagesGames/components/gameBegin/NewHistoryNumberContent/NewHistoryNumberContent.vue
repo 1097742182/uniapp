@@ -46,7 +46,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .HistoryNumberContent {
   height: 320px;
   border: 1px solid red;

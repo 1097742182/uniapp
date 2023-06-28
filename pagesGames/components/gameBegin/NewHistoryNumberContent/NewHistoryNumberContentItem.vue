@@ -8,7 +8,13 @@
         <!-- 最后出现答案时，展示的密码 -->
         <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
           <view v-if="numberListStatus[index] === 'V'" class="right">
-            {{ numberListStatus[index] }}
+            <!-- {{ numberListStatus[index] }} -->
+            <u-icon
+              name="checkbox-mark"
+              size="20"
+              color="#39b844"
+              style="margin-bottom: -5px"
+            ></u-icon>
           </view>
           <view v-if="numberListStatus[index] === 'O'" class="nearly">
             {{ numberListStatus[index] }}
@@ -21,7 +27,11 @@
     </view>
 
     <view class="numberStatus">
-      <text class="right" v-for="item in rightListCount" :key="item"> V </text>
+      <!-- <text class="right" v-for="item in rightListCount" :key="item"> V </text> -->
+
+      <text class="right" v-for="item in rightListCount" :key="item">
+        <u-icon name="checkbox-mark" size="20" color="#39b844"></u-icon>
+      </text>
       <text class="nearly" v-for="item in nearlyRightListCount" :key="item"> O </text>
       <text class="error" v-for="item in errorListCount" :key="item"> ~ </text>
     </view>
@@ -200,7 +210,7 @@ export default {
 
 .right {
   color: green;
-  margin: 0 4px;
+  margin: 0;
 }
 
 .nearly {
