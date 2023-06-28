@@ -39,21 +39,31 @@
 
         <view class="" style="width: 200px" v-if="gameOver">
           <!-- <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button> -->
-          <!-- 如果游戏失败了，则显示“重新开始” -->
+          <!-- 如果游戏失败了，则显示“再来一局” -->
           <view class="popupBtn" v-if="!gameStatus">
-            <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
+            <button type="primary" class="submitClass" @click="reloadLevel()">再来一局</button>
           </view>
-          <!-- 如果游戏胜利了，但使用过二次机会，则显示“重新开始” -->
+          <!-- 如果游戏胜利了，但使用过二次机会，则显示“再来一局” -->
           <view class="popupBtn" v-else-if="gameStatus && SecondHistory">
-            <u-button type="primary" @click="reloadLevel()"> 重新开始 </u-button>
+            <button type="primary" class="submitClass" @click="reloadLevel()">再来一局</button>
           </view>
           <!-- 如果游戏胜利了，并且不是最后一关，并且没有使用过二次机会，则显示“下一关” -->
           <view class="popupBtn" v-else-if="gameStatus && !checkIsLastLevel() && !SecondHistory">
-            <u-button type="primary" @click="nextLevel()"> 下一关 </u-button>
+            <button type="primary" class="submitClass" @click="nextLevel()">下一关</button>
+            <button
+              type="primary"
+              class="submitClass"
+              @click="reloadLevel()"
+              style="margin-top: 10px"
+            >
+              再来一局
+            </button>
           </view>
           <!-- 如果游戏胜利了，并且是最后一关，则显示“返回菜单” -->
           <view class="popupBtn" v-else-if="gameStatus && checkIsLastLevel()">
-            <u-button type="success" @click="returnMenuBtnClick()"> 返回菜单 </u-button>
+            <button type="success" class="submitClass" @click="returnMenuBtnClick()">
+              返回菜单
+            </button>
           </view>
 
           <!-- 成功的dialog展示 -->
@@ -394,7 +404,7 @@ export default {
       this.errorDialogShow = false;
     },
 
-    // 重新开始按钮点击
+    // 再来一局按钮点击
     reloadLevel() {
       if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelOne");
 
@@ -408,7 +418,8 @@ export default {
     },
     getCurrentTitle() {
       if (this.GameBeginTitle === "第三关" || this.GameBeginTitle === "第四关") {
-        return true;
+        // return true;
+        return false;
       } else {
         return false;
       }
