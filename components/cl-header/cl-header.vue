@@ -18,7 +18,7 @@
             size="20"
             @click="back"
             name="arrow-left"
-            color="#ffffff"
+            color="#222222"
             :style="{
               color: realTextColor,
             }"
@@ -66,7 +66,7 @@ export default {
     // 透明时文本颜色
     transparentTextColor: {
       type: String,
-      default: "#ffffff",
+      default: "#222222",
     },
     // 透明阈值到指定高度取消透明
     transparentMaxHeight: {
