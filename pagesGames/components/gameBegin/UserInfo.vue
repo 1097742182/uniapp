@@ -43,7 +43,7 @@ export default {
   padding: 10px 20px;
   margin: 10px;
   margin-top: 0;
-  border-radius: 6px;
+  border-radius: 16px;
   display: flex;
   justify-content: space-between;
 

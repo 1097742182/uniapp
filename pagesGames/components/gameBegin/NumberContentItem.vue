@@ -1,7 +1,7 @@
 <template>
   <view
     @click="emitIndex()"
-    :class="{ inputClass: true, isActived: actived }"
+    :class="{ inputClass: true, isActived: actived, rightColor: gameOver }"
   >
     {{ value }}
   </view>
@@ -21,9 +21,6 @@ export default {
   methods: {
     emitIndex() {
       this.$emit("changeIndex", this.viewIndex);
-    },
-    getRightBackground() {
-      if (this.gameOver) return { background: "#27ef27" };
     },
   },
 };
@@ -46,5 +43,9 @@ export default {
 
 .isActived {
   background-color: lightblue;
+}
+
+.rightColor {
+  background-color: #27ef27 !important;
 }
 </style>
