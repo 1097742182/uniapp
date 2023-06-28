@@ -29,9 +29,9 @@
     <view class="numberStatus">
       <!-- <text class="right" v-for="item in rightListCount" :key="item"> V </text> -->
 
-      <text class="right" v-for="item in rightListCount" :key="item">
+      <view class="right" v-for="item in rightListCount" :key="item">
         <u-icon name="checkbox-mark" size="20" color="#39b844"></u-icon>
-      </text>
+      </view>
       <text class="nearly" v-for="item in nearlyRightListCount" :key="item"> O </text>
       <text class="error" v-for="item in errorListCount" :key="item"> ~ </text>
     </view>
@@ -151,6 +151,7 @@ export default {
 <style lang="scss" scoped>
 .HistoryNumberContentItem {
   height: 50px;
+  width: 100%;
   margin-bottom: 10px;
   padding: 0 6px;
   box-sizing: border-box;
@@ -165,7 +166,7 @@ export default {
     // border: 1px solid blue;
     border-radius: 5px;
 
-    max-width: 200px;
+    max-width: 240px;
     height: 50px;
     line-height: 50px;
     padding-left: 4px;

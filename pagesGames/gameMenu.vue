@@ -24,6 +24,9 @@
           <!-- <u-button @click="gameBegin(4)" text="第四关" type="primary" /> -->
           <ice-button @click="gameBegin(4)" :buttonType="getButtonType(4)" buttonText="第四关" />
         </view>
+        <view class="u-page__button-item">
+          <ice-button @click="gameBegin(5)" :buttonType="getButtonType(5)" buttonText="第五关" />
+        </view>
       </view>
     </view>
   </view>
@@ -53,6 +56,8 @@ export default {
       if (level == 3) this.$store.dispatch("setLevelThree");
 
       if (level == 4) this.$store.dispatch("setLevelFour");
+
+      if (level == 5) this.$store.dispatch("setLevelFive");
 
       setTimeout(() => {
         this.$Router.push({ name: "gameBegin", params: {} });

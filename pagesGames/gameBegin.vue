@@ -169,6 +169,7 @@ export default {
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
 
+    // 初始化扣除的分数
     setTimeout(() => {
       this.subCount = this.LevelCount / (this.HistoryNumberCount + 2);
     }, 1000);
@@ -188,8 +189,10 @@ export default {
     },
     // 初始化头部的数据
     _initNumberList() {
-      let numberList = ["", "", "", ""];
-      numberList = numberList.slice(0, this.NumberCount);
+      let numberList = [];
+      for (let i = 0; i < this.NumberCount; i++) {
+        numberList.push("");
+      }
       uni.$u.vuex("NumberList", numberList);
     },
     // 检查用户输入数字并显示结果
@@ -270,6 +273,7 @@ export default {
 
       const historyNumberList = JSON.parse(JSON.stringify(this.HistoryNumberList));
       historyNumberList.push(historyitem);
+      uni.$emit("$scrollToContent");
 
       uni.$u.vuex("HistoryNumberList", historyNumberList);
       uni.$u.vuex("HistoryRefresh", !this.HistoryRefresh);
@@ -380,6 +384,8 @@ export default {
 
       if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelFour");
 
+      if (this.GameBeginTitle === "第四关") this.$store.dispatch("setLevelFive");
+
       this.$Router.replace({ name: "gameBegin", params: {} });
     },
 
@@ -414,6 +420,8 @@ export default {
 
       if (this.GameBeginTitle === "第四关") this.$store.dispatch("setLevelFour");
 
+      if (this.GameBeginTitle === "第五关") this.$store.dispatch("setLevelFive");
+
       this.$Router.push({ name: "gameBegin", params: {} });
     },
     getCurrentTitle() {
@@ -426,7 +434,7 @@ export default {
     },
     // 查看是否最后一关
     checkIsLastLevel() {
-      return this.GameBeginTitle === "第四关";
+      return this.GameBeginTitle === "第五关";
     },
   },
 };
