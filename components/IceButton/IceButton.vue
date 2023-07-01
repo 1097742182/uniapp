@@ -1,26 +1,14 @@
 <template>
   <view class="IceButton">
-    <button
-      @click="ButtonClick()"
-      v-if="buttonType === 'fire'"
-      class="button fire"
-    >
+    <button @click="ButtonClick()" v-if="buttonType === 'fire'" class="button fire">
       {{ buttonText }}
     </button>
 
-    <button
-      @click="ButtonClick()"
-      v-if="buttonType === 'ice'"
-      class="button ice"
-    >
+    <button @click="ButtonClick()" v-if="buttonType === 'ice'" class="button ice">
       {{ buttonText }}
     </button>
 
-    <button
-      @click="disabledButtonClick()"
-      v-if="buttonType === 'disabled'"
-      class="button disabled"
-    >
+    <button @click="disabledButtonClick()" v-if="buttonType === 'disabled'" class="button disabled">
       {{ buttonText }}
     </button>
   </view>
@@ -91,14 +79,9 @@ export default {
 }
 .button.fire {
   border-color: #ffeca8;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(161, 161, 161, 1),
-    rgba(240, 96, 29, 0.6)
-  );
-  box-shadow: 0 0 70px rgba(255, 138, 48, 0.6),
-    0 5px 20px rgba(255, 138, 48, 0.6), inset 0 1px #ffeca8,
-    inset 0 -1px #ffeca8;
+  background-image: linear-gradient(to bottom, rgba(213, 55, 55, 0.8), rgba(240, 29, 29, 0.6));
+  box-shadow: 0 0 70px rgba(247, 80, 29, 0.6), 0 5px 20px rgba(247, 80, 29, 0.6),
+    inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
   color: #ffeca8;
 }
 .button.fire:before {
@@ -107,13 +90,9 @@ export default {
 
 .button.disabled {
   border-color: #ffeca8;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.6),
-    rgba(5, 5, 5, 0.6)
-  );
-  box-shadow: 0 0 70px rgba(0, 0, 0, 0.6), 0 5px 20px rgba(0, 0, 0, 0.6),
-    inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(5, 5, 5, 0.6));
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.6), 0 5px 20px rgba(0, 0, 0, 0.6), inset 0 1px #ffeca8,
+    inset 0 -1px #ffeca8;
   color: #ffeca8;
 }
 .button.disabled:before {
@@ -122,31 +101,24 @@ export default {
 
 .button.ice {
   border-color: #a8ecff;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(48, 138, 255, 0.5),
-    rgba(29, 96, 240, 0.5)
-  );
-  box-shadow: 0 0 70px rgba(48, 138, 255, 0.5),
-    0 5px 20px rgba(48, 138, 255, 0.5), inset 0 1px #ffeca8,
-    inset 0 -1px #ffeca8;
+  background-image: linear-gradient(to bottom, rgba(48, 138, 255, 0.5), rgba(29, 96, 240, 0.5));
+  box-shadow: 0 0 70px rgba(48, 138, 255, 0.5), 0 5px 20px rgba(48, 138, 255, 0.5),
+    inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
   color: #ffffff;
 }
 .button.ice:before {
   box-shadow: inset 0 0 30px 0 #a8ecff;
 }
 .button:hover.fire {
-  box-shadow: 0 0 70px rgba(255, 138, 48, 0.8),
-    0 5px 20px rgba(255, 138, 48, 0.8), inset 0 1px #ffeca8,
-    inset 0 -1px #ffeca8;
+  box-shadow: 0 0 70px rgba(255, 138, 48, 0.8), 0 5px 20px rgba(255, 138, 48, 0.8),
+    inset 0 1px #ffeca8, inset 0 -1px #ffeca8;
 }
 .button:hover.fire:before {
   box-shadow: inset 0 0 50px 0 #ffeca8;
 }
 .button:hover.ice {
-  box-shadow: 0 0 70px rgba(48, 138, 255, 0.8),
-    0 5px 20px rgba(48, 138, 255, 0.8), inset 0 1px #a8ecff,
-    inset 0 -1px #a8ecff;
+  box-shadow: 0 0 70px rgba(48, 138, 255, 0.8), 0 5px 20px rgba(48, 138, 255, 0.8),
+    inset 0 1px #a8ecff, inset 0 -1px #a8ecff;
 }
 .button:hover.ice:before {
   box-shadow: inset 0 0 50px 0 #a8ecff;

@@ -7,14 +7,9 @@
 
         <!-- 最后出现答案时，展示的密码 -->
         <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
-          <view v-if="numberListStatus[index] === 'V'" class="right">
+          <view v-if="numberListStatus[index] === 'V'" class="right" style="margin-bottom: -5px">
             <!-- {{ numberListStatus[index] }} -->
-            <u-icon
-              name="checkbox-mark"
-              size="20"
-              color="#39b844"
-              style="margin-bottom: -5px"
-            ></u-icon>
+            <u-icon name="checkbox-mark" size="20" color="#39b844"></u-icon>
           </view>
           <view v-if="numberListStatus[index] === 'O'" class="nearly">
             {{ numberListStatus[index] }}

@@ -59,6 +59,7 @@ export default {
           if (res.confirm) {
             this.$store.commit("SET_UserCount", 100);
             this.$store.commit("SET_LevelStep", 1);
+            this.$store.commit("SET_HardLevelStep", 1);
             uni.setStorageSync("UserCount", 100);
             uni.setStorageSync("LevelStep", 1);
           } else if (res.cancel) {

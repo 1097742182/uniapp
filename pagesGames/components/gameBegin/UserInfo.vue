@@ -1,5 +1,5 @@
 <template>
-  <view class="UserInfo">
+  <view class="UserInfo" :style="getBackgroundColor()">
     <view class="left" style="display: flex">
       <image :src="avatarUrl" class="userAvatal"> </image>
       <view class="nickName" style="margin-left: 10px"> {{ nickName }} </view>
@@ -26,6 +26,13 @@ export default {
     _initUserInfo() {
       this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
       this.nickName = this.NickName || "";
+    },
+    getBackgroundColor() {
+      if (this.CurrentLevelType === "hard") {
+        return {
+          background: "linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%)",
+        };
+      }
     },
   },
 };

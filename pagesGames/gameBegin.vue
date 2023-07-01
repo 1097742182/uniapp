@@ -50,20 +50,11 @@
           <!-- 如果游戏胜利了，并且不是最后一关，并且没有使用过二次机会，则显示“下一关” -->
           <view class="popupBtn" v-else-if="gameStatus && !checkIsLastLevel() && !SecondHistory">
             <button type="primary" class="submitClass" @click="nextLevel()">下一关</button>
-            <button
-              type="primary"
-              class="submitClass"
-              @click="reloadLevel()"
-              style="margin-top: 10px"
-            >
-              再来一局
-            </button>
+            <button type="primary" class="submitClass" @click="reloadLevel()" style="margin-top: 10px">再来一局</button>
           </view>
           <!-- 如果游戏胜利了，并且是最后一关，则显示“返回菜单” -->
           <view class="popupBtn" v-else-if="gameStatus && checkIsLastLevel()">
-            <button type="success" class="submitClass" @click="returnMenuBtnClick()">
-              返回菜单
-            </button>
+            <button type="success" class="submitClass" @click="returnMenuBtnClick()">返回菜单</button>
           </view>
 
           <!-- 成功的dialog展示 -->
@@ -99,10 +90,7 @@
             @close="warningDialogShow = false"
             :safeAreaInsetBottom="false"
           >
-            <warning-dialog
-              @continueBtnClick="continueBtnClick()"
-              @abandonBtnClick="abandonBtnClick()"
-            />
+            <warning-dialog @continueBtnClick="continueBtnClick()" @abandonBtnClick="abandonBtnClick()" />
           </u-popup>
         </view>
       </view>
@@ -122,7 +110,7 @@ import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
 
 // 方法
-import { equals } from "@/utils/index.js";
+import { equals, addDuplicate } from "@/utils/index.js";
 
 export default {
   data() {
@@ -182,9 +170,16 @@ export default {
       while (nums.length < this.NumberCount) {
         const num = Math.floor(Math.random() * this.ButtonCount); // 值为button的值
         if (this.ButtonCount <= 6 && num == 0) continue;
-        if (!nums.includes(num)) nums.push(num);
+        if (this.CurrentLevelType === "normal") {
+          if (!nums.includes(num)) nums.push(num);
+        } else if (this.CurrentLevelType === "hard") {
+          // 如果是困难模式，则不需要检查重复值
+          nums.push(num);
+        }
       }
       this.secretNumbers = nums.map((item) => item.toString());
+      console.log(this.secretNumbers);
+      if (this.CurrentLevelType === "hard") addDuplicate(this.secretNumbers);
       console.log(this.secretNumbers);
     },
     // 初始化头部的数据
@@ -253,6 +248,7 @@ export default {
 
     // 检查重复数字
     __checkDuplicates(arr) {
+      if (this.CurrentLevelType === "hard") return true;
       let newArr = Array.from(new Set(arr)); // 将数组转换成 Set
       return newArr.length === arr.length; // 比较长度，判断是否存在重复元素
     },
@@ -435,6 +431,13 @@ export default {
     // 查看是否最后一关
     checkIsLastLevel() {
       return this.GameBeginTitle === "第五关";
+    },
+    getBackgroundColor() {
+      if (this.CurrentLevelType === "hard") {
+        return {
+          background: "linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%)",
+        };
+      }
     },
   },
 };

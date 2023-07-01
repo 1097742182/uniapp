@@ -30,8 +30,10 @@ const store = new Vuex.Store({
     UserDetail: {}, // 用户补充信息(city, gender)
     UserCount: -1, // 用户总分
     LevelStep: -1, // 当前用户的关卡
+    HardLevelStep: -1, // 困难关卡的等级
 
     GameBeginTitle: "关卡",
+    CurrentLevelType: "normal",
     CurrentIndex: 0, // 当前选中输入框
     NumberList: ["", "", "", ""], // 输入框的值
     NumberCount: 4, // 输入数字的总数
@@ -106,6 +108,9 @@ const store = new Vuex.Store({
     SET_LevelCount(state, LevelCount) {
       state.LevelCount = LevelCount;
     },
+    SET_HardLevelStep(state, HardLevelStep) {
+      state.HardLevelStep = HardLevelStep;
+    },
     SET_LevelStep(state, LevelStep) {
       state.LevelStep = LevelStep;
     },
@@ -143,6 +148,14 @@ const store = new Vuex.Store({
         let levelStep = uni.getStorageSync("LevelStep");
         levelStep = levelStep ? levelStep : 1;
         commit("SET_LevelStep", levelStep);
+      }
+
+      // 初始化HardLevelStep
+      if (state.HardLevelStep === -1) {
+        let hardLevelStep = uni.getStorageSync("HardLevelStep");
+        hardLevelStep = hardLevelStep ? hardLevelStep : 1;
+        commit("SET_HardLevelStep", hardLevelStep);
+        console.log(state.HardLevelStep);
       }
 
       // 初始化UserDetail
@@ -195,45 +208,50 @@ const store = new Vuex.Store({
       commit("SET_CurrentLevelNumberResult", []);
       commit("SET_CurrentLevelNumberResultShow", false);
     },
-    setLevelOne({ commit, dispatch }) {
+    setLevelOne({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
       commit("SET_NumberCount", 2);
       commit("SET_HistoryNumberCount", 4);
       commit("SET_ButtonCount", 3);
       commit("SET_LevelCount", 100);
       setTimeout(() => commit("SET_GameBeginTitle", "第一关"), 0);
+      if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
     },
-    setLevelTwo({ commit, dispatch }) {
+    setLevelTwo({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
       commit("SET_NumberCount", 3);
       commit("SET_HistoryNumberCount", 5);
       commit("SET_ButtonCount", 5);
       commit("SET_LevelCount", 300);
       setTimeout(() => commit("SET_GameBeginTitle", "第二关"), 0);
+      if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
     },
-    setLevelThree({ commit, dispatch }) {
+    setLevelThree({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
       commit("SET_NumberCount", 4);
       commit("SET_HistoryNumberCount", 7);
       commit("SET_ButtonCount", 6);
       commit("SET_LevelCount", 600);
       setTimeout(() => commit("SET_GameBeginTitle", "第三关"), 0);
+      if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
     },
-    setLevelFour({ commit, dispatch }) {
+    setLevelFour({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
       commit("SET_NumberCount", 4);
       commit("SET_HistoryNumberCount", 10);
       commit("SET_ButtonCount", 10);
       commit("SET_LevelCount", 1000);
       setTimeout(() => commit("SET_GameBeginTitle", "第四关"), 0);
+      if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
     },
-    setLevelFive({ commit, dispatch }) {
+    setLevelFive({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
       commit("SET_NumberCount", 5);
       commit("SET_HistoryNumberCount", 10);
       commit("SET_ButtonCount", 10);
-      commit("SET_LevelCount", 1500);
+      commit("SET_LevelCount", 2000);
       setTimeout(() => commit("SET_GameBeginTitle", "第五关"), 0);
+      if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
     },
     // 更新用户积分(旧)
     ADD_UserCount({ state, commit }, LevelCount) {
@@ -250,16 +268,29 @@ const store = new Vuex.Store({
     },
 
     setLevelStep({ state, commit }) {
-      let levelStep = parseInt(state.LevelStep);
-      let currentLevelStep = parseInt(state.LevelStep);
+      if (state.CurrentLevelType === "normal") {
+        let levelStep = parseInt(state.LevelStep);
+        let currentLevelStep = parseInt(state.LevelStep);
 
-      if (state.GameBeginTitle === "第一关" && currentLevelStep === 1) levelStep = 2;
-      if (state.GameBeginTitle === "第二关" && currentLevelStep === 2) levelStep = 3;
-      if (state.GameBeginTitle === "第三关" && currentLevelStep === 3) levelStep = 4;
-      if (state.GameBeginTitle === "第四关" && currentLevelStep === 4) levelStep = 5;
+        if (state.GameBeginTitle === "第一关" && currentLevelStep === 1) levelStep = 2;
+        if (state.GameBeginTitle === "第二关" && currentLevelStep === 2) levelStep = 3;
+        if (state.GameBeginTitle === "第三关" && currentLevelStep === 3) levelStep = 4;
+        if (state.GameBeginTitle === "第四关" && currentLevelStep === 4) levelStep = 5;
 
-      commit("SET_LevelStep", levelStep);
-      uni.setStorageSync("LevelStep", levelStep);
+        commit("SET_LevelStep", levelStep);
+        uni.setStorageSync("LevelStep", levelStep);
+      } else if (state.CurrentLevelType === "hard") {
+        let levelStep = parseInt(state.HardLevelStep);
+        let currentLevelStep = parseInt(state.HardLevelStep);
+
+        if (state.GameBeginTitle === "第一关" && currentLevelStep === 1) levelStep = 2;
+        if (state.GameBeginTitle === "第二关" && currentLevelStep === 2) levelStep = 3;
+        if (state.GameBeginTitle === "第三关" && currentLevelStep === 3) levelStep = 4;
+        if (state.GameBeginTitle === "第四关" && currentLevelStep === 4) levelStep = 5;
+
+        commit("SET_HardLevelStep", levelStep);
+        uni.setStorageSync("HardLevelStep", levelStep);
+      }
     },
     setUserDetail({ commit }, userDetail) {
       const { nickName, avatarUrl, cityValue, genderValue } = userDetail;

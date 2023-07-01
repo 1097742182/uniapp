@@ -31,7 +31,7 @@
 export default {
   data() {
     return {
-      UserRank: 1,
+      UserRank: "10+",
       isRotating: false,
     };
   },

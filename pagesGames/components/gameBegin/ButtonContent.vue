@@ -4,6 +4,7 @@
       <button
         type="primary"
         class="buttonClass"
+        :style="getBackgroundColor()"
         v-for="item in buttonFirstRow"
         :key="item"
         @click="buttonClick(item)"
@@ -15,6 +16,7 @@
       <button
         type="primary"
         class="buttonClass"
+        :style="getBackgroundColor()"
         v-for="item in buttonSecondRow"
         :key="item"
         @click="buttonClick(item)"
@@ -66,6 +68,13 @@ export default {
         uni.$u.vuex("CurrentIndex", this.CurrentIndex + 1);
       } else {
         uni.$u.vuex("CurrentIndex", 0);
+      }
+    },
+    getBackgroundColor() {
+      if (this.CurrentLevelType === "hard") {
+        return {
+          background: "linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%)",
+        };
       }
     },
   },

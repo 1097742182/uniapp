@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :style="getBackgroundColor()">
     <number-content-item
       v-for="(item, index) in NumberList"
       :key="index"
@@ -32,6 +32,13 @@ export default {
   methods: {
     changeIndex(i) {
       uni.$u.vuex("CurrentIndex", i);
+    },
+    getBackgroundColor() {
+      if (this.CurrentLevelType === "hard") {
+        return {
+          background: "linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%)",
+        };
+      }
     },
   },
 };

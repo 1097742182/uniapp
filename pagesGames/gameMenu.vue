@@ -6,11 +6,31 @@
     <!-- <success-dialog /> -->
 
     <view class="u-demo-block">
-      <text class="u-demo-block__title">游戏目录</text>
+      <div class="u-demo-block-header">
+        <text class="u-demo-block__title">游戏目录</text>
+        <button
+          type="primary"
+          v-if="CurrentLevelType === 'normal'"
+          class="u-demo-block__hardLevel"
+          @click="changeLevelBtnClick()"
+        >
+          困难模式 >
+        </button>
+
+        <button
+          type="primary"
+          v-if="CurrentLevelType === 'hard'"
+          class="u-demo-block__hardLevel"
+          style="background: #6273cb"
+          @click="changeLevelBtnClick()"
+        >
+          普通模式 >
+        </button>
+      </div>
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(1)" text="第一关" type="primary" /> -->
-          <ice-button @click="gameBegin(1)" buttonText="第一关" />
+          <ice-button @click="gameBegin(1)" :buttonType="getButtonType(1)" buttonText="第一关" />
         </view>
         <view class="u-page__button-item">
           <!-- <u-button @click="gameBegin(2)" text="第二关" type="primary" /> -->
@@ -41,7 +61,9 @@ import SuccessDialog from "components/SuccessDialog/SuccessDialog.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      contentKey: new Date().getTime(), // 刷新按钮区域
+    };
   },
   components: { UserInfo, UserCountCard, IceButton, SuccessDialog },
   methods: {
@@ -64,10 +86,18 @@ export default {
       }, 100);
     },
     getButtonType(level) {
-      return this.LevelStep >= level ? "ice" : "disabled";
-      // if (level == 2) return this.LevelStep > 200 ? "ice" : "disabled";
-      // if (level == 3) return this.UserCount > 500 ? "ice" : "disabled";
-      // if (level == 4) return this.UserCount > 800 ? "ice" : "disabled";
+      if (this.CurrentLevelType === "normal") {
+        return this.LevelStep >= level ? "ice" : "disabled";
+      } else if (this.CurrentLevelType === "hard") {
+        return this.HardLevelStep >= level ? "fire" : "disabled";
+      }
+    },
+    changeLevelBtnClick() {
+      if (this.CurrentLevelType === "normal") this.$u.vuex("CurrentLevelType", "hard");
+      else if (this.CurrentLevelType === "hard") this.$u.vuex("CurrentLevelType", "normal");
+      setTimeout(() => {
+        this.contentKey = new Date().getTime();
+      }, 100);
     },
   },
 };
@@ -135,13 +165,27 @@ export default {
     // flex-wrap: wrap;
   }
 
-  &__title {
+  &-header {
     margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px;
+  }
+
+  &__title {
     display: block;
     font-size: 20px;
     color: #40485b;
     margin-bottom: 18px;
-    text-align: center;
+  }
+
+  &__hardLevel {
+    margin-right: 0;
+    padding: 5px 10px;
+    height: 28px;
+    line-height: 1;
+    font-size: 16px;
+    background: #fd4a4a;
   }
 }
 
