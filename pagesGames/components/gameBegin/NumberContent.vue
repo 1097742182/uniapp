@@ -30,9 +30,9 @@
             <view class="popup-content-item"> 每一关的密码是由不同的数字组成，数字可以重复。 </view>
             <view class="popup-content-item"> 破译者猜测其中的数字，并根据系统的提示，继续推理出下一轮的密码。 </view>
             <view class="popup-content-item"> 标签解析 </view>
-            <view class="popup-content-item" style="margin-left: 40px"> √：代表有数字与位置都正确 </view>
-            <view class="popup-content-item" style="margin-left: 40px"> O：代表数字正确，位置不正确 </view>
-            <view class="popup-content-item" style="margin-left: 40px"> ~：代表数字不正确 </view>
+            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> √：代表有数字与位置都正确 </view>
+            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> O：代表数字正确，位置不正确 </view>
+            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> ~：代表数字不正确 </view>
             <view class="popup-content-item"> 在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。 </view>
 
             <view class="popup-content-button-area">
@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     _initQuestionShow() {
-      if (this.LevelStatus === "normal") {
+      if (this.CurrentLevelType === "normal") {
         this.questionShow = uni.getStorageSync("questionShow");
         if (!this.questionShow) this.popupShow = true;
         if (this.questionShow) this.checkboxValue = ["不再提醒"];
@@ -124,7 +124,7 @@ export default {
       uni.$u.vuex("CurrentIndex", i);
     },
     questionBtnClick() {
-      if (this.LevelStatus === "normal") {
+      if (this.CurrentLevelType === "normal") {
         this.popupShow = true;
       } else {
         this.hardPopupShow = true;
