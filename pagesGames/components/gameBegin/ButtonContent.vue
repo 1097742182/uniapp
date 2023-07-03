@@ -4,7 +4,7 @@
       <button
         type="primary"
         class="buttonClass"
-        :style="getBackgroundColor()"
+        :class="backgroundType"
         v-for="item in buttonFirstRow"
         :key="item"
         @click="buttonClick(item)"
@@ -16,7 +16,7 @@
       <button
         type="primary"
         class="buttonClass"
-        :style="getBackgroundColor()"
+        :class="backgroundType"
         v-for="item in buttonSecondRow"
         :key="item"
         @click="buttonClick(item)"
@@ -35,6 +35,9 @@ export default {
       buttonFirstRow: [],
       buttonSecondRow: [],
     };
+  },
+  props: {
+    backgroundType: { type: String, default: "blueBackground" },
   },
 
   mounted() {
@@ -108,7 +111,15 @@ export default {
 
     // background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
     // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
-    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
+    // background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
   }
+}
+
+.blueBackground {
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
+}
+
+.redBackground {
+  background: linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%);
 }
 </style>

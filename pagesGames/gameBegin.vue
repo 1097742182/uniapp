@@ -3,8 +3,8 @@
     <cl-header :title="GameBeginTitle" :transparent="true" />
     <u-toast ref="uToast"></u-toast>
     <view class="content">
-      <user-info></user-info>
-      <number-content :gameOver="gameOver"></number-content>
+      <user-info :backgroundType="backgroundType"></user-info>
+      <number-content :gameOver="gameOver" :backgroundType="backgroundType"></number-content>
 
       <!-- history区域 -->
       <swiper
@@ -30,7 +30,7 @@
       <new-history-number-content v-else /> -->
 
       <!-- 当需要展示答案时，按钮就不显示了 -->
-      <button-content v-if="!CurrentLevelNumberResultShow"></button-content>
+      <button-content v-if="!CurrentLevelNumberResultShow" :backgroundType="backgroundType"></button-content>
 
       <view class="buttonContent">
         <view style="width: 200px" v-if="!gameOver">
@@ -115,6 +115,7 @@ import { equals, addDuplicate } from "@/utils/index.js";
 export default {
   data() {
     return {
+      backgroundType: "blueBackground",
       secretNumbers: [1, 2, 3, 4], // 正确的数字序列
       gameOver: false, // 是否游戏结束
       gameResult: "", // 是否游戏结束
@@ -161,6 +162,8 @@ export default {
     setTimeout(() => {
       this.subCount = this.LevelCount / (this.HistoryNumberCount + 2);
     }, 1000);
+
+    if (this.CurrentLevelType === "hard") this.backgroundType = "redBackground";
   },
 
   methods: {
@@ -509,10 +512,6 @@ export default {
 }
 
 .submitClass {
-  background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
-  // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
-  border-color: #e0b6de;
-
   background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <view class="container" :class="backgroungType">
+  <view class="container" :class="backgroundType">
     <number-content-item
       v-for="(item, index) in NumberList"
       :key="index"
@@ -88,7 +88,6 @@ export default {
     return {
       // numberList: ["1", "2", "3", "4"],
       // currentIndex: 0
-      backgroungType: "blueBackground",
       popupShow: false,
       hardPopupShow: false,
       questionShow: false,
@@ -96,8 +95,10 @@ export default {
       hardCheckboxValue: [],
     };
   },
+
   props: {
     gameOver: { type: Boolean, default: false },
+    backgroundType: { type: String, default: "blueBackground" },
   },
   components: {
     NumberContentItem,
@@ -105,7 +106,7 @@ export default {
   watch: {},
   mounted() {
     this._initQuestionShow();
-    // this.backgroungType = "redBackground";
+    console.log(this.provideData);
   },
   methods: {
     _initQuestionShow() {
@@ -113,7 +114,7 @@ export default {
         this.questionShow = uni.getStorageSync("questionShow");
         if (!this.questionShow) this.popupShow = true;
         if (this.questionShow) this.checkboxValue = ["不再提醒"];
-      } else {
+      } else if (this.CurrentLevelType === "hard") {
         this.hardQuestionShow = uni.getStorageSync("hardQuestionShow");
         if (!this.hardQuestionShow) this.hardPopupShow = true;
         if (this.hardQuestionShow) this.hardCheckboxValue = ["不再提醒"];
@@ -126,7 +127,7 @@ export default {
     questionBtnClick() {
       if (this.CurrentLevelType === "normal") {
         this.popupShow = true;
-      } else {
+      } else if (this.CurrentLevelType === "hard") {
         this.hardPopupShow = true;
       }
     },
@@ -173,14 +174,6 @@ export default {
 
   // background: radial-gradient(circle, rgb(207, 107, 170) 0%, rgb(247, 150, 192) 100%);
   // box-shadow: 0px 3px 3px #e0b6de, 0px -3px 3px #e6c9e4, inset 0px -1px 3px #e2cfe1;
-}
-
-.blueBackground {
-  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
-}
-
-.redBackground {
-  background: linear-gradient(0deg, rgb(230, 92, 17) 0%, rgb(200, 97, 32) 100%);
 }
 
 .question {
@@ -235,5 +228,13 @@ export default {
 .checkboxGroup {
   display: flex;
   justify-content: center;
+}
+
+.blueBackground {
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
+}
+
+.redBackground {
+  background: linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%);
 }
 </style>
