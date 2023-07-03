@@ -36,9 +36,11 @@
             <view class="popup-content-item"> 在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。 </view>
 
             <view class="popup-content-button-area">
-              <u-checkbox-group v-model="checkboxValue" @change="handleCheckboxChange" class="checkboxGroup" style="margin: 6px">
-                <u-checkbox name="不再提醒" label="不再提醒" style="margin: 0"></u-checkbox>
-              </u-checkbox-group>
+              <view class="checkboxGroup">
+                <u-checkbox-group v-model="checkboxValue" @change="handleCheckboxChange" style="margin: 6px">
+                  <u-checkbox name="不再提醒" label="不再提醒" style="margin: 0"></u-checkbox>
+                </u-checkbox-group>
+              </view>
 
               <button type="primary" style="width: 120px; line-height: 2" @click="close()">关闭</button>
             </view>
@@ -62,15 +64,11 @@
             <view class="popup-content-item" style="font-weight: bold; color: red"> “困难模式”数字可重复 </view>
 
             <view class="popup-content-button-area">
-              <u-checkbox-group
-                v-model="hardCheckboxValue"
-                @change="handleHardCheckboxChange"
-                class="checkboxGroup"
-                style="margin: 6px"
-              >
-                <u-checkbox name="不再提醒" label="不再提醒" style="margin: 0"></u-checkbox>
-              </u-checkbox-group>
-
+              <view class="checkboxGroup">
+                <u-checkbox-group v-model="hardCheckboxValue" @change="handleHardCheckboxChange" style="margin: 6px">
+                  <u-checkbox name="不再提醒" label="不再提醒" style="margin: 0"></u-checkbox>
+                </u-checkbox-group>
+              </view>
               <button type="primary" style="width: 120px; line-height: 2" @click="hardClose()">关闭</button>
             </view>
           </view>
