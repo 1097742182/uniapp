@@ -110,7 +110,7 @@ import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
 
 // 方法
-import { equals, addDuplicate } from "@/utils/index.js";
+import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
 
 export default {
   data() {
@@ -171,8 +171,8 @@ export default {
       const nums = [];
       // NumberCount为store里面的数据，是可输入的总数
       while (nums.length < this.NumberCount) {
-        const num = Math.floor(Math.random() * this.ButtonCount); // 值为button的值
-        if (this.ButtonCount <= 6 && num == 0) continue;
+        let num = Math.floor(Math.random() * this.ButtonCount); // 值为button的值
+        if (this.ButtonCount <= 6 && num == 0) num = this.ButtonCount; // num不为0，若num为0，则为最大数
         if (this.CurrentLevelType === "normal") {
           if (!nums.includes(num)) nums.push(num);
         } else if (this.CurrentLevelType === "hard") {
@@ -202,16 +202,8 @@ export default {
       // 第一次不可为空，所以需要检查数据
       this._checkFirstCheck();
 
-      console.log("numberList", this.NumberList);
-      console.log("secretNumbers", this.secretNumbers);
-      // 计算本次结果（1A和1B的数量）
-      let A = 0,
-        B = 0;
-      for (let i = 0; i < this.NumberCount; i++) {
-        // 数字和位置都正确
-        if (this.NumberList[i] == this.secretNumbers[i]) A++;
-        else if (this.secretNumbers.includes(this.NumberList[i])) B++; // 数字正确但位置不正确
-      }
+      const data = { secretNumbers: [...this.secretNumbers], NumberList: [...this.NumberList] };
+      const { A, B } = checkNumberRight(this.CurrentLevelType, data);
 
       // 保存数据到history中
       const status = { right: A, nearlyRight: B };
@@ -261,6 +253,7 @@ export default {
       if (!this.firstCheck) return; // 如果不是第一次检查，则直接返回
 
       if (equals(this.NumberList, this.secretNumbers)) this._initSecretNumbers();
+      // 如果重置后 仍然相同，则再重置一次
       if (equals(this.NumberList, this.secretNumbers)) this._checkFirstCheck();
 
       this.firstCheck = false;

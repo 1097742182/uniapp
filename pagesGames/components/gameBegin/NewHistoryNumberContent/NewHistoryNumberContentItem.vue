@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { checkNumberRight } from "@/utils/index.js";
+
 export default {
   data() {
     return {
@@ -107,13 +109,12 @@ export default {
       this.colorList.push(this.randomColor());
     },
     _checkNumberList() {
-      const currentLevelNumberResult = this.CurrentLevelNumberResult;
-      for (let i = 0; i < this.numberList.length; i++) {
-        const item = this.numberList[i];
-        if (item === currentLevelNumberResult[i]) this.numberListStatus[i] = "V";
-        else if (currentLevelNumberResult.includes(item)) this.numberListStatus[i] = "O";
-        else this.numberListStatus[i] = "~";
-      }
+      const secretNumbers = this.CurrentLevelNumberResult;
+      const numberList = this.numberList;
+      // 赋值data，传入函数中
+      const data = { secretNumbers: [...secretNumbers], NumberList: [...numberList] };
+      const { numberListStatus } = checkNumberRight(this.CurrentLevelType, data);
+      this.numberListStatus = numberListStatus;
     },
     randomColor() {
       const colorList = [
