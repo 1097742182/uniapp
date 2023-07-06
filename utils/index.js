@@ -63,10 +63,19 @@ export function checkNumberRight(CurrentLevelType, data) {
       }
     }
 
+    // console.log([...secretNumbers]);
+    // console.log([...NumberList]);
+
     for (let i = 0; i < NumberList.length; i++) {
       const item = NumberList[i];
-      if (item && secretNumbers.includes(item)) numberListStatus[i] = "O";
+      if (item && secretNumbers.includes(item)) {
+        numberListStatus[i] = "O";
+
+        const index = secretNumbers.findIndex((number) => number === item);
+        if (index >= 0) secretNumbers[index] = "";
+      }
     }
+    // console.log({ secretNumbers, NumberList });
   }
 
   const A = numberListStatus.filter((item) => item === "V").length;
