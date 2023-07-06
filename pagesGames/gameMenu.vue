@@ -14,7 +14,7 @@
           class="u-demo-block__hardLevel"
           @click="changeLevelBtnClick()"
         >
-          困难模式 >
+          华山论剑 >
         </button>
 
         <button
@@ -24,7 +24,7 @@
           style="background: #6273cb"
           @click="changeLevelBtnClick()"
         >
-          普通模式 >
+          菜鸟集训 >
         </button>
       </div>
       <view class="u-demo-block__content">

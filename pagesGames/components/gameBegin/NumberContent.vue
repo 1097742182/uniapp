@@ -58,10 +58,10 @@
         :safeAreaInsetBottom="false"
       >
         <view class="popup">
-          <view class="popup-title">“困难模式”游戏规则</view>
+          <view class="popup-title">“华山论剑”游戏规则</view>
           <view class="popup-content">
-            <view class="popup-content-item"> 与“普通模式”规则大致相同 </view>
-            <view class="popup-content-item" style="font-weight: bold; color: red"> “困难模式”数字可重复 </view>
+            <view class="popup-content-item"> 与“菜鸟集训”规则大致相同 </view>
+            <view class="popup-content-item" style="font-weight: bold; color: red"> “华山论剑”数字可重复 </view>
 
             <view class="popup-content-button-area">
               <view class="checkboxGroup">
@@ -130,7 +130,7 @@ export default {
       }
     },
 
-    // 普通模式游戏规则逻辑
+    // 菜鸟集训游戏规则逻辑
     close() {
       uni.setStorageSync("questionShow", this.questionShow);
       this.popupShow = false;
@@ -143,7 +143,7 @@ export default {
       if (list.length === 0) this.questionShow = false;
     },
 
-    // 困难模式游戏规则逻辑
+    // 华山论剑游戏规则逻辑
     hardClose() {
       console.log(this.hardQuestionShow);
       uni.setStorageSync("hardQuestionShow", this.hardQuestionShow);

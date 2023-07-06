@@ -176,7 +176,7 @@ export default {
         if (this.CurrentLevelType === "normal") {
           if (!nums.includes(num)) nums.push(num);
         } else if (this.CurrentLevelType === "hard") {
-          // 如果是困难模式，则不需要检查重复值
+          // 如果是华山论剑，则不需要检查重复值
           nums.push(num);
         }
       }
