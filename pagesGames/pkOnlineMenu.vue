@@ -4,11 +4,11 @@
 
     <user-info />
 
-    <view style="padding: 2px 14px">
+    <view style="padding: 2px">
       <user-detail-card />
     </view>
 
-    <view style="padding: 2px 14px; margin-top: 10px">
+    <view style="padding: 2px; margin-top: 10px">
       <PKHistoryDetailVue />
     </view>
 
@@ -50,5 +50,7 @@ export default {
   background-image: linear-gradient(to bottom, rgb(165, 207, 244) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
+
+  padding: 15px 15px 40px 15px;
 }
 </style>

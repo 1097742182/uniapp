@@ -104,7 +104,6 @@ export default {
   watch: {},
   mounted() {
     this._initQuestionShow();
-    console.log(this.provideData);
   },
   methods: {
     _initQuestionShow() {
@@ -145,7 +144,6 @@ export default {
 
     // 华山论剑游戏规则逻辑
     hardClose() {
-      console.log(this.hardQuestionShow);
       uni.setStorageSync("hardQuestionShow", this.hardQuestionShow);
       this.hardPopupShow = false;
     },

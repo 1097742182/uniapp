@@ -118,7 +118,6 @@ export default {
       backgroundType: "blueBackground",
       secretNumbers: [1, 2, 3, 4], // 正确的数字序列
       gameOver: false, // 是否游戏结束
-      gameResult: "", // 是否游戏结束
       gameStatus: false,
       count: 0, // 已猜测次数
       firstCheck: true, // 第一次检查，不可直接成功
@@ -181,7 +180,6 @@ export default {
         }
       }
       this.secretNumbers = nums.map((item) => item.toString());
-      console.log(this.secretNumbers);
       if (this.CurrentLevelType === "hard") addDuplicate(this.secretNumbers);
       console.log(this.secretNumbers);
     },
@@ -278,21 +276,14 @@ export default {
         this.gameOver = true;
         this.successDialogShow = true;
         this.gameStatus = true; // true代表游戏胜利
-        this.gameResult = "恭喜你猜对了！";
         this._setCurrentLevelNumberResult(); // 展示答案出来
         if (!this.SecondHistory) this.$store.dispatch("setLevelStep"); // 如果没有开启二次机会，则游戏成功，则关卡往前走
       } else if (this.count === this.HistoryNumberCount) {
-        console.log(this.SecondHistory);
         this.gameOver = true;
         if (!this.SecondHistory) this.warningDialogShow = true; // 如果没有开启二次机会，则显示
         if (this.SecondHistory) this.errorDialogShow = true; // 如果已经开启了二次机会，则不显示
-        if (this.SecondHistory) {
-          // 如果已经用了第二次机会，则直接显示答案
-          this._setCurrentLevelNumberResult();
-        }
+        if (this.SecondHistory) this._setCurrentLevelNumberResult(); // 如果已经用了第二次机会，则直接显示答案
         this.gameStatus = false; // false代表输掉游戏
-        this.gameResult = `很遗憾，你没有在规定的次数内猜中答案。正确答案是
-        ${this.secretNumbers.join(" ")}`;
       }
     },
 
@@ -330,9 +321,7 @@ export default {
     _setCurrentLevelNumberResult() {
       this.$store.commit("SET_CurrentLevelNumberResult", this.secretNumbers);
       this.$store.commit("SET_CurrentLevelNumberResultShow", true);
-      setTimeout(() => {
-        this.$store.commit("SET_NumberList", this.secretNumbers);
-      }, 100);
+      setTimeout(() => this.$store.commit("SET_NumberList", this.secretNumbers), 100);
     },
 
     // 返回菜单按钮点击
