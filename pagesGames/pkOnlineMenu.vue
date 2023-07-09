@@ -38,7 +38,7 @@ export default {
     gameBegin() {
       this.$store.dispatch("setPKLevel");
       setTimeout(() => {
-        this.$Router.push({ name: "gameBegin", params: {} });
+        this.$Router.push({ name: "pkOnlineBegin", params: {} });
       }, 100);
     },
   },

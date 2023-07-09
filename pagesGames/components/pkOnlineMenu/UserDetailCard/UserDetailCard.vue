@@ -14,9 +14,9 @@ export default {
     return {
       gameDetail: [
         { content: "比赛次数", value: 10 },
-        { content: "胜场", value: 5 },
-        { content: "胜率", value: "50%" },
-        { content: "比赛次数", value: 10 },
+        { content: "胜场次数", value: 5 },
+        { content: "平局次数", value: 2 },
+        { content: "游戏胜率", value: "50%" },
       ],
     };
   },
