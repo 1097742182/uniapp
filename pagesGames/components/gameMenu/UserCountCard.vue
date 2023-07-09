@@ -15,7 +15,7 @@
 
     <view class="bottom">
       <slot name="bottom">
-        <view class="bottomLeft">我的排名：{{ UserRank }}</view>
+        <view class="bottomLeft">我的排名：{{ UserRankComputed }}</view>
         <view class="bottomRight" @click="countMallBtnClick()">积分商城 ></view>
       </slot>
     </view>
@@ -34,6 +34,20 @@ export default {
       UserRank: "10+",
       isRotating: false,
     };
+  },
+  computed: {
+    UserRankComputed() {
+      if (this.UserCount < 100) return "999+";
+      if (this.UserCount < 500) return "500+";
+      if (this.UserCount < 1000) return "200+";
+      if (this.UserCount < 1500) return "180+";
+      if (this.UserCount < 2000) return "150+";
+      if (this.UserCount < 3000) return "100+";
+      if (this.UserCount < 5000) return "50+";
+      if (this.UserCount < 10000) return "10+";
+      if (this.UserCount < 20000) return "5+";
+      if (this.UserCount < 30000) return "1";
+    },
   },
   methods: {
     reloadBtnClick() {

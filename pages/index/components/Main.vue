@@ -16,20 +16,12 @@
           <view class="popup-title">游戏规则</view>
           <view class="popup-content">
             <view class="popup-content-item"> 每一关的密码是由不同的数字组成，数字可以重复。 </view>
-            <view class="popup-content-item">
-              破译者猜测其中的数字，并根据系统的提示，继续推理出下一轮的密码。
-            </view>
+            <view class="popup-content-item"> 破译者猜测其中的数字，并根page__button据系统的提示，继续推理出下一轮的密码。 </view>
             <view class="popup-content-item"> 标签解析 </view>
-            <view class="popup-content-item" style="margin-left: 40px">
-              √：代表有数字与位置都正确
-            </view>
-            <view class="popup-content-item" style="margin-left: 40px">
-              O：代表数字正确，位置不正确
-            </view>
+            <view class="popup-content-item" style="margin-left: 40px"> √：代表有数字与位置都正确 </view>
+            <view class="popup-content-item" style="margin-left: 40px"> O：代表数字正确，位置不正确 </view>
             <view class="popup-content-item" style="margin-left: 40px"> ~：代表数字不正确 </view>
-            <view class="popup-content-item">
-              在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。
-            </view>
+            <view class="popup-content-item"> 在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。 </view>
           </view>
         </view>
       </u-popup>
@@ -38,18 +30,14 @@
     <view class="u-demo-block">
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
-          <u-button @click="goPage(1)" text="开始游戏" type="primary" />
+          <u-button @click="goPage(1)" type="primary">开始游戏</u-button>
         </view>
         <view class="u-page__button-item">
-          <u-button @click="popupShow = true" text="游戏规则" type="primary" />
+          <u-button @click="pkOnlineBtnClick()" type="primary">线上PK</u-button>
         </view>
-        <!-- <view class="u-page__button-item">
-          <u-button
-            @click="OneClickSubmitBtnClick()"
-            text="一键登录"
-            type="primary"
-          />
-        </view> -->
+        <view class="u-page__button-item">
+          <u-button @click="popupShow = true" type="primary">游戏规则</u-button>
+        </view>
       </view>
     </view>
 
@@ -85,6 +73,9 @@ export default {
 
       this.$Router.push({ name: "gameMenu", params: {} });
     },
+    pkOnlineBtnClick() {
+      this.$Router.push({ name: "pkOnlineMenu", params: {} });
+    },
 
     close() {
       this.popupShow = false;
@@ -109,14 +100,6 @@ export default {
         },
       });
     },
-    // 获取微信用户的基本信息
-    // getUserInfo(e) {
-    // 	// 判断是否获取用户信息成功
-    // 	if (e.detail.errMsg === 'getUserInfo:fail auth deny') return uni.$showMsg('您取消了登录授权！')
-
-    // 	// 获取用户信息成功， e.detail.userInfo 就是用户的基本信息
-    // 	console.log(e.detail.userInfo)
-    // }
   },
 };
 </script>

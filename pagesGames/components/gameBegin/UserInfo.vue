@@ -5,22 +5,34 @@
       <view class="nickName" style="margin-left: 10px"> {{ nickName }} </view>
     </view>
 
-    <view class="right">
+    <!-- 如果不是PK界面，则展示关卡积分 -->
+    <view class="right" v-if="!PKLevelStatus">
       <text class="userCount">关卡积分：{{ LevelCount }}</text>
+    </view>
+
+    <!-- 如果是PK界面，则展示时间计算 -->
+    <view class="right" v-if="PKLevelStatus">
+      <view class="userCount">关卡用时：<time-record-vue /> </view>
     </view>
   </view>
 </template>
 
 <script>
+import TimeRecordVue from "components/TimeRecord/TimeRecord.vue";
+
 export default {
   data() {
     return {
       avatarUrl: "",
       nickName: "",
+      levelTime: 0,
     };
   },
   props: {
     backgroundType: { type: String, default: "blueBackground" },
+  },
+  components: {
+    TimeRecordVue,
   },
   mounted() {
     this._initUserInfo();
@@ -52,7 +64,7 @@ export default {
   .nickName {
     height: 40px;
     line-height: 40px;
-    font-size: 24px;
+    font-size: 22px;
     display: inline-block;
     color: #ffffff;
   }
@@ -60,7 +72,7 @@ export default {
   .userCount {
     height: 40px;
     line-height: 40px;
-    font-size: 20px;
+    font-size: 18px;
     display: inline-block;
     color: #ffffff;
   }

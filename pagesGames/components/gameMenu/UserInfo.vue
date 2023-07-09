@@ -1,10 +1,12 @@
 <template>
   <view class="UserInfo">
-    <view class="left" style="display: flex" @click="resetUserCount()">
-      <image :src="avatarUrl" class="userAvatal"> </image>
+    <view class="left" style="display: flex">
+      <button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar" class="avatarImage">
+        <image :src="avatarUrl" class="userAvatal"> </image>
+      </button>
       <view style="margin-left: 10px">
         <view class="nickName">{{ nickName }}</view>
-        <view class="tips">欢迎使用，祝您玩的开心</view>
+        <view class="tips" @click="resetUserCount()">欢迎使用，祝您玩的开心</view>
       </view>
     </view>
 
@@ -72,6 +74,13 @@ export default {
     personalCenterClick() {
       this.$Router.push({ name: "personalCenter", params: {} });
     },
+    onChooseavatar(e) {
+      this.avatarUrl = e.detail.avatarUrl;
+      if (this.avatarUrl) {
+        uni.setStorageSync("avatarUrl", this.avatarUrl);
+        this.$store.commit("SET_AvatarUrl", this.avatarUrl);
+      }
+    },
   },
 };
 </script>
@@ -127,5 +136,15 @@ export default {
       color: #606266;
     }
   }
+}
+
+.avatarImage {
+  padding: 0;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  line-height: 1;
+  background: #ffffff00;
+  border-radius: 50%;
 }
 </style>

@@ -45,6 +45,8 @@ const store = new Vuex.Store({
     CurrentLevelNumberResult: [], // 当前关卡的答案
     CurrentLevelNumberResultShow: false, // 是否显示答案
 
+    PKLevelStatus: false, // 是否为PK关卡
+
     musicPlayer: null, // 展示音乐的
   },
   getters: {},
@@ -122,6 +124,10 @@ const store = new Vuex.Store({
     },
     SET_CurrentLevelNumberResultShow(state, CurrentLevelNumberResultShow) {
       state.CurrentLevelNumberResultShow = CurrentLevelNumberResultShow;
+    },
+
+    SET_PKLevelStatus: (state, PKLevelStatus) => {
+      state.PKLevelStatus = PKLevelStatus;
     },
 
     setMusicPlayer: (state, musicPlayer) => {
@@ -205,6 +211,7 @@ const store = new Vuex.Store({
     },
     _setDefaultLevelValue({ commit }) {
       commit("SET_SecondHistory", false);
+      commit("SET_PKLevelStatus", false);
       commit("SET_CurrentLevelNumberResult", []);
       commit("SET_CurrentLevelNumberResultShow", false);
     },
@@ -252,6 +259,15 @@ const store = new Vuex.Store({
       commit("SET_LevelCount", 2000);
       setTimeout(() => commit("SET_GameBeginTitle", "第五关"), 0);
       if (state.CurrentLevelType == "hard") commit("SET_LevelCount", state.LevelCount * 2);
+    },
+    setPKLevel({ state, commit, dispatch }) {
+      dispatch("_setDefaultLevelValue");
+      commit("SET_PKLevelStatus", true);
+      commit("SET_NumberCount", 4);
+      commit("SET_HistoryNumberCount", 10);
+      commit("SET_ButtonCount", 10);
+      commit("SET_LevelCount", 1000);
+      setTimeout(() => commit("SET_GameBeginTitle", "线上PK"), 0);
     },
     // 更新用户积分(旧)
     ADD_UserCount({ state, commit }, LevelCount) {

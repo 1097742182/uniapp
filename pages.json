@@ -1,96 +1,109 @@
 {
-    "easycom": {
-        // uview 组件
-        "^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue",
-        // 自定义组件
-        "^cl-(.*)": "@/components/cl-$1/cl-$1.vue"
+  "easycom": {
+    // uview 组件
+    "^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue",
+    // 自定义组件
+    "^cl-(.*)": "@/components/cl-$1/cl-$1.vue"
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "name": "index",
+      "aliasPath": "/",
+      "meta": {
+        "title": "首页"
+      },
+      "style": {
+        "navigationStyle": "custom"
+      }
     },
-    "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/newpage/newpage",
+      "name": "newpage",
+      "aliasPath": "/",
+      "meta": {
+        "title": "首页"
+      },
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "window": {
+    "enableShareAppMessage": true
+  },
+  "subPackages": [
+    {
+      "root": "pagesGames",
+      "pages": [
         {
-            "path": "pages/index/index",
-            "name": "index",
-            "aliasPath": "/",
-            "meta": {
-                "title": "首页"
-            },
-            "style": {
-                "navigationStyle": "custom"
-            }
+          "path": "gameMenu",
+          "name": "gameMenu",
+          "meta": {
+            "title": "游戏目录"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "游戏目录",
+            "enablePullDownRefresh": false
+          }
         },
         {
-            "path": "pages/newpage/newpage",
-            "name": "newpage",
-            "aliasPath": "/",
-            "meta": {
-                "title": "首页"
-            },
-            "style": {
-                "navigationStyle": "custom"
-            }
-        }
-    ],
-    "window": {
-        "enableShareAppMessage": true
-    },
-    "subPackages": [
+          "path": "gameBegin",
+          "name": "gameBegin",
+          "meta": {
+            "title": "游戏开始"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "游戏开始",
+            "enablePullDownRefresh": false
+          }
+        },
         {
-            "root": "pagesGames",
-            "pages": [
-                {
-                    "path": "gameMenu",
-                    "name": "gameMenu",
-                    "meta": {
-                        "title": "游戏目录"
-                    },
-                    "style": {
-                        "navigationStyle": "custom",
-                        "navigationBarTitleText": "游戏目录",
-                        "enablePullDownRefresh": false
-                    }
-                },
-                {
-                    "path": "gameBegin",
-                    "name": "gameBegin",
-                    "meta": {
-                        "title": "游戏开始"
-                    },
-                    "style": {
-                        "navigationStyle": "custom",
-                        "navigationBarTitleText": "游戏开始",
-                        "enablePullDownRefresh": false
-                    }
-                },
-                {
-                    "path": "countMall",
-                    "name": "countMall",
-                    "meta": {
-                        "title": "游戏开始"
-                    },
-                    "style": {
-                        "navigationStyle": "custom",
-                        "navigationBarTitleText": "游戏开始",
-                        "enablePullDownRefresh": false
-                    }
-                },
-                {
-                    "path": "personalCenter",
-                    "name": "personalCenter",
-                    "meta": {
-                        "title": "个人中心"
-                    },
-                    "style": {
-                        "navigationStyle": "custom",
-                        "navigationBarTitleText": "个人中心",
-                        "enablePullDownRefresh": false
-                    }
-                }
-            ]
+          "path": "countMall",
+          "name": "countMall",
+          "meta": {
+            "title": "游戏开始"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "游戏开始",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "personalCenter",
+          "name": "personalCenter",
+          "meta": {
+            "title": "个人中心"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "个人中心",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pkOnlineMenu",
+          "name": "pkOnlineMenu",
+          "meta": {
+            "title": "线上PK"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "线上PK",
+            "enablePullDownRefresh": false
+          }
         }
-    ],
-    "globalStyle": {
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "猜四个数字",
-        "navigationBarBackgroundColor": "#F8F8F8",
-        "backgroundColor": "#F8F8F8"
+      ]
     }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "猜四个数字",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
 }
