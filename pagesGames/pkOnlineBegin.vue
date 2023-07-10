@@ -21,7 +21,7 @@
       </view>
     </view>
 
-    <message-box-vue ref="secluded" content="对方暂未结束，可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
+    <message-box-vue ref="MessageBox" content="对方暂未结束，可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
   </view>
 </template>
 
@@ -85,6 +85,11 @@ export default {
   },
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
+
+    const launchOptions = uni.getLaunchOptionsSync();
+    const query = launchOptions.query;
+    const roomId = query.id;
+    console.log(roomId);
   },
 
   methods: {
@@ -107,7 +112,7 @@ export default {
       uni.$u.vuex("NumberList", numberList);
     },
     backToMenuBtnClick() {
-      this.$refs.secluded.open();
+      this.$refs.MessageBox.open();
     },
     messageBoxConfirm() {
       uni.navigateBack({ delta: 1 });

@@ -16,9 +16,9 @@
           <view class="content">{{ content }}</view>
         </slot>
         <slot name="bottom">
-          <view class="btns">
-            <view class="cancel btn" @click="cancel">取消</view>
-            <view class="confirm btn" @click="confirm">确定</view>
+          <view class="btns" v-if="showBottom">
+            <view class="cancel btn" @click="cancel" v-if="cancelShow">{{ cancelText }}</view>
+            <view class="confirm btn" @click="confirm" v-if="confirmShow">{{ confirmText }}</view>
           </view>
         </slot>
       </view>
@@ -37,6 +37,12 @@ export default {
   props: {
     title: { type: String, default: "提示" },
     content: { type: String, default: "是否关闭对话框？" },
+    showBottom: { type: Boolean, default: true },
+    cancelText: { type: String, default: "取消" },
+    confirmText: { type: String, default: "确定" },
+
+    cancelShow: { type: Boolean, default: true },
+    confirmShow: { type: Boolean, default: true },
   },
   methods: {
     open() {

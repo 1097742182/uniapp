@@ -14,7 +14,7 @@ export default {
 .PKHistoryDetail {
   position: relative;
   overflow: hidden;
-  height: 300px;
+  height: 340px;
   width: 100%;
   border-radius: 20px;
   padding: 20px;
