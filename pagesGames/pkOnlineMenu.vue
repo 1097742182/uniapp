@@ -53,12 +53,20 @@ export default {
     IceButton,
   },
   methods: {
-    gameBegin() {
+    async gameBegin() {
       this.$refs.MessageBox.open();
       this.$store.dispatch("setPKLevel");
+
+      const userData = { OpenId: this.OpenId, NickName: this.NickName };
+      const res = await this.$api.user.searchUser(userData);
+      console.log(res);
+      const id = res.roomId;
+
       setTimeout(() => {
-        // this.$Router.push({ name: "pkOnlineBegin", params: {} });
-      }, 100);
+        const path = `/pagesGames/pkOnlineBegin?id=${id}`;
+        this.$Router.push({ path: path });
+        this.$refs.MessageBox.close();
+      }, 1000);
     },
     shareFriendBtnClick() {
       // this.$refs.shareButton.click();

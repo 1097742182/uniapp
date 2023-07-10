@@ -37,6 +37,20 @@ export function getRoomId(data) {
   });
 }
 
+export function searchUser(data) {
+  return new Promise((resolve, reject) => {
+    const roomId = Math.random().toString().split(".")[1];
+    const resData = {
+      firstUser: "zhonglin",
+      firstOpenId: "123123123",
+      secondUser: "yanyan",
+      secondOpenId: "qweqweqwe",
+      roomId,
+    };
+    resolve(resData);
+  });
+}
+
 export function getCity() {
   return city;
 }

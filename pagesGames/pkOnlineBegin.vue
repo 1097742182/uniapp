@@ -20,6 +20,7 @@
         </view>
       </view>
     </view>
+    <startGameMessageBox></startGameMessageBox>
 
     <message-box-vue ref="MessageBox" content="对方暂未结束，可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
   </view>
@@ -35,7 +36,8 @@ import ButtonContent from "./components/gameBegin/ButtonContent.vue";
 import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
 import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
-import MessageBoxVue from "components/MessageBox/MessageBox.vue";
+import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
+import startGameMessageBox from "./components/pkOnlineBegin/startGameMessageBox";
 
 // 方法
 import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
@@ -43,15 +45,13 @@ import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
 export default {
   data() {
     return {
+      roomId: "",
       backgroundType: "blueBackground",
       secretNumbers: [1, 2, 3, 4], // 正确的数字序列
       gameOver: false, // 是否游戏结束
       gameStatus: false,
       count: 0, // 已猜测次数
       firstCheck: true, // 第一次检查，不可直接成功
-      subCount: -1, // 用户每次失败扣除的分数
-      currentSwiper: 0, // 默认展示的swiper
-      confirmSecondHistoryShow: false, // 巡检是否开启二次机会的popup
       successDialogShow: false, // 游戏成功动画
       errorDialogShow: false, // 游戏失败动画
       warningDialogShow: false, // 游戏失败动画
@@ -68,6 +68,7 @@ export default {
     SuccessDialog,
     WarningDialog,
     MessageBoxVue,
+    startGameMessageBox,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -79,20 +80,22 @@ export default {
       this.historyHeight = "430px";
     },
   },
+  onLoad: function (option) {
+    console.log(option);
+    this.roomId = option.id;
+  },
   created() {
     this._initSecretNumbers();
     this._initNumberList();
   },
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
-
-    const launchOptions = uni.getLaunchOptionsSync();
-    const query = launchOptions.query;
-    const roomId = query.id;
-    console.log(roomId);
+    this._initRoomDetail();
   },
 
   methods: {
+    _initRoomDetail() {
+    },
     _initSecretNumbers() {
       const nums = [];
       // NumberCount为store里面的数据，是可输入的总数
