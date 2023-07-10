@@ -13,6 +13,7 @@ function hasDuplicates(list) {
   return list.length !== new Set(list).size;
 }
 
+// 给list增加重复数字
 export function addDuplicate(list) {
   if (!hasDuplicates(list)) {
     const duplicateValue = list[Math.floor(Math.random() * list.length)];

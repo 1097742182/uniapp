@@ -12,7 +12,7 @@
 
     <!-- 如果是PK界面，则展示时间计算 -->
     <view class="right" v-if="PKLevelStatus">
-      <view class="userCount">关卡用时：<time-record-vue /> </view>
+      <view class="userCount">关卡用时：<time-record-vue ref="TimeRecordVue" /> </view>
     </view>
   </view>
 </template>
@@ -41,6 +41,9 @@ export default {
     _initUserInfo() {
       this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
       this.nickName = this.NickName || "";
+    },
+    stopTimer() {
+      this.$refs.TimeRecordVue.stopTimer();
     },
   },
 };

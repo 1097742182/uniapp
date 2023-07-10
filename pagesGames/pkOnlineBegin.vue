@@ -2,7 +2,7 @@
   <view class="gameBegin">
     <cl-header :title="GameBeginTitle" :transparent="true" />
     <view class="content">
-      <user-info :backgroundType="backgroundType"></user-info>
+      <user-info ref="UserInfo" :backgroundType="backgroundType"></user-info>
       <number-content :gameOver="gameOver" :backgroundType="backgroundType"></number-content>
 
       <new-history-number-content />
@@ -14,8 +14,14 @@
         <view style="width: 200px" v-if="!gameOver">
           <button type="primary" class="submitClass" @click="checkAnswer">提交</button>
         </view>
+
+        <view style="width: 200px" v-if="gameOver">
+          <button type="primary" class="submitClass" @click="backToMenuBtnClick()">返回菜单</button>
+        </view>
       </view>
     </view>
+
+    <message-box-vue ref="secluded" content="对方暂未结束，可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
   </view>
 </template>
 
@@ -29,6 +35,7 @@ import ButtonContent from "./components/gameBegin/ButtonContent.vue";
 import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
 import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
+import MessageBoxVue from "components/MessageBox/MessageBox.vue";
 
 // 方法
 import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
@@ -60,6 +67,7 @@ export default {
     ErrorDialog,
     SuccessDialog,
     WarningDialog,
+    MessageBoxVue,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -97,6 +105,12 @@ export default {
         numberList.push("");
       }
       uni.$u.vuex("NumberList", numberList);
+    },
+    backToMenuBtnClick() {
+      this.$refs.secluded.open();
+    },
+    messageBoxConfirm() {
+      uni.navigateBack({ delta: 1 });
     },
     // 检查用户输入数字并显示结果
     checkAnswer() {
@@ -181,10 +195,12 @@ export default {
         this.gameOver = true;
         this.successDialogShow = true;
         this.gameStatus = true; // true代表游戏胜利
+        this.$refs.UserInfo.stopTimer();
         this._setCurrentLevelNumberResult(); // 展示答案出来
       } else if (this.count === this.HistoryNumberCount) {
         this.gameOver = true;
         this.errorDialogShow = true; // 如果已经开启了二次机会，则不显示
+        this.$refs.UserInfo.stopTimer();
         this._setCurrentLevelNumberResult(); // 如果已经用了第二次机会，则直接显示答案
         this.gameStatus = false; // false代表输掉游戏
       }
