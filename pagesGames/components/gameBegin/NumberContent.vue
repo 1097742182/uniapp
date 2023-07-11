@@ -22,6 +22,7 @@
         @open="open"
         :closeable="true"
         round="20"
+        :zIndex="20000"
         :safeAreaInsetBottom="false"
       >
         <view class="popup">

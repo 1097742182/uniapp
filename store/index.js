@@ -1,4 +1,5 @@
 import Vue from "vue";
+import PkOnline from "./modules/pkOnline";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
@@ -328,7 +329,9 @@ const store = new Vuex.Store({
       commit("setMusicPlayer", musicPlayer);
     },
   },
-  modules: {},
+  modules: {
+    PkOnline,
+  },
 });
 
 // 从缓存中取得相同的key进行覆盖操作

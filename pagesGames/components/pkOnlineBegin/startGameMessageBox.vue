@@ -1,9 +1,25 @@
 <template>
   <view class="startGameMessageBox">
-    <MessageBox ref="startGame">
+    <MessageBox ref="startGame" title="对战详情">
       <view slot="body" class="content">
-        <view class="user1"> </view>
-        <view class="user2"></view>
+        <view class="user1 user">
+          <view class="username">{{ firstUser }}</view>
+          <view v-if="user1Status" class="userStatus">
+            <u-icon name="checkbox-mark" size="20" color="#39b844"></u-icon>
+          </view>
+        </view>
+        <view>VS</view>
+        <view class="user2 user">
+          <view class="username">{{ secondUser }} </view>
+          <view v-if="user2Status" class="userStatus">
+            <u-icon name="checkbox-mark" size="20" color="#39b844"></u-icon>
+          </view>
+        </view>
+      </view>
+
+      <view slot="bottom">
+        <button v-if="!readyStatus" class="ready" @click="readyBtnClick()">准备</button>
+        <button v-if="readyStatus" class="beready" @click="gameBeginBtnClick()">开始游戏</button>
       </view>
     </MessageBox>
   </view>
@@ -12,10 +28,42 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      firstUser: "",
+      secondUser: "",
+      readyStatus: false,
+      user1Status: false,
+      user2Status: false,
+    };
   },
   mounted() {
     this.$refs.startGame.open();
+    this._initUserDetail();
+    setTimeout(() => {
+      this.user2Status = true;
+    }, 1000);
+  },
+  methods: {
+    _initUserDetail() {
+      const roomDetail = this.PkOnline.RoomDetail;
+      console.log(roomDetail);
+      this.firstUser = this.NickName;
+
+      // 用户肯定是在firstUser或者secondUser，firstUser肯定是自己，那么secdond就是对手
+      if (this.firstUser === roomDetail.firstUser) this.secondUser = roomDetail.secondUser;
+      else this.secondUser = roomDetail.firstUser;
+
+      this.secondUser = this.secondUser ? this.secondUser : "user";
+    },
+    readyBtnClick() {
+      // this.$refs.startGame.close();
+      this.readyStatus = true;
+      this.user1Status = true;
+    },
+    gameBeginBtnClick() {
+      this.$refs.startGame.close();
+      uni.$emit("$gameBegin");
+    },
   },
 };
 </script>
@@ -23,5 +71,28 @@ export default {
 <style lang="scss" scoped>
 .content {
   display: flex;
+  justify-content: space-around;
+  height: 100px;
+  align-items: center;
+}
+
+.ready {
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
+  color: #ffffff;
+}
+
+.beready {
+  background: linear-gradient(0deg, rgb(0, 238, 48) 0%, rgb(51, 220, 85) 100%);
+  color: #ffffff;
+}
+
+.user {
+  position: relative;
+
+  .userStatus {
+    position: absolute;
+    right: -25px;
+    top: 2px;
+  }
 }
 </style>

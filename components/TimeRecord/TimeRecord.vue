@@ -26,7 +26,9 @@ export default {
     },
   },
   mounted() {
-    this.startTimer();
+    uni.$on("$gameBegin", () => {
+      this.startTimer();
+    });
   },
   methods: {
     startTimer() {

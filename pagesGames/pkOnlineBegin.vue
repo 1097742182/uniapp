@@ -22,7 +22,7 @@
     </view>
     <startGameMessageBox></startGameMessageBox>
 
-    <message-box-vue ref="MessageBox" content="对方暂未结束，可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
+    <message-box-vue ref="MessageBox" content="可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
   </view>
 </template>
 
@@ -93,9 +93,22 @@ export default {
     this._initRoomDetail();
   },
 
+  // onUnload() {
+  //   uni.showModal({
+  //     title: "提示",
+  //     content: "确定要离开当前页面吗？",
+  //     success: (res) => {
+  //       if (res.confirm) {
+  //         uni.navigateBack();
+  //       } else if (res.cancel) {
+  //         uni.navigateBack(false);
+  //       }
+  //     },
+  //   });
+  // },
+
   methods: {
-    _initRoomDetail() {
-    },
+    _initRoomDetail() {},
     _initSecretNumbers() {
       const nums = [];
       // NumberCount为store里面的数据，是可输入的总数

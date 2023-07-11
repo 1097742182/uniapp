@@ -6,6 +6,7 @@
       @open="open"
       mode="center"
       :safeAreaInsetBottom="false"
+      :closeOnClickOverlay="false"
       customStyle="border-radius: 16rpx"
     >
       <view class="MessageBox">

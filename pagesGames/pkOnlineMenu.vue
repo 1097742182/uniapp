@@ -61,6 +61,7 @@ export default {
       const res = await this.$api.user.searchUser(userData);
       console.log(res);
       const id = res.roomId;
+      this.$store.commit("PkOnline/SET_RoomDetail", res);
 
       setTimeout(() => {
         const path = `/pagesGames/pkOnlineBegin?id=${id}`;
