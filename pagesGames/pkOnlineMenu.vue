@@ -16,7 +16,7 @@
       <view style="margin-bottom: 10px">
         <ice-button @click="gameBegin()" buttonText="开始PK" />
       </view>
-      <ice-button open-type="share" @click="shareFriendBtnClick()" buttonText="邀请好友" />
+      <ice-button open-type="share" buttonText="邀请好友" />
       <button class="shareButton" type="primary" open-type="share">好友PK</button>
     </view>
 
@@ -68,9 +68,6 @@ export default {
         this.$Router.push({ path: path });
         this.$refs.MessageBox.close();
       }, 1000);
-    },
-    shareFriendBtnClick() {
-      // this.$refs.shareButton.click();
     },
   },
 };

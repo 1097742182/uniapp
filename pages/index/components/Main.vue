@@ -74,7 +74,10 @@ export default {
       this.$Router.push({ name: "gameMenu", params: {} });
     },
     pkOnlineBtnClick() {
-      this.$Router.push({ name: "pkOnlineMenu", params: {} });
+      this.$store.dispatch("PkOnline/initPkOnlineData");
+      setTimeout(() => {
+        this.$Router.push({ name: "pkOnlineMenu", params: {} });
+      }, 100);
     },
 
     close() {
