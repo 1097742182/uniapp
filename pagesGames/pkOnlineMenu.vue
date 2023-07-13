@@ -66,11 +66,11 @@ export default {
       const roomDetail = await this.$api.user.searchUser(userData);
 
       roomDetail["gameStatus"] = "myLoading";
-      roomDetail["firstStep"] = "0";
+      roomDetail["firstStep"] = 0;
       roomDetail["firstUseTime"] = "00:00";
       roomDetail["firstUserStatus"] = false;
-      roomDetail["secondStep"] = "0";
-      roomDetail["secondUseTime"] = "00:00";
+      roomDetail["secondStep"] = 4;
+      roomDetail["secondUseTime"] = "01:00";
       roomDetail["secondUserStatus"] = false;
       roomDetail["beginTime"] = formatDate(new Date());
 

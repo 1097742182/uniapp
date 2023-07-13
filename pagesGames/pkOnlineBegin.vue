@@ -40,7 +40,7 @@ import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
 import startGameMessageBox from "./components/pkOnlineBegin/startGameMessageBox";
 
 // 方法
-import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
+import { equals, addDuplicate, checkNumberRight, checkPkGameStatus } from "@/utils/index.js";
 
 export default {
   data() {
@@ -123,12 +123,17 @@ export default {
       const historyList = this.PkOnline.PkHistoryList;
       const roomDetail = this.PkOnline.RoomDetail;
 
-      if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
       roomDetail.firstUseTime = this.$refs.UserInfo.getTimer(); // 获取游戏时间
 
       // 如果用户游戏已经结束，则赋值firstStep
       if (roomDetail.firstUserStatus) roomDetail.firstStep = this.HistoryNumberList.length;
 
+      // 判断游戏是否胜利
+      if (roomDetail.firstStep != 0) {
+        roomDetail.gameStatus = checkPkGameStatus(roomDetail);
+      }
+
+      if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
       historyList.push(roomDetail);
       this.$store.commit("PkOnline/SET_PkHistoryList", historyList);
     },

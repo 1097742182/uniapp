@@ -84,6 +84,7 @@ export function checkNumberRight(CurrentLevelType, data) {
   return { A, B, numberListStatus };
 }
 
+// 格式化日期
 export function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -93,4 +94,39 @@ export function formatDate(date) {
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+function compareTime(time1, time2) {
+  const [hour1, minute1] = time1.split(":");
+  const [hour2, minute2] = time2.split(":");
+  const date1 = new Date(0, 0, 0, hour1, minute1);
+  const date2 = new Date(0, 0, 0, hour2, minute2);
+
+  // 比较时间差
+  if (date1.getTime() <= date2.getTime()) {
+    return true;
+  } else if (date1.getTime() > date2.getTime()) {
+    return false;
+  }
+}
+
+// 判断游戏是否胜利
+export function checkPkGameStatus(roomDetail) {
+  let gameStatus = "success";
+  const firstStep = roomDetail.firstStep;
+  const secondStep = roomDetail.secondStep;
+
+  if (firstStep < secondStep) gameStatus = "success";
+  if (firstStep > secondStep) gameStatus = "failed";
+
+  if (firstStep == secondStep) {
+    const firstUseTime = roomDetail.firstUseTime;
+    const secondUseTime = roomDetail.secondUseTime;
+
+    const timeStatus = compareTime(firstUseTime, secondUseTime);
+    if (timeStatus) gameStatus = "success";
+    else gameStatus = "failed";
+  }
+
+  return gameStatus;
 }
