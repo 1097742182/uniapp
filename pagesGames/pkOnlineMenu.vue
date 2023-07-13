@@ -32,6 +32,8 @@ import PKHistoryDetailVue from "./components/pkOnlineMenu/PKHistoryDetail/PKHist
 import UserDetailCard from "./components/pkOnlineMenu/UserDetailCard/UserDetailCard.vue";
 import IceButton from "@/components/IceButton/IceButton.vue";
 
+import { formatDate } from "@/utils/index.js";
+
 export default {
   data() {
     return {};
@@ -52,16 +54,28 @@ export default {
     PKHistoryDetailVue,
     IceButton,
   },
+  mounted() {
+    this.$store.dispatch("PkOnline/initPkOnlineData");
+  },
   methods: {
     async gameBegin() {
       this.$refs.MessageBox.open();
       this.$store.dispatch("setPKLevel");
 
       const userData = { OpenId: this.OpenId, NickName: this.NickName };
-      const res = await this.$api.user.searchUser(userData);
-      console.log(res);
-      const id = res.roomId;
-      this.$store.commit("PkOnline/SET_RoomDetail", res);
+      const roomDetail = await this.$api.user.searchUser(userData);
+
+      roomDetail["gameStatus"] = "myLoading";
+      roomDetail["firstStep"] = "0";
+      roomDetail["firstUseTime"] = "00:00";
+      roomDetail["firstUserStatus"] = false;
+      roomDetail["secondStep"] = "0";
+      roomDetail["secondUseTime"] = "00:00";
+      roomDetail["secondUserStatus"] = false;
+      roomDetail["beginTime"] = formatDate(new Date());
+
+      const id = roomDetail.roomId;
+      this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);
 
       setTimeout(() => {
         const path = `/pagesGames/pkOnlineBegin?id=${id}`;

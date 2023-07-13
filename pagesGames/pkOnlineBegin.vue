@@ -91,21 +91,13 @@ export default {
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
     this._initRoomDetail();
+    console.log(this.PkOnline);
   },
 
-  // onUnload() {
-  //   uni.showModal({
-  //     title: "提示",
-  //     content: "确定要离开当前页面吗？",
-  //     success: (res) => {
-  //       if (res.confirm) {
-  //         uni.navigateBack();
-  //       } else if (res.cancel) {
-  //         uni.navigateBack(false);
-  //       }
-  //     },
-  //   });
-  // },
+  // 离开界面时
+  onUnload() {
+    this.setGameDataToHistory(); // 离开界面时，将游戏数据传输到历史数据中
+  },
 
   methods: {
     _initRoomDetail() {},
@@ -126,6 +118,19 @@ export default {
         numberList.push("");
       }
       uni.$u.vuex("NumberList", numberList);
+    },
+    setGameDataToHistory() {
+      const historyList = this.PkOnline.PkHistoryList;
+      const roomDetail = this.PkOnline.RoomDetail;
+
+      if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
+      roomDetail.firstUseTime = this.$refs.UserInfo.getTimer(); // 获取游戏时间
+
+      // 如果用户游戏已经结束，则赋值firstStep
+      if (roomDetail.firstUserStatus) roomDetail.firstStep = this.HistoryNumberList.length;
+
+      historyList.push(roomDetail);
+      this.$store.commit("PkOnline/SET_PkHistoryList", historyList);
     },
     backToMenuBtnClick() {
       this.$refs.MessageBox.open();
@@ -216,12 +221,14 @@ export default {
         this.gameOver = true;
         this.successDialogShow = true;
         this.gameStatus = true; // true代表游戏胜利
-        this.$refs.UserInfo.stopTimer();
+        uni.$emit("$stopTimer");
+        this.PkOnline.RoomDetail.firstUserStatus = true;
         this._setCurrentLevelNumberResult(); // 展示答案出来
       } else if (this.count === this.HistoryNumberCount) {
         this.gameOver = true;
         this.errorDialogShow = true; // 如果已经开启了二次机会，则不显示
-        this.$refs.UserInfo.stopTimer();
+        uni.$emit("$stopTimer");
+        this.PkOnline.RoomDetail.firstUserStatus = false;
         this._setCurrentLevelNumberResult(); // 如果已经用了第二次机会，则直接显示答案
         this.gameStatus = false; // false代表输掉游戏
       }

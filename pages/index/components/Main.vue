@@ -74,7 +74,8 @@ export default {
       this.$Router.push({ name: "gameMenu", params: {} });
     },
     pkOnlineBtnClick() {
-      this.$store.dispatch("PkOnline/initPkOnlineData");
+      if (!this.NickName) return uni.$showMsg("请先填写用户名");
+
       setTimeout(() => {
         this.$Router.push({ name: "pkOnlineMenu", params: {} });
       }, 100);

@@ -213,6 +213,7 @@ const store = new Vuex.Store({
     _setDefaultLevelValue({ commit }) {
       commit("SET_SecondHistory", false);
       commit("SET_PKLevelStatus", false);
+      commit("SET_CurrentIndex", 0);
       commit("SET_CurrentLevelNumberResult", []);
       commit("SET_CurrentLevelNumberResultShow", false);
     },

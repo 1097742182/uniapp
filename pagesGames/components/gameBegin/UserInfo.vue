@@ -42,8 +42,8 @@ export default {
       this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
       this.nickName = this.NickName || "";
     },
-    stopTimer() {
-      this.$refs.TimeRecordVue.stopTimer();
+    getTimer() {
+      return this.$refs.TimeRecordVue.getTimer();
     },
   },
 };

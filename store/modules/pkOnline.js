@@ -1,3 +1,5 @@
+import { formatDate } from "@/utils/index.js";
+
 const state = {
   UserGameDetail: [
     { content: "比赛次数", value: 0 },
@@ -9,27 +11,18 @@ const state = {
   PkHistoryList: [
     {
       firstUser: "zhonglin",
-      firstOpenId: "123123123",
-      firstStep: 10,
+      firstOpenId: "123121231233123",
+      firstStep: 0,
       firstUseTime: "02:20",
+      firstUserStatus: "false",
       secondUser: "yanyan",
       secondOpenId: "qweqweqwe",
       secondStep: 5,
       secondUseTime: "01:20",
-      roomId: "123123123",
-      gameStatus: true,
-    },
-    {
-      firstUser: "zhonglin",
-      firstOpenId: "123123123",
-      firstStep: 10,
-      firstUseTime: "02:20",
-      secondUser: "yanyan",
-      secondOpenId: "qweqweqwe",
-      secondStep: 5,
-      secondUseTime: "01:20",
-      roomId: "123123123",
-      gameStatus: false,
+      secondUserStatus: "false",
+      roomId: "12312312312123123",
+      gameStatus: "success",
+      beginTime: formatDate(new Date()),
     },
   ],
 };
@@ -43,18 +36,30 @@ const mutations = {
   },
   SET_PkHistoryList: (state, PkHistoryList) => {
     state.PkHistoryList = PkHistoryList;
+    uni.setStorageSync("PkHistoryList", PkHistoryList);
   },
 };
 
 const actions = {
   initPkOnlineData({ commit, dispatch }) {
     dispatch("initUserGameDetail");
+    dispatch("initPkHistoryList");
   },
+
+  // 初始化用户PK记录
   initUserGameDetail({ state, commit }) {
     let UserGameDetail = uni.getStorageSync("UserGameDetail");
     if (UserGameDetail) {
-      UserGameDetail = JSON.parse(UserGameDetail);
       commit("SET_UserGameDetail", UserGameDetail);
+    }
+  },
+
+  // 初始化PK历史记录
+  initPkHistoryList({ state, commit }) {
+    let PkHistoryList = uni.getStorageSync("PkHistoryList");
+    console.log(PkHistoryList);
+    if (PkHistoryList) {
+      commit("SET_PkHistoryList", PkHistoryList);
     }
   },
 };

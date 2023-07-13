@@ -29,6 +29,10 @@ export default {
     uni.$on("$gameBegin", () => {
       this.startTimer();
     });
+
+    uni.$on("$stopTimer", () => {
+      this.stopTimer();
+    });
   },
   methods: {
     startTimer() {
@@ -45,6 +49,9 @@ export default {
     },
     resetTimer() {
       this.startTime = null;
+    },
+    getTimer() {
+      return this.displayTime;
     },
   },
 };
