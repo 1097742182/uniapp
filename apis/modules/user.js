@@ -1,4 +1,5 @@
 import { city } from "./city.js";
+import { formatDate } from "@/utils/index.js";
 
 // test user request api
 const http = uni.$u.http;
@@ -43,8 +44,16 @@ export function searchUser(data) {
     const resData = {
       firstUser: "zhonglin",
       firstOpenId: "123123123",
+      firstStep: 0,
+      firstUseTime: "00:00",
+      firstUserStatus: false,
       secondUser: "yanyan",
       secondOpenId: "qweqweqwe",
+      secondStep: 8,
+      secondUseTime: "03:00",
+      secondUserStatus: false,
+      gameStatus: "myLoading",
+      beginTime: formatDate(new Date()),
       roomId,
     };
     resolve(resData);

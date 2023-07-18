@@ -65,15 +65,6 @@ export default {
       const userData = { OpenId: this.OpenId, NickName: this.NickName };
       const roomDetail = await this.$api.user.searchUser(userData);
 
-      roomDetail["gameStatus"] = "myLoading";
-      roomDetail["firstStep"] = 0;
-      roomDetail["firstUseTime"] = "00:00";
-      roomDetail["firstUserStatus"] = false;
-      roomDetail["secondStep"] = 4;
-      roomDetail["secondUseTime"] = "01:00";
-      roomDetail["secondUserStatus"] = false;
-      roomDetail["beginTime"] = formatDate(new Date());
-
       const id = roomDetail.roomId;
       this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);
 

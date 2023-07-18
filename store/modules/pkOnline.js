@@ -8,23 +8,7 @@ const state = {
     { content: "最少步数", value: 0 },
   ],
   RoomDetail: {},
-  PkHistoryList: [
-    {
-      firstUser: "zhonglin",
-      firstOpenId: "123121231233123",
-      firstStep: 0,
-      firstUseTime: "02:20",
-      firstUserStatus: "false",
-      secondUser: "yanyan",
-      secondOpenId: "qweqweqwe",
-      secondStep: 5,
-      secondUseTime: "01:20",
-      secondUserStatus: "false",
-      roomId: "12312312312123123",
-      gameStatus: "success",
-      beginTime: formatDate(new Date()),
-    },
-  ],
+  PkHistoryList: [],
 };
 
 const mutations = {
