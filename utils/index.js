@@ -130,3 +130,8 @@ export function checkPkGameStatus(roomDetail) {
 
   return gameStatus;
 }
+
+// 计算百分比
+export function calculatePercentage(num1, num2) {
+  return ((num1 / num2) * 100).toFixed(2) + "%";
+}

@@ -67,12 +67,24 @@ export default {
 
       const id = roomDetail.roomId;
       this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);
+      // this._addPkGameCount();
 
       setTimeout(() => {
         const path = `/pagesGames/pkOnlineBegin?id=${id}`;
         this.$Router.push({ path: path });
         this.$refs.MessageBox.close();
       }, 1000);
+    },
+    // Pk游戏次数+1
+    _addPkGameCount() {
+      const UserGameDetail = this.PkOnline.UserGameDetail;
+      console.log(UserGameDetail);
+      const gameCount = UserGameDetail.filter((item) => item.content === "比赛次数");
+      const currentGameCount = gameCount[0].value;
+      gameCount[0].value = currentGameCount + 1;
+      // 将数据保存到vuex,storage中
+      this.$store.commit("PkOnline/SET_UserGameDetail", UserGameDetail);
+      this.$store.dispatch("PkOnline/setRoomDetailActions", UserGameDetail);
     },
   },
 };

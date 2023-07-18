@@ -11,12 +11,13 @@ import GameDetailItem from "./components/GameDetailItem.vue";
 
 export default {
   data() {
-    return {
-      gameDetail: [],
-    };
+    return {};
   },
-  mounted() {
-    this.gameDetail = this.PkOnline.UserGameDetail;
+  mounted() {},
+  computed: {
+    gameDetail() {
+      return this.PkOnline.UserGameDetail;
+    },
   },
   components: {
     GameDetailItem,

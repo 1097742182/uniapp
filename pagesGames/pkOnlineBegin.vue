@@ -119,6 +119,7 @@ export default {
       }
       uni.$u.vuex("NumberList", numberList);
     },
+    // 离开界面时，将游戏数据传输到历史数据中
     setGameDataToHistory() {
       const historyList = this.PkOnline.PkHistoryList;
       const roomDetail = this.PkOnline.RoomDetail;
@@ -135,7 +136,8 @@ export default {
 
       if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
       historyList.push(roomDetail);
-      this.$store.commit("PkOnline/SET_PkHistoryList", historyList);
+      this.$store.commit("PkOnline/SET_PkHistoryList", historyList); // 将历史数据保存到vuex中，
+      this.$store.dispatch("PkOnline/setRoomDetailActions", roomDetail);
     },
     backToMenuBtnClick() {
       this.$refs.MessageBox.open();

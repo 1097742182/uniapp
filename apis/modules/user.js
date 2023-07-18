@@ -38,6 +38,13 @@ export function getRoomId(data) {
   });
 }
 
+function _searchUser() {
+  const random = Math.random();
+  console.log(random);
+  if (random > 0.5) return true;
+  else return false;
+}
+
 export function searchUser(data) {
   return new Promise((resolve, reject) => {
     const roomId = Math.random().toString().split(".")[1];
@@ -56,7 +63,14 @@ export function searchUser(data) {
       beginTime: formatDate(new Date()),
       roomId,
     };
-    resolve(resData);
+
+    const timeInterval = setInterval(() => {
+      const status = _searchUser();
+      if (status) {
+        clearInterval(timeInterval);
+        resolve(resData);
+      }
+    }, 1000);
   });
 }
 
