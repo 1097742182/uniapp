@@ -64,6 +64,7 @@ export default {
 
       const userData = { OpenId: this.OpenId, NickName: this.NickName };
       const roomDetail = await this.$api.user.searchUser(userData);
+      roomDetail.firstUser = this.NickName;
 
       const id = roomDetail.roomId;
       this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);

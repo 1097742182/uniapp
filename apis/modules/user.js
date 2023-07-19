@@ -1,5 +1,6 @@
 import { city } from "./city.js";
-import { formatDate } from "@/utils/index.js";
+import { nameList } from "./name.js";
+import { formatDate, generateRandomTime, generateRandomNumber } from "@/utils/index.js";
 
 // test user request api
 const http = uni.$u.http;
@@ -41,7 +42,7 @@ export function getRoomId(data) {
 function _searchUser() {
   const random = Math.random();
   console.log(random);
-  if (random > 0.5) return true;
+  if (random > 0.6) return random.toString().split(".")[1][0];
   else return false;
 }
 
@@ -63,6 +64,11 @@ export function searchUser(data) {
       beginTime: formatDate(new Date()),
       roomId,
     };
+
+    const randomNameNumber = Math.floor(Math.random() * nameList.length);
+    resData.secondUser = nameList[randomNameNumber];
+    resData.secondUseTime = generateRandomTime();
+    resData.secondStep = generateRandomNumber();
 
     const timeInterval = setInterval(() => {
       const status = _searchUser();

@@ -135,3 +135,36 @@ export function checkPkGameStatus(roomDetail) {
 export function calculatePercentage(num1, num2) {
   return ((num1 / num2) * 100).toFixed(2) + "%";
 }
+
+// 生成随机时间
+export function generateRandomTime() {
+  var hours = Math.floor(Math.random() * 5) + 1; // 生成1到5之间的随机数作为小时数
+  var minutes = Math.floor(Math.random() * 60); // 生成0到59之间的随机数作为分钟数
+
+  // 格式化时间，保证小时和分钟都是两位数
+  var formattedHours = hours < 10 ? "0" + hours : hours;
+  var formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+  return formattedHours + ":" + formattedMinutes; // 返回生成的时间
+}
+
+// 生成随机数字
+export function generateRandomNumber() {
+  var randomNumber = Math.random();
+  if (randomNumber < 0.1) {
+    // 10 的概率生成数字5
+    return 5;
+  } else if (randomNumber < 0.3) {
+    // 20 的概率生成数字6
+    return 6;
+  } else if (randomNumber < 0.5) {
+    // 20 的概率生成数字7
+    return 7;
+  } else if (randomNumber < 0.8) {
+    // 30 的概率生成数字8,9或10
+    return Math.floor(Math.random() * 3) + 8;
+  } else {
+    // 20 的概率生成数字11
+    return 0;
+  }
+}
