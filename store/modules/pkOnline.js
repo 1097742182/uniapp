@@ -1,4 +1,4 @@
-import { formatDate } from "@/utils/index.js";
+import { formatDate, checkHistoryItemGameStatus } from "@/utils/index.js";
 
 const state = {
   UserGameDetail: [
@@ -48,6 +48,7 @@ const actions = {
     }
   },
 
+  // 当游戏结束时，将数据保存到UserGameDetail中
   setRoomDetailActions({ state, commit }, roomDetail) {
     const gameCount = state.UserGameDetail.filter((item) => item.content === "比赛次数")[0];
     const winCount = state.UserGameDetail.filter((item) => item.content === "胜场次数")[0];
@@ -74,6 +75,14 @@ const actions = {
     winPercent.value = ((winCount.value / gameCount.value) * 100).toFixed(2) + "%";
 
     commit("SET_UserGameDetail", state.UserGameDetail);
+  },
+
+  reloadPkHistoryList({ state, commit }) {
+    for (let item of state.PkHistoryList) {
+      if (item.gameStatus === "loading") {
+        checkHistoryItemGameStatus(item);
+      }
+    }
   },
 };
 

@@ -96,6 +96,7 @@ export function formatDate(date) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+// 判断时间大小
 function compareTime(time1, time2) {
   const [hour1, minute1] = time1.split(":");
   const [hour2, minute2] = time2.split(":");
@@ -110,8 +111,46 @@ function compareTime(time1, time2) {
   }
 }
 
+// 判断时间是否超过当前时间
+function isFutureTime(dateTime, timeToAdd) {
+  var currentDateTime = new Date(); // 获取当前时间
+  var futureDateTime = new Date(dateTime); // 将传入的日期时间字符串转换为日期对象
+
+  // 将时间字符串转换为分钟和秒数
+  var timeParts = timeToAdd.split(":");
+  var minutesToAdd = parseInt(timeParts[0]);
+  var secondsToAdd = parseInt(timeParts[1]);
+
+  // 在传入的日期时间上添加分钟和秒数
+  futureDateTime.setMinutes(futureDateTime.getMinutes() + minutesToAdd);
+  futureDateTime.setSeconds(futureDateTime.getSeconds() + secondsToAdd);
+
+  // 比较现在时间和追加时间后的日期时间
+  if (futureDateTime > currentDateTime) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// 查看时间是否valid
+function checkTimeValid(roomDetail) {
+  const firstUseTime = roomDetail.firstUseTime;
+  const secondUseTime = roomDetail.secondUseTime;
+  const beginTime = roomDetail.beginTime;
+
+  // 判断第二个用户的时间是否为未来时间
+  const secondStatus = isFutureTime(beginTime, secondUseTime);
+  if (secondStatus) return false; // 如果是未来时间，则返回false
+  return true;
+}
+
 // 判断游戏是否胜利
 export function checkPkGameStatus(roomDetail) {
+  // 先检查时间是否符合，如果不符合，则直接返回loading
+  const valid = checkTimeValid(roomDetail);
+  if (!valid) return "loading";
+
   let gameStatus = "success";
   const firstStep = roomDetail.firstStep;
   const secondStep = roomDetail.secondStep;
@@ -168,4 +207,46 @@ export function generateRandomNumber() {
     // 20 的概率生成数字11
     return 0;
   }
+}
+
+// 查看历史记录为loading状态的historyItem
+export function checkHistoryItemGameStatus(historyItem) {
+  if (historyItem.gameStatus !== "loading") return;
+  const firstUseTime = historyItem.firstUseTime;
+  const secondUseTime = historyItem.secondUseTime;
+  const beginTime = historyItem.beginTime;
+
+  // 判断第二个用户的时间是否为未来时间
+  const secondStatus = isFutureTime(beginTime, secondUseTime);
+  if (!secondStatus) {
+    historyItem.gameStatus = checkPkGameStatus(historyItem);
+  }
+}
+
+// 防抖函数
+export function debounce(func, delay) {
+  var timer;
+  return function () {
+    var context = this;
+    var args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      func.apply(context, args);
+    }, delay);
+  };
+}
+
+// 节流函数
+export function throttle(func, delay = 10 * 1000) {
+  var timer;
+  return function () {
+    var context = this;
+    var args = arguments;
+    if (!timer) {
+      timer = setTimeout(function () {
+        func.apply(context, args);
+        timer = null;
+      }, delay);
+    }
+  };
 }

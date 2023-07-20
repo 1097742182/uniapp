@@ -3,25 +3,7 @@
     <view class="header">
       <view>历史记录</view>
       <view v-show="false">查看更多 ></view>
-    </view>
-
-    <view class="content" v-if="historyList.length != 0" v-show="false">
-      <view class="historyItem" v-for="item in historyList" :key="item.roomId">
-        <view class="title">{{ item.firstUser }} <text style="margin: 0 16px">VS</text> {{ item.secondUser }}</view>
-        <view class="tagClass">
-          <u-tag text="胜利" v-if="item.gameStatus === 'success'" type="success"></u-tag>
-          <u-tag text="失败" v-else-if="item.gameStatus === 'failed'" type="error"></u-tag>
-          <u-tag text="进行中" v-else-if="item.gameStatus === 'loading'" type="warning"></u-tag>
-        </view>
-
-        <view class="useTime" style="margin-top: 6px">使用时间：{{ item.firstUseTime }}</view>
-        <view class="useStep" style="margin-top: 6px; position: relative; display: inline-block">
-          <view>使用步数：{{ item.firstStep }}</view>
-          <view class="failedTagClass">
-            <u-tag text="闯关失败" v-if="item.firstStep == 0" type="error"></u-tag>
-          </view>
-        </view>
-      </view>
+      <view class="right"> <reload-icon size="28" showMsg="历史记录已刷新" @reloadSuccess="reloadSuccess" /> </view>
     </view>
 
     <view class="content" v-if="historyList.length != 0">
@@ -47,11 +29,13 @@
 
         <view class="right flexClass">
           <view style="margin-bottom: 6px" class="ellipsis-text">{{ item.secondUser }}</view>
-          <view v-if="item.secondStep != 0">{{ item.secondStep }}</view>
-          <view v-if="item.secondStep == 0">
+          <view v-if="item.gameStatus === 'loading'">~</view>
+          <view v-else-if="item.secondStep != 0">{{ item.secondStep }}</view>
+          <view v-else-if="item.secondStep == 0">
             <u-tag text="闯关失败" type="error"></u-tag>
           </view>
-          <view style="margin-top: 6px">{{ item.secondUseTime }}</view>
+          <view v-if="item.gameStatus === 'loading'">~</view>
+          <view v-else style="margin-top: 6px">{{ item.secondUseTime }}</view>
         </view>
       </view>
     </view>
@@ -63,28 +47,57 @@
 </template>
 
 <script>
+import ReloadIcon from "components/ReloadIcon/ReloadIcon.vue";
+import { throttle } from "@/utils/index.js";
+
 export default {
+  components: { ReloadIcon },
   data() {
     return {};
   },
   computed: {
     historyList() {
       // const history = this.PkOnline.PkHistoryList.slice(-3);
-      const history = this.PkOnline.PkHistoryList;
+      const history = JSON.parse(JSON.stringify(this.PkOnline.PkHistoryList));
       history.reverse();
       return history;
     },
   },
-  mounted() {},
+  mounted() {
+    this._checkHistoryItemGameStatus();
+  },
+
+  methods: {
+    // 检查是否有loading状态的历史记录
+    _checkHistoryItemGameStatus() {
+      console.log(123);
+      for (let item of this.PkOnline.PkHistoryList) {
+        if (item.gameStatus === "loading") {
+          this.$store.dispatch("PkOnline/reloadPkHistoryList");
+
+          // 如果还有loading的话，则过段时间再检查一次
+          throttle(this._checkHistoryItemGameStatus, 1000);
+          return;
+        }
+      }
+    },
+    // 重置历史记录
+    resetPkHistoryList() {
+      const PkHistoryList = [];
+      this.$store.commit("PkOnline/SET_PkHistoryList", PkHistoryList);
+    },
+    reloadSuccess() {
+      this.$store.dispatch("PkOnline/reloadPkHistoryList");
+      throttle(this._checkHistoryItemGameStatus, 1000);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .PKHistoryDetail {
   position: relative;
-  overflow: auto;
   // height: 340px;
-  height: 350px;
   width: 100%;
   border-radius: 20px;
   padding: 10px 20px;
@@ -99,35 +112,39 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    font-size: 18px;
+    padding-bottom: 10px;
   }
 
-  .historyItem {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    border-radius: 4px;
-    padding: 4px 20px;
-    margin: 13px 0;
+  .content {
+    height: 320px;
+    overflow: auto;
 
-    .flexClass {
+    .historyItem {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 75px;
-    }
+      justify-content: space-between;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 4px 20px;
+      margin-bottom: 13px;
 
-    .center {
-      position: relative;
-      padding-top: 20px;
+      .flexClass {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 75px;
+      }
 
-      .tagClass {
-        position: absolute;
-        right: 12px;
-        top: 1px;
-        display: block;
-        width: 50px;
+      .center {
+        position: relative;
+        padding-top: 2px;
+
+        .tagClass {
+          padding-top: 2px;
+          display: block;
+        }
       }
     }
   }

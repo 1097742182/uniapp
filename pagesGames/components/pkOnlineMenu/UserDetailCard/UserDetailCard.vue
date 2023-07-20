@@ -22,6 +22,18 @@ export default {
   components: {
     GameDetailItem,
   },
+  methods: {
+    // 重置用户比赛详情
+    resetUserGameDetail() {
+      const UserGameDetail = [
+        { content: "比赛次数", value: 0 },
+        { content: "胜场次数", value: 0 },
+        { content: "游戏胜率", value: "0%" },
+        { content: "最少步数", value: 0 },
+      ];
+      this.$store.commit("PkOnline/SET_UserGameDetail", UserGameDetail);
+    },
+  },
 };
 </script>
 

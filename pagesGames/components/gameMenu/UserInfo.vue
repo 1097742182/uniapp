@@ -25,6 +25,9 @@ export default {
       nickName: "",
     };
   },
+  props: {
+    resetStatus: { type: Boolean, default: true },
+  },
   computed: {
     avatarUrlState() {
       return this.AvatarUrl;
@@ -50,6 +53,9 @@ export default {
       this.nickName = this.NickName || "";
     },
     resetUserCount() {
+      this.$emit("resetBtnClick");
+      if (!this.resetStatus) return; // 如果resetStatus为false，则直接返回，不执行后面操作
+
       uni.showModal({
         cancelText: "取消", // 取消按钮的文字
         confirmText: "确认", // 确认按钮文字
