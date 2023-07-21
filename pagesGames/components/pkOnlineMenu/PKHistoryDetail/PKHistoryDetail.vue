@@ -48,7 +48,6 @@
 
 <script>
 import ReloadIcon from "components/ReloadIcon/ReloadIcon.vue";
-import { throttle } from "@/utils/index.js";
 
 export default {
   components: { ReloadIcon },
@@ -64,19 +63,18 @@ export default {
     },
   },
   mounted() {
-    this._checkHistoryItemGameStatus();
+    this.throttle();
   },
 
   methods: {
     // 检查是否有loading状态的历史记录
     _checkHistoryItemGameStatus() {
-      console.log(123);
       for (let item of this.PkOnline.PkHistoryList) {
         if (item.gameStatus === "loading") {
           this.$store.dispatch("PkOnline/reloadPkHistoryList");
 
           // 如果还有loading的话，则过段时间再检查一次
-          throttle(this._checkHistoryItemGameStatus, 1000);
+          setTimeout(() => this.throttle(), 1000);
           return;
         }
       }
@@ -88,7 +86,15 @@ export default {
     },
     reloadSuccess() {
       this.$store.dispatch("PkOnline/reloadPkHistoryList");
-      throttle(this._checkHistoryItemGameStatus, 1000);
+      this.throttle();
+    },
+    throttle() {
+      if (!this.timer) {
+        this.timer = setTimeout(() => {
+          this._checkHistoryItemGameStatus();
+          this.timer = null;
+        }, 5000);
+      }
     },
   },
 };
