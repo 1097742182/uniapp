@@ -1,12 +1,6 @@
 <template>
   <view class="HistoryNumberContent" ref="HistoryNumberContent" :style="'height:' + contentHeight">
-    <new-history-number-content-item
-      v-for="item in countList"
-      :value="item"
-      :key="item"
-      :ref="getRef()"
-      class="contentItem"
-    />
+    <new-history-number-content-item v-for="item in countList" :value="item" :key="item" :ref="getRef()" class="contentItem" />
   </view>
 </template>
 

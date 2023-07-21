@@ -5,7 +5,7 @@
       <user-info ref="UserInfo" :backgroundType="backgroundType"></user-info>
       <number-content :gameOver="gameOver" :backgroundType="backgroundType"></number-content>
 
-      <new-history-number-content />
+      <new-history-number-content style="position: relative" />
 
       <!-- 当需要展示答案时，按钮就不显示了 -->
       <button-content v-if="!CurrentLevelNumberResultShow" :backgroundType="backgroundType"></button-content>

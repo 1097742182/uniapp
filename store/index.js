@@ -264,7 +264,7 @@ const store = new Vuex.Store({
     },
     setPKLevel({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
-      commit("SET_PKLevelStatus", true);
+      commit("SET_PKLevelStatus", true); // 标记为PK状态，可用于标记其他功能，例如开启计时
       commit("SET_NumberCount", 4);
       commit("SET_HistoryNumberCount", 10);
       commit("SET_ButtonCount", 10);
