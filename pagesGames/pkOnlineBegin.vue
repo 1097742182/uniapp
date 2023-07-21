@@ -21,6 +21,7 @@
       </view>
     </view>
     <startGameMessageBox></startGameMessageBox>
+    <gameResultPopupContentVue ref="gameResultPopupContentVue" />
 
     <message-box-vue ref="MessageBox" content="可在比赛记录查看PK结果" @confirm="messageBoxConfirm" />
   </view>
@@ -33,11 +34,9 @@ import NumberContent from "./components/gameBegin/NumberContent.vue";
 import HistoryNumberContent from "./components/gameBegin/HistoryNumberContent.vue";
 import NewHistoryNumberContent from "./components/gameBegin/NewHistoryNumberContent/NewHistoryNumberContent.vue";
 import ButtonContent from "./components/gameBegin/ButtonContent.vue";
-import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
-import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
-import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
 import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
 import startGameMessageBox from "./components/pkOnlineBegin/startGameMessageBox";
+import gameResultPopupContentVue from "./components/pkOnlineBegin/gameResultPopupContent.vue";
 
 // 方法
 import { equals, addDuplicate, checkNumberRight, checkPkGameStatus } from "@/utils/index.js";
@@ -52,7 +51,6 @@ export default {
       gameStatus: false,
       count: 0, // 已猜测次数
       firstCheck: true, // 第一次检查，不可直接成功
-      successDialogShow: false, // 游戏成功动画
       errorDialogShow: false, // 游戏失败动画
       warningDialogShow: false, // 游戏失败动画
       historyHeight: "355px",
@@ -64,11 +62,9 @@ export default {
     HistoryNumberContent,
     NewHistoryNumberContent,
     ButtonContent,
-    ErrorDialog,
-    SuccessDialog,
-    WarningDialog,
     MessageBoxVue,
     startGameMessageBox,
+    gameResultPopupContentVue,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -137,7 +133,7 @@ export default {
       if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
       historyList.push(roomDetail);
       this.$store.commit("PkOnline/SET_PkHistoryList", historyList); // 将历史数据保存到vuex中，
-      this.$store.dispatch("PkOnline/setRoomDetailActions", roomDetail);
+      this.$store.dispatch("PkOnline/checkUserGameDetailActions"); // 给用户PK记录进行计算
     },
     backToMenuBtnClick() {
       this.$refs.MessageBox.open();
@@ -226,14 +222,14 @@ export default {
       // 如果猜测次数已满10次或者已猜对，则游戏结束
       if (A === this.NumberCount) {
         this.gameOver = true;
-        this.successDialogShow = true;
+        this.$refs.gameResultPopupContentVue.success();
         this.gameStatus = true; // true代表游戏胜利
         uni.$emit("$stopTimer");
         this.PkOnline.RoomDetail.firstUserStatus = true;
         this._setCurrentLevelNumberResult(); // 展示答案出来
       } else if (this.count === this.HistoryNumberCount) {
         this.gameOver = true;
-        this.errorDialogShow = true; // 如果已经开启了二次机会，则不显示
+        this.$refs.gameResultPopupContentVue.error();
         uni.$emit("$stopTimer");
         this.PkOnline.RoomDetail.firstUserStatus = false;
         this._setCurrentLevelNumberResult(); // 如果已经用了第二次机会，则直接显示答案

@@ -16,8 +16,10 @@
       <view style="margin-bottom: 10px">
         <ice-button @click="gameBegin()" buttonText="开始PK" />
       </view>
-      <ice-button open-type="share" buttonText="邀请好友" />
-      <button class="shareButton" type="primary" open-type="share">好友PK</button>
+      <view v-show="false">
+        <ice-button open-type="share" buttonText="邀请好友" />
+        <button class="shareButton" type="primary" open-type="share">好友PK</button>
+      </view>
     </view>
 
     <MessageBox ref="MessageBox" :showBottom="true" :confirmShow="false" cancelText="取消匹配">
