@@ -182,6 +182,7 @@ const store = new Vuex.Store({
         commit("SET_UserCount", userCount);
       }
     },
+    // 根据接口返回的信息，更新用户数据
     updateUserInfoByInterfaceData({ state, commit, dispatch }, userInfo) {
       const openId = userInfo["openId"];
       const nickname = userInfo["nickname"];
@@ -271,14 +272,7 @@ const store = new Vuex.Store({
       commit("SET_LevelCount", 1000);
       setTimeout(() => commit("SET_GameBeginTitle", "线上PK"), 0);
     },
-    // 更新用户积分(旧)
-    ADD_UserCount({ state, commit }, LevelCount) {
-      let userCount = parseInt(state.UserCount);
-      userCount = userCount + parseInt(LevelCount);
 
-      if (userCount) commit("SET_UserCount", userCount);
-      if (userCount) uni.setStorageSync("UserCount", userCount);
-    },
     // 更新用户积分
     UPDATE_UserCount({ commit }, UserCount) {
       if (UserCount) commit("SET_UserCount", UserCount);
