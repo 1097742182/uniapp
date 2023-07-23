@@ -60,7 +60,7 @@ export function searchUser(data) {
       secondStep: 8,
       secondUseTime: "03:00",
       secondUserStatus: false,
-      gameStatus: "myLoading",
+      gameStatus: "loading",
       beginTime: formatDate(new Date()),
       roomId,
     };

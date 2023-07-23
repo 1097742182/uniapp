@@ -155,11 +155,13 @@ export function checkPkGameStatus(roomDetail) {
   const firstStep = roomDetail.firstStep;
   const secondStep = roomDetail.secondStep;
 
-  if (firstStep != 0 && secondStep == 0) gameStatus = "success"; // 如果用户成功了，但是对方没有成功
+  if (firstStep == 0) gameStatus = "failed"; // 如果用户失败了，则返回失败
+  else if (secondStep == 0) gameStatus = "success"; // 如果用户成功了，但是对方没有成功
   else if (firstStep < secondStep) gameStatus = "success"; // 如果该用户步数比对方少，则成功
   else if (firstStep > secondStep) gameStatus = "failed"; // 如果步数比对面多，则失败
 
-  if (firstStep == secondStep) {
+  // 如果步数不为0，并且相同，则判断时间
+  if (firstStep != 0 && firstStep == secondStep) {
     const firstUseTime = roomDetail.firstUseTime;
     const secondUseTime = roomDetail.secondUseTime;
 

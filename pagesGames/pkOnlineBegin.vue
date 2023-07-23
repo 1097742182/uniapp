@@ -130,7 +130,6 @@ export default {
         roomDetail.gameStatus = checkPkGameStatus(roomDetail);
       }
 
-      if (roomDetail.gameStatus === "myLoading") roomDetail.gameStatus = "failed";
       historyList.push(roomDetail);
       this.$store.commit("PkOnline/SET_PkHistoryList", historyList); // 将历史数据保存到vuex中，
       this.$store.dispatch("PkOnline/checkUserGameDetailActions"); // 给用户PK记录进行计算

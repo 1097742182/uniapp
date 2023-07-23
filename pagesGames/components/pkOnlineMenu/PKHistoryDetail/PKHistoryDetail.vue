@@ -66,15 +66,21 @@ export default {
     this.throttle();
   },
 
+  // 离开界面时
+  onUnload() {
+    clearInterval(this.timer);
+  },
+  destroyed() {
+    clearInterval(this.timer);
+  },
+
   methods: {
     // 检查是否有loading状态的历史记录
     _checkHistoryItemGameStatus() {
+      // console.log("监测历史中");
       for (let item of this.PkOnline.PkHistoryList) {
         if (item.gameStatus === "loading") {
           this.$store.dispatch("PkOnline/reloadPkHistoryList");
-
-          // 如果还有loading的话，则过段时间再检查一次
-          setTimeout(() => this.throttle(), 1000);
           return;
         }
       }
@@ -85,14 +91,13 @@ export default {
       this.$store.commit("PkOnline/SET_PkHistoryList", PkHistoryList);
     },
     reloadSuccess() {
-      this.$store.dispatch("PkOnline/reloadPkHistoryList");
-      this.throttle();
+      this._checkHistoryItemGameStatus();
     },
     throttle() {
+      this._checkHistoryItemGameStatus();
       if (!this.timer) {
-        this.timer = setTimeout(() => {
+        this.timer = setInterval(() => {
           this._checkHistoryItemGameStatus();
-          this.timer = null;
         }, 5000);
       }
     },

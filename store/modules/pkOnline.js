@@ -73,14 +73,11 @@ const actions = {
 
   reloadPkHistoryList({ state, commit, dispatch }) {
     for (let item of state.PkHistoryList) {
-      if (item.gameStatus === "loading") {
-        checkHistoryItemGameStatus(item);
-      }
+      if (item.gameStatus === "loading") checkHistoryItemGameStatus(item);
     }
 
     setTimeout(() => {
       commit("SET_PkHistoryList", state.PkHistoryList);
-
       setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录
     }, 1000);
   },
