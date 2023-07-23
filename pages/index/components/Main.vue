@@ -30,13 +30,15 @@
     <view class="u-demo-block">
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
-          <u-button @click="goPage(1)" type="primary">开始游戏</u-button>
+          <ice-button @click="goPage(1)" buttonText="开始游戏" />
+          <!-- <u-button @click="goPage(1)" type="primary">开始游戏</u-button> -->
         </view>
         <view class="u-page__button-item">
-          <u-button @click="pkOnlineBtnClick()" type="primary">线上PK</u-button>
+          <ice-button @click="pkOnlineBtnClick(1)" buttonText="线上PK" />
+          <!-- <u-button @click="pkOnlineBtnClick()" type="primary">线上PK</u-button> -->
         </view>
-        <view class="u-page__button-item">
-          <u-button @click="popupShow = true" type="primary">游戏规则</u-button>
+        <view class="u-page__button-item" style="display: flex; justify-content: center">
+          <view @click="popupShow = true" class="gameRule">游戏规则</view>
         </view>
       </view>
     </view>
@@ -50,6 +52,7 @@
 
 <script>
 import MainImage from "./MainImage.vue";
+import IceButton from "@/components/IceButton/IceButton.vue";
 
 export default {
   data() {
@@ -59,6 +62,7 @@ export default {
   },
   components: {
     MainImage,
+    IceButton,
   },
   mounted() {
     this.OneClickSubmitBtnClick();
@@ -242,5 +246,17 @@ export default {
     margin-right: 6px;
     margin-bottom: 4px;
   }
+}
+
+.gameRule {
+  background: #ffffff00;
+  border: none;
+  color: #000000;
+  border-bottom: 1px solid #636666; /* Dark Grey */
+  width: 85px;
+  padding-bottom: 8px;
+  height: 20px;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>
