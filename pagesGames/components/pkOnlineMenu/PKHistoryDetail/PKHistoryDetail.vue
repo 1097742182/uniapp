@@ -77,7 +77,7 @@ export default {
   methods: {
     // 检查是否有loading状态的历史记录
     _checkHistoryItemGameStatus() {
-      // console.log("监测历史中");
+      console.log("监测历史中");
       for (let item of this.PkOnline.PkHistoryList) {
         if (item.gameStatus === "loading") {
           this.$store.dispatch("PkOnline/reloadPkHistoryList");
@@ -98,7 +98,7 @@ export default {
       if (!this.timer) {
         this.timer = setInterval(() => {
           this._checkHistoryItemGameStatus();
-        }, 5000);
+        }, 10000);
       }
     },
   },

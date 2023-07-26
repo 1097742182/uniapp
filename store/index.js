@@ -191,8 +191,8 @@ const store = new Vuex.Store({
       const genderValue = userInfo["genderValue"];
       const UserCount = userInfo["UserCount"];
       const LevelStep = userInfo["LevelStep"];
-      const UserGameDetail = JSON.parse(userInfo["UserGameDetail"]);
-      const PkHistoryList = JSON.parse(userInfo["PkHistoryList"]);
+      const UserGameDetail = userInfo["UserGameDetail"];
+      const PkHistoryList = userInfo["PkHistoryList"];
 
       // 存到Vuex中
       if (openId) commit("SET_OpenId", openId);
@@ -210,8 +210,8 @@ const store = new Vuex.Store({
       if (genderValue) uni.setStorageSync("genderValue", genderValue);
       if (UserCount) uni.setStorageSync("UserCount", UserCount);
       if (LevelStep) uni.setStorageSync("LevelStep", LevelStep);
-      if (UserGameDetail) uni.setStorageSync("UserGameDetail", UserGameDetail);
-      if (PkHistoryList) uni.setStorageSync("PkHistoryList", PkHistoryList);
+      if (UserGameDetail) uni.setStorageSync("UserGameDetail", JSON.parse(UserGameDetail));
+      if (PkHistoryList) uni.setStorageSync("PkHistoryList", JSON.parse(PkHistoryList));
 
       console.log(state);
     },
