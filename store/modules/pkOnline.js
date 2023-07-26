@@ -1,4 +1,5 @@
 import { formatDate, checkHistoryItemGameStatus } from "@/utils/index.js";
+import store from "../index";
 
 const state = {
   UserGameDetail: [
@@ -47,7 +48,7 @@ const actions = {
       commit("SET_PkHistoryList", PkHistoryList);
     }
   },
-
+  // 根据PK历史记录，对UserGameDetail进行更新
   checkUserGameDetailActions({ state, commit }) {
     const PkHistoryList = state.PkHistoryList;
 
@@ -70,16 +71,28 @@ const actions = {
     ];
     commit("SET_UserGameDetail", UserGameDetail);
   },
-
+  // 刷新PK历史记录，如果发现有loading，则进行判断
   reloadPkHistoryList({ state, commit, dispatch }) {
     for (let item of state.PkHistoryList) {
       if (item.gameStatus === "loading") checkHistoryItemGameStatus(item);
     }
 
-    setTimeout(() => {
-      commit("SET_PkHistoryList", state.PkHistoryList);
-      setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录
-    }, 1000);
+    commit("SET_PkHistoryList", state.PkHistoryList);
+    setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录
+  },
+  // 更新UserGameDetail到后台数据库中
+  updateUserGameDetailApi({ state, commit }) {
+    const openId = store.state.OpenId;
+    let UserGameDetail = state.UserGameDetail;
+    console.log(UserGameDetail);
+    UserGameDetail = JSON.stringify(UserGameDetail);
+
+    if (openId) {
+      const data = { openId, UserGameDetail };
+      uni.$u.http.post("/number/update_user_pk_history", data).then((res) => {
+        console.log(res);
+      });
+    }
   },
 };
 
