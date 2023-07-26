@@ -43,6 +43,10 @@ export function updateUserPkHistory(data) {
   return http.post("/number/update_user_pk_history", data);
 }
 
+export function createRoom(data) {
+  return http.post("/number/createRoom", data);
+}
+
 function _searchUser() {
   const random = Math.random();
   console.log(random);

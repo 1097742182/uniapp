@@ -16,8 +16,8 @@
       <view style="margin-bottom: 10px">
         <ice-button @click="gameBegin()" buttonText="开始PK" />
       </view>
-      <view v-show="false">
-        <ice-button open-type="share" buttonText="邀请好友" />
+      <view>
+        <ice-button buttonText="邀请好友" />
         <button class="shareButton" type="primary" open-type="share">好友PK</button>
       </view>
     </view>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+// 子组件
 import UserInfo from "./components/gameMenu/UserInfo.vue";
 import PKHistoryDetailVue from "./components/pkOnlineMenu/PKHistoryDetail/PKHistoryDetail.vue";
 import UserDetailCard from "./components/pkOnlineMenu/UserDetailCard/UserDetailCard.vue";
@@ -41,13 +42,14 @@ export default {
     return {};
   },
   async onShareAppMessage() {
-    const roomData = {};
-    const res = await this.$api.user.getRoomId(roomData);
+    const createRoomData = { username: this.NickName, openId: this.OpenId };
+    const res = await this.$api.user.createRoom(createRoomData);
+    const roomId = res["roomId"];
+    if (!roomId) return uni.showToast({ title: "分享失败" });
 
     const data = JSON.parse(JSON.stringify(this.share));
-    const yourId = res;
     data.title = "对战房间";
-    data.path = "/pagesGames/pkOnlineBegin?id=" + yourId;
+    data.path = "/pagesGames/pkOnlineBegin?roomId=" + roomId;
     return data;
   },
   components: {
