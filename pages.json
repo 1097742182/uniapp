@@ -108,6 +108,16 @@
             "navigationBarTitleText": "线上PK",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "enterRoom",
+          "name": "enterRoom",
+          "meta": { "title": "线上PK" },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "线上PK",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

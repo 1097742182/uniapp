@@ -47,6 +47,10 @@ export function createRoom(data) {
   return http.post("/number/createRoom", data);
 }
 
+export function searchRoom(data) {
+  return http.post("/number/searchRoom", data);
+}
+
 function _searchUser() {
   const random = Math.random();
   console.log(random);

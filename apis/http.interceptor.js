@@ -108,7 +108,7 @@ const install = (Vue, vm) => {
       } else if (result.code == 300) {
         vm.$u.toast("未登录!");
       } else {
-        vm.$u.toast(result.msg);
+        vm.$u.toast(result.msg || result.message);
       }
     } else {
       let errorMessage = codeMessage[res.statusCode] ? codeMessage[res.statusCode] : res.statusCode;

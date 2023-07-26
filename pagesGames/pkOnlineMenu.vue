@@ -21,6 +21,7 @@
         <button class="shareButton" type="primary" open-type="share">好友PK</button>
       </view>
     </view>
+    <button @click="enterRoomBtnClick()">enterRoom</button>
 
     <MessageBox ref="MessageBox" :showBottom="true" :confirmShow="false" cancelText="取消匹配">
       <view slot="body">匹配用户中……</view>
@@ -47,9 +48,11 @@ export default {
     const roomId = res["roomId"];
     if (!roomId) return uni.showToast({ title: "分享失败" });
 
+    this.$store.commit("PkOnline/SET_RoomId", roomId);
+
     const data = JSON.parse(JSON.stringify(this.share));
     data.title = "对战房间";
-    data.path = "/pagesGames/pkOnlineBegin?roomId=" + roomId;
+    data.path = "/pagesGames/enterRoom?roomId=" + roomId;
     return data;
   },
   components: {
@@ -91,6 +94,10 @@ export default {
           }
         },
       });
+    },
+    enterRoomBtnClick() {
+      const path = `/pagesGames/enterRoom?roomId=${this.PkOnline.RoomId}`;
+      this.$Router.push({ path: path });
     },
   },
 };

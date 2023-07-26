@@ -10,6 +10,7 @@ const state = {
   ],
   RoomDetail: {},
   PkHistoryList: [],
+  RoomId: "",
 };
 
 const mutations = {
@@ -23,6 +24,9 @@ const mutations = {
   SET_PkHistoryList: (state, PkHistoryList) => {
     state.PkHistoryList = PkHistoryList;
     uni.setStorageSync("PkHistoryList", PkHistoryList);
+  },
+  SET_RoomId: (state, RoomId) => {
+    state.RoomId = RoomId;
   },
 };
 
