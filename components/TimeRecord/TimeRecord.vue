@@ -51,7 +51,8 @@ export default {
       this.startTime = null;
     },
     getTimer() {
-      return this.displayTime;
+      const time = this.displayTime.replace(":00", ":01");
+      return time;
     },
   },
 };
