@@ -76,12 +76,25 @@ export default {
 
   methods: {
     // 检查是否有loading状态的历史记录
-    _checkHistoryItemGameStatus() {
+    async _checkHistoryItemGameStatus() {
       console.log("监测历史中");
       for (let item of this.PkOnline.PkHistoryList) {
         if (item.gameStatus === "loading") {
-          this.$store.dispatch("PkOnline/reloadPkHistoryList");
-          return;
+          // 如果这条历史记录同事有两个时间，说明是fake数据，则直接reload这条数据
+          if (item.firstUseTime && item.secondUseTime) {
+            this.$store.dispatch("PkOnline/reloadOnePkHistoryList", item);
+          }
+
+          // 如果其中一个没有时间，则需要去后台获取时间
+          if (!item.firstUseTime || !item.secondUseTime) {
+            if (!item.roomId) continue; // 如果没有roomId，则直接跳过
+            const data = { roomId: item.roomId };
+            const roomDetail = await this.$api.user.getRoomDetail(data);
+            // 如果原数据没有firstUseTime，并且返回数据有firstUseTime，则直接赋值
+            if (!item.firstUseTime && roomDetail.firstUseTime) item.firstUseTime = roomDetail.firstUseTime;
+            if (!item.secondUseTime && roomDetail.secondUseTime) item.secondUseTime = roomDetail.secondUseTime;
+            this.$store.dispatch("PkOnline/reloadOnePkHistoryList", item);
+          }
         }
       }
     },

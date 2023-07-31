@@ -113,6 +113,8 @@ function compareTime(time1, time2) {
 
 // 判断时间是否超过当前时间
 function isFutureTime(dateTime, timeToAdd) {
+  if (!timeToAdd) return true; // 如果没有时间，则返回true（未来时间）
+
   var currentDateTime = new Date(); // 获取当前时间
   var futureDateTime = new Date(dateTime); // 将传入的日期时间字符串转换为日期对象
 
@@ -139,9 +141,10 @@ function checkTimeValid(roomDetail) {
   const secondUseTime = roomDetail.secondUseTime;
   const beginTime = roomDetail.beginTime;
 
-  // 判断第二个用户的时间是否为未来时间
+  // 判断两个用户的时间是否为未来时间
   const secondStatus = isFutureTime(beginTime, secondUseTime);
-  if (secondStatus) return false; // 如果是未来时间，则返回false
+  const firstStatus = isFutureTime(beginTime, firstUseTime);
+  if (secondStatus || firstStatus) return false; // 如果其中一个是未来时间，则返回false
   return true;
 }
 

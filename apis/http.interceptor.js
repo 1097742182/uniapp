@@ -114,7 +114,7 @@ const install = (Vue, vm) => {
       let errorMessage = codeMessage[res.statusCode] ? codeMessage[res.statusCode] : res.statusCode;
       vm.$u.toast(errorMessage);
     }
-    return false;
+    return Promise.reject(res);
   });
 };
 

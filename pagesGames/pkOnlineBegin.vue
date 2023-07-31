@@ -133,6 +133,7 @@ export default {
       historyList.push(roomDetail);
       this.$store.commit("PkOnline/SET_PkHistoryList", historyList); // 将历史数据保存到vuex中，
       this.$store.dispatch("PkOnline/checkUserGameDetailActions"); // 给用户PK记录进行计算
+      this.$store.dispatch("PkOnline/updateRoomDetailAction", roomDetail); // 将用户数据保存到数据库中
     },
     backToMenuBtnClick() {
       this.$refs.MessageBox.open();

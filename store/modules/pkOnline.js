@@ -84,6 +84,18 @@ const actions = {
     commit("SET_PkHistoryList", state.PkHistoryList);
     setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录
   },
+
+  // 刷新单条PK历史记录，如果发现有loading，则进行判断
+  reloadOnePkHistoryList({ state, commit, dispatch }, item) {
+    if (item.gameStatus === "loading") checkHistoryItemGameStatus(item);
+
+    setTimeout(() => {
+      if (item.gameStatus !== "loading") {
+        commit("SET_PkHistoryList", state.PkHistoryList);
+        setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录
+      }
+    }, 1000);
+  },
   // 更新UserGameDetail到后台数据库中
   updateUserGameDetailApi({ state, commit }) {
     const openId = store.state.OpenId;
@@ -97,6 +109,27 @@ const actions = {
         console.log(res);
       });
     }
+  },
+  // 将用户游戏数据保存到数据库中
+  updateRoomDetailAction({ state, commit }, roomDetail) {
+    const roomId = roomDetail.roomId;
+    const openId = store.state.OpenId;
+    let userStep, userUseTime;
+    if (roomDetail.firstOpenId === openId) {
+      userStep = roomDetail.firstStep;
+      userUseTime = roomDetail.firstUseTime;
+    } else if (roomDetail.secondOpenId === openId) {
+      userStep = roomDetail.secondStep;
+      userUseTime = roomDetail.secondStep;
+    }
+
+    // 如果没有使用时间，则说明游戏没完成，直接返回
+    if (!userUseTime) return;
+
+    const data = { openId, userStep, userUseTime, roomId };
+    uni.$u.http.post("/number/updateRoomDetail", data).then((data) => {
+      console.log(data);
+    });
   },
 };
 
