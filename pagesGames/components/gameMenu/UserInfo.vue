@@ -95,7 +95,7 @@ export default {
 .UserInfo {
   padding: 10px 0px;
   margin: 10px;
-  margin-top: 0;
+  margin-top: -10px;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;

@@ -48,6 +48,7 @@
 
 <script>
 import ReloadIcon from "components/ReloadIcon/ReloadIcon.vue";
+import { checkUseTimeLarge20 } from "@/utils/index.js";
 
 export default {
   components: { ReloadIcon },
@@ -84,6 +85,9 @@ export default {
           if (item.firstUseTime && item.secondUseTime) {
             this.$store.dispatch("PkOnline/reloadOnePkHistoryList", item);
           }
+
+          checkUseTimeLarge20(item);
+          console.log(item);
 
           // 如果其中一个没有时间，则需要去后台获取时间
           if (!item.firstUseTime || !item.secondUseTime) {
