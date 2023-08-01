@@ -61,7 +61,7 @@ const install = (Vue, vm) => {
 
   // 请求拦截部分，如配置，每次请求前都会执行
   uni.$u.http.interceptors.request.use((config) => {
-    if (config.custom.ShowLoading) {
+    if (config.custom.ShowLoading && false) {
       uni.showLoading({
         title: config.custom.LoadingText || "正在加载",
         mask: config.custom.LoadingMask || false,
