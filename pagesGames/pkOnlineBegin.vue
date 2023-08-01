@@ -139,7 +139,12 @@ export default {
       this.$refs.MessageBox.open();
     },
     messageBoxConfirm() {
-      uni.navigateBack({ delta: 1 });
+      let pages = getCurrentPages(); // 获取栈实例
+      if (pages.length <= 1) {
+        this.$Router.replace({ path: `/pagesGames/pkOnlineMenu` });
+      } else {
+        uni.navigateBack({ delta: 1 });
+      }
     },
     // 检查用户输入数字并显示结果
     checkAnswer() {

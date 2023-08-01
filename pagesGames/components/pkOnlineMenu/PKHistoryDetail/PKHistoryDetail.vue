@@ -23,8 +23,8 @@
             <u-tag text="失败" v-else-if="item.gameStatus === 'failed'" type="error"></u-tag>
             <u-tag text="进行中" v-else-if="item.gameStatus === 'loading'" type="warning"></u-tag>
           </view>
-          <view style="margin-top: 6px">使用步数</view>
-          <view style="margin-top: 6px">使用时间</view>
+          <view style="margin: 3px">使用步数</view>
+          <view style="margin: 3px">使用时间</view>
         </view>
 
         <view class="right flexClass">
@@ -90,7 +90,6 @@ export default {
 
           // 如果其中一个没有时间，则需要去后台获取时间
           if (!item.firstUseTime || !item.secondUseTime) {
-            checkUseTimeLarge20(item); // 查看是否已经大于20分钟
             let roomDetail;
             // 如果有roomId，则去数据库获取
             if (item.roomId) {
@@ -98,12 +97,16 @@ export default {
               roomDetail = await this.$api.user.getRoomDetail(data).catch((error) => {});
             }
 
-            // 如果没有获取到数据，则直接以20分钟处理
+            // 如果没有获取到数据，则直接以20分钟处理(说明房间号已过期)
             if (!roomDetail) roomDetail = { firstUseTime: "20:00", secondUseTime: "20:00" };
 
             // 如果原数据没有firstUseTime，并且返回数据有firstUseTime，则直接赋值
             if (!item.firstUseTime && roomDetail.firstUseTime) item.firstUseTime = roomDetail.firstUseTime;
             if (!item.secondUseTime && roomDetail.secondUseTime) item.secondUseTime = roomDetail.secondUseTime;
+
+            checkUseTimeLarge20(item); // 查看是否已经大于20分钟
+
+            // 前面的逻辑都是为了赋值useTime，赋值过后，开始进行胜负判断
             this.$store.dispatch("PkOnline/reloadOnePkHistoryList", item);
           }
         }

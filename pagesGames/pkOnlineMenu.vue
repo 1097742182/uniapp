@@ -21,7 +21,7 @@
         <button class="shareButton" type="primary" open-type="share">好友PK</button>
       </view>
     </view>
-    <button @click="enterRoomBtnClick()">enterRoom</button>
+    <button @click="enterRoomBtnClick()" v-if="false">enterRoom</button>
 
     <MessageBox ref="MessageBox" :showBottom="true" :confirmShow="false" cancelText="取消匹配">
       <view slot="body">匹配用户中……</view>
@@ -109,7 +109,7 @@ export default {
   background-size: 100% 200px;
   background-repeat: no-repeat;
 
-  padding: 15px 15px 40px 15px;
+  padding: 15px;
 }
 
 .shareButton {

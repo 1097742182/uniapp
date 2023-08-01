@@ -94,7 +94,7 @@ export default {
 <style lang="scss" scoped>
 .UserInfo {
   padding: 10px 0px;
-  margin: 10px;
+  margin: 0 10px;
   margin-top: -10px;
   border-radius: 6px;
   display: flex;
