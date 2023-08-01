@@ -259,22 +259,26 @@ export function throttle(func, delay = 10 * 1000) {
 function isTimeMoreThan20MinutesAgo(timeString) {
   var givenTime = new Date(timeString);
   const currentTime = new Date();
-  return (currentTime.getTime() - givenTime.getTime()) > (20 * 60 * 1000);
+  return currentTime.getTime() - givenTime.getTime() > 20 * 60 * 1000;
 }
-
-
 
 // 检查是否大于20分钟
 export function checkUseTimeLarge20(item) {
   // 如果没有firstUseTime，或者firstUseTime的时间为"00:00"
   if (!item.firstUseTime || item.firstUseTime === "00:00") {
-    const status = isTimeMoreThan20MinutesAgo(item.beginTime)
-    if (status) item["firstUseTime"] = "59:59"
+    const status = isTimeMoreThan20MinutesAgo(item.beginTime);
+    if (status) item["firstUseTime"] = "20:00";
   }
 
   // 如果没有firstUseTime，或者firstUseTime的时间为"00:00"
   if (!item.secondUseTime || item.secondUseTime === "00:00") {
-    const status = isTimeMoreThan20MinutesAgo(item.beginTime)
-    if (status) item["secondUseTime"] = "59:59"
+    const status = isTimeMoreThan20MinutesAgo(item.beginTime);
+    if (status) item["secondUseTime"] = "20:00";
   }
+}
+
+// 清洗历史数据，脏数据
+export function clearPKHistoryData(item) {
+  if (!item.secondUseTime) item["secondUseTime"] = "20:00";
+  if (!item.firstUseTime) item["firstUseTime"] = "20:00";
 }

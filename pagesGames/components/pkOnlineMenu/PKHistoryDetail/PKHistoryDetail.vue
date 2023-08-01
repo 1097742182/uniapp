@@ -87,13 +87,16 @@ export default {
           }
 
           checkUseTimeLarge20(item);
-          console.log(item);
+          console.log({ item });
 
           // 如果其中一个没有时间，则需要去后台获取时间
           if (!item.firstUseTime || !item.secondUseTime) {
             if (!item.roomId) continue; // 如果没有roomId，则直接跳过
             const data = { roomId: item.roomId };
-            const roomDetail = await this.$api.user.getRoomDetail(data);
+            let roomDetail = await this.$api.user.getRoomDetail(data).catch((error) => {});
+
+            // 如果没有获取到数据，则直接以20分钟处理
+            if (!roomDetail) roomDetail = { firstUseTime: "20:00", secondUseTime: "20:00" };
             // 如果原数据没有firstUseTime，并且返回数据有firstUseTime，则直接赋值
             if (!item.firstUseTime && roomDetail.firstUseTime) item.firstUseTime = roomDetail.firstUseTime;
             if (!item.secondUseTime && roomDetail.secondUseTime) item.secondUseTime = roomDetail.secondUseTime;
@@ -111,7 +114,8 @@ export default {
       this._checkHistoryItemGameStatus();
     },
     throttle() {
-      this._checkHistoryItemGameStatus();
+      setTimeout(() => this._checkHistoryItemGameStatus(), 1000);
+
       if (!this.timer) {
         this.timer = setInterval(() => {
           this._checkHistoryItemGameStatus();

@@ -107,7 +107,8 @@ export default {
       if (!this.nickName) return uni.showToast({ title: "请输入用户名！", icon: "none" });
       if (!this.openId) {
         uni.showToast({ title: "用户状态异常，进入房间失败！", icon: "none" });
-        this.$Router.replace({ path: `pages/index/index` });
+        uni.reLaunch({ url: "/pages/index/index" });
+        // this.$Router.replace({ path: `/pages/index/index` });
         return;
       }
 
