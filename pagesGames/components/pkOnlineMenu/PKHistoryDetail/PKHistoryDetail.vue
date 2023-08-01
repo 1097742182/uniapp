@@ -86,17 +86,21 @@ export default {
             this.$store.dispatch("PkOnline/reloadOnePkHistoryList", item);
           }
 
-          checkUseTimeLarge20(item);
-          console.log({ item });
+          /* 假数据不会走到这个if，因为假数据有两个useTime */
 
           // 如果其中一个没有时间，则需要去后台获取时间
           if (!item.firstUseTime || !item.secondUseTime) {
-            if (!item.roomId) continue; // 如果没有roomId，则直接跳过
-            const data = { roomId: item.roomId };
-            let roomDetail = await this.$api.user.getRoomDetail(data).catch((error) => {});
+            checkUseTimeLarge20(item); // 查看是否已经大于20分钟
+            let roomDetail;
+            // 如果有roomId，则去数据库获取
+            if (item.roomId) {
+              const data = { roomId: item.roomId };
+              roomDetail = await this.$api.user.getRoomDetail(data).catch((error) => {});
+            }
 
             // 如果没有获取到数据，则直接以20分钟处理
             if (!roomDetail) roomDetail = { firstUseTime: "20:00", secondUseTime: "20:00" };
+
             // 如果原数据没有firstUseTime，并且返回数据有firstUseTime，则直接赋值
             if (!item.firstUseTime && roomDetail.firstUseTime) item.firstUseTime = roomDetail.firstUseTime;
             if (!item.secondUseTime && roomDetail.secondUseTime) item.secondUseTime = roomDetail.secondUseTime;

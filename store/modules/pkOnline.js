@@ -90,6 +90,7 @@ const actions = {
     if (item.gameStatus === "loading") checkHistoryItemGameStatus(item);
 
     setTimeout(() => {
+      // 如果该条数据已经不是loading，则将数据写入vuex中
       if (item.gameStatus !== "loading") {
         commit("SET_PkHistoryList", state.PkHistoryList);
         setTimeout(() => dispatch("checkUserGameDetailActions"), 100); // 重新计算用户的PK记录

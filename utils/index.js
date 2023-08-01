@@ -223,9 +223,8 @@ export function checkHistoryItemGameStatus(historyItem) {
 
   // 判断第二个用户的时间是否为未来时间
   const secondStatus = isFutureTime(beginTime, secondUseTime);
-  if (!secondStatus) {
-    historyItem.gameStatus = checkPkGameStatus(historyItem);
-  }
+  // 如果不是未来时间，说明该进行判断了
+  if (!secondStatus) historyItem.gameStatus = checkPkGameStatus(historyItem);
 }
 
 // 防抖函数
@@ -256,13 +255,14 @@ export function throttle(func, delay = 10 * 1000) {
   };
 }
 
+// 时间是否已经大于20分钟
 function isTimeMoreThan20MinutesAgo(timeString) {
   var givenTime = new Date(timeString);
   const currentTime = new Date();
   return currentTime.getTime() - givenTime.getTime() > 20 * 60 * 1000;
 }
 
-// 检查是否大于20分钟
+// 检查是否大于20分钟，如果大于20分钟，则直接赋值"20:00"
 export function checkUseTimeLarge20(item) {
   // 如果没有firstUseTime，或者firstUseTime的时间为"00:00"
   if (!item.firstUseTime || item.firstUseTime === "00:00") {
