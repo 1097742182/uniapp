@@ -17,25 +17,24 @@
     <view class="nickname">
       <view>
         <view class="inputArea">房间ID号</view>
-        <input class="weui-input" :value="roomId" :disabled="true" />
+        <input class="weui-input" :value="roomId" />
       </view>
 
       <view>
-        <view class="inputArea">用户名</view>
-        <input
-          type="nickname"
-          class="weui-input"
-          :value="nickName"
-          @blur="bindblur"
-          @input="bindinput"
-          placeholder="给自己起个名字，开始你的征程吧"
-        />
+        <view class="inputArea">用户昵称</view>
+        <input class="weui-input" :value="nickName" :disabled="true" />
+        <text class="tips"></text>
+      </view>
+
+      <view>
+        <view class="inputArea">对手昵称</view>
+        <input class="weui-input" :value="user2" :disabled="true" />
         <text class="tips"></text>
       </view>
     </view>
 
     <view class="buttonArea">
-      <button type="primary" @click="enterRoom()">开始游戏</button>
+      <button type="primary" @click="enterRoom()" :disabled="checkEnterBtnStatus()">开始游戏</button>
     </view>
   </div>
 </template>
@@ -47,61 +46,40 @@ export default {
       roomId: "",
       nickName: "",
       avatarUrl: "",
+      user2: "",
       openId: "",
+
+      timeInterval: "",
     };
   },
-  computed: {
-    avatarUrlState() {
-      return this.AvatarUrl;
-    },
-    nickNameState() {
-      return this.NickName;
-    },
-  },
-  watch: {
-    avatarUrlState() {
-      this._initUserInfo();
-    },
-    nickNameState() {
-      this._initUserInfo();
-    },
-  },
-  onLoad: async function (option) {
-    this._initUserInfo();
+  onLoad: function (option) {
     console.log(option);
-    // 如果vuex中有openId，则直接进入
-    if (this.OpenId) {
-      this.nickName = this.NickName;
-      this.openId = this.OpenId;
-      this.roomId = option.roomId;
-      this.enterRoom();
-      return;
-    }
-
-    // 如果没有获取到openId，则登录微信接口获取
-    uni.login({
-      provider: "weixin",
-      success: (res) => {
-        var code = res.code;
-        // 将 code 发送到后台获取 openId
-        this.$api.user.getUserInfo(code).then((res) => {
-          const userInfo = res;
-          this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);
-
-          setTimeout(() => {
-            this.nickName = this.NickName;
-            this.openId = this.OpenId;
-            this.roomId = option.roomId;
-            this.enterRoom();
-          }, 100);
-        });
-      },
-    });
+    this.roomId = option.roomId;
+  },
+  mounted() {
+    this._initUserInfo();
+    this.timeInterval = setInterval(() => {
+      this._getRoomDetail();
+    }, 10000);
   },
   methods: {
     _initUserInfo() {
       this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
       this.nickName = this.NickName || "";
+    },
+    _getRoomDetail() {
+      console.log("RoomId", this.roomId);
+      if (!this.roomId) return; // 没有房间号，则直接返回
+      const data = { roomId: this.roomId };
+      this.$api.user.getRoomDetail(data).then((data) => {
+        if (this.nickName == data.firstUser) {
+          this.user2 = data.secondUser;
+        } else {
+          this.user2 = data.firstUser;
+        }
+
+        if (this.user2) clearInterval(this.timeInterval);
+      });
     },
     enterRoom() {
       // 如果没有名称与openId，则直接返回
@@ -109,23 +87,13 @@ export default {
       if (!this.openId) {
         uni.showToast({ title: "用户状态异常，进入房间失败！", icon: "none" });
         uni.reLaunch({ url: "/pages/index/index" });
-        // this.$Router.replace({ path: `/pages/index/index` });
         return;
       }
 
       if (!this.roomId) return uni.showToast({ title: "房间号为空", icon: "none" });
 
-      const data = {
-        roomId: this.roomId,
-        username: this.nickName,
-        openId: this.openId,
-      };
-
-      this.$api.user.searchRoom(data).then((data) => {
-        console.log(data);
-        console.log("进入房间成功！");
-        uni.showToast({ title: "进入房间成功" });
-
+      const data = { roomId: this.roomId };
+      this.$api.user.getRoomDetail(data).then((data) => {
         // 将获取到的数据保存到vuex中
         const roomDetail = data;
         this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);
@@ -134,30 +102,13 @@ export default {
         this.$store.dispatch("setPKLevel");
 
         setTimeout(() => {
-          // 跳转到游戏开始界面
-          this.$Router.replace({ path: `/pagesGames/pkOnlineBegin` });
+          this.$Router.replace({ path: `/pagesGames/pkOnlineBegin` }); // 跳转到游戏开始界面
         }, 400);
       });
     },
-
-    bindblur(e) {
-      // 获取微信昵称
-      this.nickName = e.detail.value;
-      uni.setStorageSync("nickName", this.nickName);
-      this.$store.commit("SET_NickName", this.nickName);
-    },
-    bindinput(e) {
-      //这里要注意如果只用blur方法的话用户在输入玩昵称后直接点击保存按钮，会出现修改不成功的情况。
-      this.nickName = e.detail.value;
-      uni.setStorageSync("nickName", this.nickName);
-      this.$store.commit("SET_NickName", this.nickName);
-    },
-    onChooseavatar(e) {
-      this.avatarUrl = e.detail.avatarUrl;
-      if (this.avatarUrl) {
-        uni.setStorageSync("avatarUrl", this.avatarUrl);
-        this.$store.commit("SET_AvatarUrl", this.avatarUrl);
-      }
+    checkEnterBtnStatus() {
+      if (this.user2) return false;
+      if (!this.user2) return true;
     },
   },
 };

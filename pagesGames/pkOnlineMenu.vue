@@ -22,6 +22,7 @@
       </view>
     </view>
     <button @click="enterRoomBtnClick()" v-if="false">enterRoom</button>
+    <button @click="waitingRoomBtnClick()" v-if="false">waitingRoom</button>
 
     <MessageBox ref="MessageBox" :showBottom="true" :confirmShow="false" cancelText="取消匹配">
       <view slot="body">匹配用户中……</view>
@@ -53,6 +54,14 @@ export default {
     const data = JSON.parse(JSON.stringify(this.share));
     data.title = "对战房间";
     data.path = "/pagesGames/enterRoom?roomId=" + roomId;
+
+    // 分享结束后跳转界面
+    setTimeout(() => {
+      const path = "/pagesGames/waitingRoom?roomId=" + roomId;
+      console.log(path);
+      this.$Router.push(path);
+    }, 1000);
+
     return data;
   },
   components: {
@@ -97,6 +106,10 @@ export default {
     },
     enterRoomBtnClick() {
       const path = `/pagesGames/enterRoom?roomId=${this.PkOnline.RoomId}`;
+      this.$Router.push({ path: path });
+    },
+    waitingRoomBtnClick() {
+      const path = `/pagesGames/waitingRoom`;
       this.$Router.push({ path: path });
     },
   },
