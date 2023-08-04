@@ -66,14 +66,19 @@ export default {
       this._initUserInfo();
     },
   },
-  onLoad: async function (option) {
+  mounted() {
+    const pages = getCurrentPages();
+    const length = pages.length;
+
+    const currentPage = pages[length - 1];
+    const options = currentPage.options;
+    this.roomId = options.roomId;
+
     this._initUserInfo();
-    console.log(option);
     // 如果vuex中有openId，则直接进入
     if (this.OpenId) {
       this.nickName = this.NickName;
       this.openId = this.OpenId;
-      this.roomId = option.roomId;
       this.enterRoom();
       return;
     }
@@ -91,7 +96,6 @@ export default {
           setTimeout(() => {
             this.nickName = this.NickName;
             this.openId = this.OpenId;
-            this.roomId = option.roomId;
             this.enterRoom();
           }, 100);
         });

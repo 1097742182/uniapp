@@ -53,7 +53,8 @@ export default {
 
     const data = JSON.parse(JSON.stringify(this.share));
     data.title = "对战房间";
-    data.path = "/pagesGames/enterRoom?roomId=" + roomId;
+    // data.path = "/pagesGames/enterRoom?roomId=" + roomId;
+    data.path = "/pagesGames/pkOnlineMenu?roomId=" + roomId;
 
     // 分享结束后跳转界面
     setTimeout(() => {
@@ -71,9 +72,26 @@ export default {
     IceButton,
   },
   mounted() {
+    this._checkIsHaveRoomId();
     this.$store.dispatch("PkOnline/initPkOnlineData");
   },
   methods: {
+    // 如果有roomid传入进来，说明是链接跳转的，直接跳转到enterRoom中
+    _checkIsHaveRoomId() {
+      const pages = getCurrentPages();
+      const length = pages.length;
+
+      const currentPage = pages[length - 1];
+      const options = currentPage.options;
+      const roomId = options.roomId;
+
+      if (roomId) {
+        const path = "/pagesGames/enterRoom?roomId=" + roomId;
+        setTimeout(() => {
+          this.$Router.push({ path });
+        }, 100);
+      }
+    },
     async gameBegin() {
       this.$refs.MessageBox.open();
       this.$store.dispatch("setPKLevel");
