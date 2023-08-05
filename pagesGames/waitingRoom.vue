@@ -28,7 +28,7 @@
 
       <view>
         <view class="inputArea">对手昵称</view>
-        <input class="weui-input" :value="user2" :disabled="true" />
+        <input class="weui-input" :value="user2" :disabled="true" placeholder="正在等待对手进入房间……" />
         <text class="tips"></text>
       </view>
     </view>
@@ -84,12 +84,7 @@ export default {
     enterRoom() {
       // 如果没有名称与openId，则直接返回
       if (!this.nickName) return uni.showToast({ title: "请输入用户名！", icon: "none" });
-      if (!this.openId) {
-        uni.showToast({ title: "用户状态异常，进入房间失败！", icon: "none" });
-        uni.reLaunch({ url: "/pages/index/index" });
-        return;
-      }
-
+      if (!this.OpenId) return uni.showToast({ title: "用户状态异常！", icon: "none" });
       if (!this.roomId) return uni.showToast({ title: "房间号为空", icon: "none" });
 
       const data = { roomId: this.roomId };
