@@ -1,6 +1,8 @@
 import { city } from "./city.js";
 import { nameList } from "./name.js";
 import { formatDate, generateRandomTime, generateRandomNumber } from "@/utils/index.js";
+import store from '@/store';
+
 
 // test user request api
 const http = uni.$u.http;
@@ -82,6 +84,8 @@ export function searchUser(data) {
       beginTime: formatDate(new Date()),
       roomId,
     };
+
+    if (store.state.OpenId) resData.firstOpenId = store.state.OpenId;
 
     const randomNameNumber = Math.floor(Math.random() * nameList.length);
     resData.secondUser = nameList[randomNameNumber];
