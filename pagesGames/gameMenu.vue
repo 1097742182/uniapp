@@ -8,7 +8,7 @@
     <view class="u-demo-block">
       <div class="u-demo-block-header">
         <text class="u-demo-block__title">游戏目录</text>
-        <view class="subsection" :class="getSubsectionClass()">
+        <view class="subsection" :class="backgroundColor">
           <u-subsection :current="currentSubsection" @change="changeSubsection" :list="subsectionList"></u-subsection>
         </view>
         <!-- <button
@@ -68,7 +68,15 @@ export default {
       contentKey: new Date().getTime(), // 刷新按钮区域
       subsectionList: ["菜鸟集训", "华山论剑"],
       currentSubsection: 0,
+      backgroundColor: "bg-blue",
     };
+  },
+  computed: {},
+  watch: {
+    currentSubsection(newVal) {
+      if (newVal === 0) this.backgroundColor = "bg-blue";
+      else if (newVal === 1) this.backgroundColor = "bg-red";
+    },
   },
   components: { UserInfo, UserCountCard, IceButton, SuccessDialog },
   methods: {
@@ -114,10 +122,7 @@ export default {
         this.contentKey = new Date().getTime();
       }, 100);
     },
-    getSubsectionClass() {
-      if (this.currentSubsection === 0) return "bg-blue";
-      else if (this.currentSubsection === 1) return "bg-red";
-    },
+    getSubsectionClas1s() {},
   },
 };
 </script>
@@ -246,6 +251,10 @@ export default {
   }
 
   /deep/ .u-subsection__item--1 span {
+    color: #e2312e !important;
+  }
+
+  /deep/ .u-subsection__item--1 text {
     color: #e2312e !important;
   }
 }
