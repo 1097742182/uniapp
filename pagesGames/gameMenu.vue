@@ -8,7 +8,10 @@
     <view class="u-demo-block">
       <div class="u-demo-block-header">
         <text class="u-demo-block__title">游戏目录</text>
-        <button
+        <view class="subsection" :class="getSubsectionClass()">
+          <u-subsection :current="currentSubsection" @change="changeSubsection" :list="subsectionList"></u-subsection>
+        </view>
+        <!-- <button
           type="primary"
           v-if="CurrentLevelType === 'normal'"
           class="u-demo-block__hardLevel"
@@ -25,7 +28,7 @@
           @click="changeLevelBtnClick()"
         >
           菜鸟集训 >
-        </button>
+        </button> -->
       </div>
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
@@ -63,6 +66,8 @@ export default {
   data() {
     return {
       contentKey: new Date().getTime(), // 刷新按钮区域
+      subsectionList: ["菜鸟集训", "华山论剑"],
+      currentSubsection: 0,
     };
   },
   components: { UserInfo, UserCountCard, IceButton, SuccessDialog },
@@ -98,6 +103,20 @@ export default {
       setTimeout(() => {
         this.contentKey = new Date().getTime();
       }, 100);
+    },
+    changeSubsection(index) {
+      this.currentSubsection = index;
+
+      if (this.currentSubsection == 0) this.$u.vuex("CurrentLevelType", "normal");
+      else if (this.currentSubsection == 1) this.$u.vuex("CurrentLevelType", "hard");
+
+      setTimeout(() => {
+        this.contentKey = new Date().getTime();
+      }, 100);
+    },
+    getSubsectionClass() {
+      if (this.currentSubsection === 0) return "bg-blue";
+      else if (this.currentSubsection === 1) return "bg-red";
     },
   },
 };
@@ -204,5 +223,30 @@ export default {
 
 .prompt {
   text-align: left;
+}
+
+.subsection {
+  width: 200px;
+  font-size: 40px;
+
+  /deep/ .u-subsection__item__text {
+    font-size: 16px !important;
+  }
+}
+
+// .bg-blue {
+//   /deep/ .u-subsection--button__bar {
+//     color: blue !important;
+//   }
+// }
+
+.bg-red {
+  /deep/ .u-subsection--button__bar {
+    color: red !important;
+  }
+
+  /deep/ .u-subsection__item--1 span {
+    color: #e2312e !important;
+  }
 }
 </style>
