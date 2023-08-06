@@ -141,6 +141,13 @@ function checkTimeValid(roomDetail) {
   const secondUseTime = roomDetail.secondUseTime;
   const beginTime = roomDetail.beginTime;
 
+  // 如果其中一个时间为空，则直接返回false
+  if (!firstUseTime || !secondUseTime) return false;
+
+  // 时间为00:00，也为无效时间，直接返回false
+  if (firstUseTime == "00:00") return false;
+  if (secondUseTime == "00:00") return false;
+
   // 判断两个用户的时间是否为未来时间
   const secondStatus = isFutureTime(beginTime, secondUseTime);
   const firstStatus = isFutureTime(beginTime, firstUseTime);

@@ -46,14 +46,12 @@ export default {
   methods: {
     _initUserDetail() {
       const roomDetail = this.PkOnline.RoomDetail;
-      console.log(roomDetail);
-      this.firstUser = this.NickName;
 
-      // 用户肯定是在firstUser或者secondUser，firstUser肯定是自己，那么secdond就是对手
-      if (this.firstUser === roomDetail.firstUser) this.secondUser = roomDetail.secondUser;
-      else this.secondUser = roomDetail.firstUser;
+      if (!roomDetail.firstUser) roomDetail.firstUser = "user";
+      if (!roomDetail.secondUser) roomDetail.secondUser = "user";
 
-      this.secondUser = this.secondUser ? this.secondUser : "user";
+      this.firstUser = roomDetail.firstUser;
+      this.secondUser = roomDetail.secondUser;
     },
     readyBtnClick() {
       // this.$refs.startGame.close();

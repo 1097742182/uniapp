@@ -77,7 +77,6 @@ export default {
     },
   },
   onLoad: function (option) {
-    console.log(option);
     this.roomId = option.id;
   },
   created() {
@@ -87,7 +86,6 @@ export default {
   mounted() {
     uni.$u.vuex("HistoryNumberList", []);
     this._initRoomDetail();
-    console.log(this.PkOnline);
   },
 
   // 离开界面时
@@ -120,15 +118,21 @@ export default {
       const historyList = this.PkOnline.PkHistoryList;
       const roomDetail = this.PkOnline.RoomDetail;
 
-      roomDetail.firstUseTime = this.$refs.UserInfo.getTimer(); // 获取游戏时间
+      const useTime = this.$refs.UserInfo.getTimer(); // 获取游戏时间
 
-      // 如果用户游戏已经结束，则赋值firstStep
-      if (roomDetail.firstUserStatus) roomDetail.firstStep = this.HistoryNumberList.length;
-
-      // 判断游戏是否胜利
-      if (roomDetail.firstStep != 0) {
-        roomDetail.gameStatus = checkPkGameStatus(roomDetail);
+      // 如果用户名等于firstUser
+      if (roomDetail.firstUser === this.NickName) {
+        roomDetail.firstUseTime = useTime;
+        if (this.gameStatus) roomDetail.firstStep = this.HistoryNumberList.length; // 如果用户游戏已经结束，则赋值firstStep
       }
+
+      if (roomDetail.secondUser === this.NickName) {
+        roomDetail.secondUseTime = useTime;
+        if (this.gameStatus) roomDetail.secondStep = this.HistoryNumberList.length; // 如果用户游戏已经结束，则赋值secondStep
+      }
+
+      // 获取游戏状态
+      roomDetail.gameStatus = checkPkGameStatus(roomDetail);
 
       historyList.push(roomDetail);
       this.$store.commit("PkOnline/SET_PkHistoryList", historyList); // 将历史数据保存到vuex中，
@@ -230,13 +234,11 @@ export default {
         this.$refs.gameResultPopupContentVue.success();
         this.gameStatus = true; // true代表游戏胜利
         uni.$emit("$stopTimer");
-        this.PkOnline.RoomDetail.firstUserStatus = true;
         this._setCurrentLevelNumberResult(); // 展示答案出来
       } else if (this.count === this.HistoryNumberCount) {
         this.gameOver = true;
         this.$refs.gameResultPopupContentVue.error();
         uni.$emit("$stopTimer");
-        this.PkOnline.RoomDetail.firstUserStatus = false;
         this._setCurrentLevelNumberResult(); // 如果已经用了第二次机会，则直接显示答案
         this.gameStatus = false; // false代表输掉游戏
       }
