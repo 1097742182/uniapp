@@ -124,9 +124,7 @@ export default {
       if (roomDetail.firstUser === this.NickName) {
         roomDetail.firstUseTime = useTime;
         if (this.gameStatus) roomDetail.firstStep = this.HistoryNumberList.length; // 如果用户游戏已经结束，则赋值firstStep
-      }
-
-      if (roomDetail.secondUser === this.NickName) {
+      } else if (roomDetail.secondUser === this.NickName) {
         roomDetail.secondUseTime = useTime;
         if (this.gameStatus) roomDetail.secondStep = this.HistoryNumberList.length; // 如果用户游戏已经结束，则赋值secondStep
       }
