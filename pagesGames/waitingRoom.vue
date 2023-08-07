@@ -60,7 +60,7 @@ export default {
     this._initUserInfo();
     this.timeInterval = setInterval(() => {
       this._getRoomDetail();
-    }, 10000);
+    }, 3000);
   },
   methods: {
     _initUserInfo() {

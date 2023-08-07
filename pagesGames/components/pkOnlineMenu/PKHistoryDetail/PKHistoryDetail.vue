@@ -10,11 +10,18 @@
       <view class="historyItem" v-for="item in historyList" :key="item.roomId">
         <view class="left flexClass">
           <view style="margin-bottom: 6px" class="ellipsis-text">{{ item.firstUser }}</view>
-          <view v-if="item.firstStep != 0">{{ item.firstStep }}</view>
-          <view v-if="item.firstStep == 0">
-            <u-tag text="闯关失败" type="error"></u-tag>
-          </view>
-          <view style="margin-top: 6px">{{ item.firstUseTime }}</view>
+          <!-- 如果含有firstUseTime并且不为00:00，则进行渲染 -->
+          <template v-if="item.firstUseTime && item.firstUseTime != '00:00'">
+            <view v-if="item.firstStep != 0">{{ item.firstStep }} </view>
+            <view v-else-if="item.firstStep == 0"><u-tag text="闯关失败" type="error"></u-tag></view>
+            <view style="margin-top: 6px">{{ item.firstUseTime }}</view>
+          </template>
+
+          <!-- 如果不含有firstUseTime，则展示~符号 -->
+          <template v-if="!item.firstUseTime || itme.firstUseTime == '00:00'">
+            <view>~</view>
+            <view>~</view>
+          </template>
         </view>
 
         <view class="center flexClass">
@@ -29,13 +36,25 @@
 
         <view class="right flexClass">
           <view style="margin-bottom: 6px" class="ellipsis-text">{{ item.secondUser }}</view>
-          <view v-if="item.gameStatus === 'loading'">~</view>
-          <view v-else-if="item.secondStep != 0">{{ item.secondStep }}</view>
-          <view v-else-if="item.secondStep == 0">
-            <u-tag text="闯关失败" type="error"></u-tag>
-          </view>
-          <view v-if="item.gameStatus === 'loading'">~</view>
-          <view v-else style="margin-top: 6px">{{ item.secondUseTime }}</view>
+
+          <!-- 如果游戏状态仍然为loading，说明为假数据 -->
+          <template v-if="item.gameStatus === 'loading'">
+            <view>~</view>
+            <view>~</view>
+          </template>
+
+          <!-- 如果含有secondUseTime并且不为00:00，则进行渲染 -->
+          <template v-else-if="item.secondUseTime && item.secondUseTime != '00:00'">
+            <view v-if="item.secondStep != 0">{{ item.secondStep }} </view>
+            <view v-else-if="item.secondStep == 0"><u-tag text="闯关失败" type="error"></u-tag></view>
+            <view style="margin-top: 6px">{{ item.secondUseTime }}</view>
+          </template>
+
+          <!-- 如果不含有secondUseTime，则展示~符号 -->
+          <template v-else-if="!item.secondUseTime || itme.secondUseTime == '00:00'">
+            <view>~</view>
+            <view>~</view>
+          </template>
         </view>
       </view>
     </view>

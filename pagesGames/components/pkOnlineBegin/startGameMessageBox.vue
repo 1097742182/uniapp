@@ -40,7 +40,8 @@ export default {
     this.$refs.startGame.open();
     this._initUserDetail();
     setTimeout(() => {
-      this.user2Status = true;
+      if (this.firstUser === this.NickName) this.user2Status = true;
+      else if (this.secondUser === this.NickName) this.user1Status = true;
     }, 1000);
   },
   methods: {
