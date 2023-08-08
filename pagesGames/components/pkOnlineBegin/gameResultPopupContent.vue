@@ -21,7 +21,7 @@
       @close="errorDialogShow = false"
       :safeAreaInsetBottom="false"
     >
-      <error-dialog @confirmBtnClick="ErrorConfirmBtnClick()" />
+      <error-dialog @confirmBtnClick="errorDialogShow = false" />
     </u-popup>
   </view>
 </template>
