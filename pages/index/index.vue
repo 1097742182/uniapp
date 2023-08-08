@@ -5,12 +5,16 @@
     <Main />
 
     <view class="gameStoryButton" @click="gameStoryShow = true">故事详情</view>
+    <div>
+      <SvgIcon />
+    </div>
   </view>
 </template>
 
 <script>
 import GameStoryVue from "./components/GameStory.vue";
 import Main from "./components/Main.vue";
+import SvgIcon from "./components/svgIcon";
 
 export default {
   data() {
@@ -18,7 +22,7 @@ export default {
       gameStoryShow: false,
     };
   },
-  components: { Main, GameStoryVue },
+  components: { Main, GameStoryVue, SvgIcon },
   mounted() {
     this._initGameStoryShow();
   },
