@@ -324,7 +324,7 @@ const store = new Vuex.Store({
       const musicPlayer = uni.createInnerAudioContext();
       musicPlayer.autoplay = true;
       musicPlayer.loop = true;
-      musicPlayer.src = "https://assets.mixkit.co/active_storage/sfx/1000/1000-preview.mp3";
+      musicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameMusic.MP3";
       commit("setMusicPlayer", musicPlayer);
     },
   },
