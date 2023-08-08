@@ -121,7 +121,7 @@ const actions = {
       userUseTime = roomDetail.firstUseTime;
     } else if (roomDetail.secondOpenId === openId) {
       userStep = roomDetail.secondStep;
-      userUseTime = roomDetail.secondStep;
+      userUseTime = roomDetail.secondUseTime;
     }
 
     // 如果没有使用时间，则说明游戏没完成，直接返回

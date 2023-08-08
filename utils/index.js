@@ -112,7 +112,7 @@ function compareTime(time1, time2) {
 }
 
 // 判断时间是否超过当前时间
-function isFutureTime(dateTime, timeToAdd) {
+export function isFutureTime(dateTime, timeToAdd) {
   if (!timeToAdd) return true; // 如果没有时间，则返回true（未来时间）
 
   var currentDateTime = new Date(); // 获取当前时间

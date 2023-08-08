@@ -37,21 +37,21 @@
         <view class="right flexClass">
           <view style="margin-bottom: 6px" class="ellipsis-text">{{ item.secondUser }}</view>
 
-          <!-- 如果游戏状态仍然为loading，说明为假数据 -->
-          <template v-if="item.gameStatus === 'loading'">
+          <!-- 判断是否为“未来时间”，根据这个判断来确认是否为假数据 -->
+          <template v-if="checkIsFutureTime(item)">
             <view>~</view>
             <view>~</view>
           </template>
 
           <!-- 如果含有secondUseTime并且不为00:00，则进行渲染 -->
-          <template v-else-if="item.secondUseTime && item.secondUseTime != '00:00'">
+          <template v-else-if="item.secondUseTime && item.secondUseTime !== '00:00'">
             <view v-if="item.secondStep != 0">{{ item.secondStep }} </view>
             <view v-else-if="item.secondStep == 0"><u-tag text="闯关失败" type="error"></u-tag></view>
             <view style="margin-top: 6px">{{ item.secondUseTime }}</view>
           </template>
 
           <!-- 如果不含有secondUseTime，则展示~符号 -->
-          <template v-else-if="!item.secondUseTime || itme.secondUseTime == '00:00'">
+          <template v-else-if="!item.secondUseTime || itme.secondUseTime === '00:00'">
             <view>~</view>
             <view>~</view>
           </template>
@@ -67,7 +67,7 @@
 
 <script>
 import ReloadIcon from "components/ReloadIcon/ReloadIcon.vue";
-import { checkUseTimeLarge20 } from "@/utils/index.js";
+import { checkUseTimeLarge20, isFutureTime } from "@/utils/index.js";
 
 export default {
   components: { ReloadIcon },
@@ -146,6 +146,17 @@ export default {
         this.timer = setInterval(() => {
           this._checkHistoryItemGameStatus();
         }, 10000);
+      }
+    },
+    checkIsFutureTime(item) {
+      // 如果含有secondUseTime，则进行判断是否为“未来时间”，如果为“未来时间”，则返回true
+      if (item.secondUseTime && item.secondUseTime !== "00:00") {
+        const futureTimeStatus = isFutureTime(item.beginTime, item.secondUseTime);
+        return futureTimeStatus;
+      }
+
+      if (!item.secondUseTime || item.secondUseTime === "00:00") {
+        return false;
       }
     },
   },

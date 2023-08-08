@@ -138,9 +138,8 @@ export default {
         this.$store.dispatch("setPKLevel");
 
         setTimeout(() => {
-          // 跳转到游戏开始界面
-          this.$Router.replace({ path: `/pagesGames/pkOnlineBegin` });
-        }, 400);
+          this.$Router.replace({ path: `/pagesGames/pkOnlineBegin` }); // 跳转到游戏开始界面
+        }, 1000);
       });
     },
 
