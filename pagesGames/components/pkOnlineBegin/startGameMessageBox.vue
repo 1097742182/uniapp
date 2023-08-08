@@ -57,7 +57,8 @@ export default {
     readyBtnClick() {
       // this.$refs.startGame.close();
       this.readyStatus = true;
-      this.user1Status = true;
+      if (this.firstUser === this.NickName) this.user1Status = true;
+      else if (this.secondUser === this.NickName) this.user2Status = true;
     },
     gameBeginBtnClick() {
       this.$refs.startGame.close();
