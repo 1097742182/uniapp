@@ -192,6 +192,13 @@ export function checkPkGameStatus(roomDetail) {
     if (gameStatus === "failed") gameStatus = "success";
   }
 
+  // 当游戏为胜利时，判断用户两个步数是否为0，如果都为0，说明失败
+  if (gameStatus === "success") {
+    if (roomDetail.firstStep == 0 && roomDetail.secondStep == 0) {
+      gameStatus = "failed";
+    }
+  }
+
   return gameStatus;
 }
 

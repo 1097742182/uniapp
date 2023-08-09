@@ -18,7 +18,7 @@
           </template>
 
           <!-- 如果不含有firstUseTime，则展示~符号 -->
-          <template v-if="!item.firstUseTime || itme.firstUseTime == '00:00'">
+          <template v-if="!item.firstUseTime || item.firstUseTime == '00:00'">
             <view>~</view>
             <view>~</view>
           </template>
@@ -51,7 +51,7 @@
           </template>
 
           <!-- 如果不含有secondUseTime，则展示~符号 -->
-          <template v-else-if="!item.secondUseTime || itme.secondUseTime === '00:00'">
+          <template v-else-if="!item.secondUseTime || item.secondUseTime === '00:00'">
             <view>~</view>
             <view>~</view>
           </template>
