@@ -64,7 +64,7 @@ export default {
 
 <style lang="scss" scoped>
 .music-icon {
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 150px;
   width: 30px;
