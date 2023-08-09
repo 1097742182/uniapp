@@ -1,3 +1,5 @@
+import store from "@/store";
+
 // 判断两个list是否相等
 export function equals(list1, list2) {
   if (list1.length !== list2.length) {
@@ -157,6 +159,8 @@ function checkTimeValid(roomDetail) {
 
 // 判断游戏是否胜利
 export function checkPkGameStatus(roomDetail) {
+  const nickName = store.state.NickName;
+
   // 先检查时间是否符合，如果不符合，则直接返回loading
   const valid = checkTimeValid(roomDetail);
   if (!valid) return "loading";
@@ -178,6 +182,14 @@ export function checkPkGameStatus(roomDetail) {
     const timeStatus = compareTime(firstUseTime, secondUseTime);
     if (timeStatus) gameStatus = "success";
     else gameStatus = "failed";
+  }
+
+  // 进行用户判断，因为上面的判断都是以nickName为firstUser判断的
+  if (nickName === roomDetail.firstUser) {
+    console.log("属于正常状态，直接跳过");
+  } else if (nickName === roomDetail.secondUser) {
+    if (gameStatus === "success") gameStatus = "failed";
+    if (gameStatus === "failed") gameStatus = "success";
   }
 
   return gameStatus;
