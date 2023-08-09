@@ -23,18 +23,17 @@
       <view>
         <view class="inputArea">用户昵称</view>
         <input class="weui-input" :value="nickName" :disabled="true" />
-        <text class="tips"></text>
       </view>
 
       <view>
         <view class="inputArea">对手昵称</view>
         <input class="weui-input" :value="user2" :disabled="true" placeholder="正在等待对手进入房间……" />
-        <text class="tips"></text>
       </view>
     </view>
 
     <view class="buttonArea">
-      <button type="primary" @click="enterRoom()" :disabled="checkEnterBtnStatus()">开始游戏</button>
+      <button type="primary" @click="enterRoom()" :disabled="checkEnterBtnStatus()" class="btnClass">开始游戏</button>
+      <button @click="shareAgainBtnClick()" open-type="share" style="margin-top: 10px" class="btnClass">再次邀请</button>
     </view>
   </div>
 </template>
@@ -51,6 +50,12 @@ export default {
 
       timeInterval: "",
     };
+  },
+  async onShareAppMessage() {
+    const data = JSON.parse(JSON.stringify(this.share));
+    data.title = "对战房间";
+    data.path = "/pagesGames/pkOnlineMenu?roomId=" + this.roomId;
+    return data;
   },
   onLoad: function (option) {
     console.log(option);
@@ -117,7 +122,7 @@ export default {
 }
 
 .avatarUrl {
-  margin-top: 120px;
+  margin-top: 100px;
   padding: 0 0 20rpx;
   background: #ffffff00;
 
@@ -186,10 +191,15 @@ button::after {
 
 .buttonArea {
   display: flex;
+  flex-direction: column;
 }
 
 .inputArea {
   margin-bottom: 10px;
   font-size: 18px;
+}
+
+.btnClass {
+  width: 200px;
 }
 </style>
