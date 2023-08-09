@@ -44,9 +44,16 @@ export default {
   methods: {
     success() {
       this.successDialogShow = true;
+      this._initGameWinMusic();
     },
     error() {
       this.errorDialogShow = true;
+    },
+    _initGameWinMusic() {
+      const musicPlayer = uni.createInnerAudioContext();
+      musicPlayer.autoplay = true;
+      musicPlayer.loop = false;
+      musicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameWin.MP3";
     },
   },
 };
