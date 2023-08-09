@@ -120,8 +120,14 @@ export default {
             if (!roomDetail) roomDetail = { firstUseTime: "20:00", secondUseTime: "20:00" };
 
             // 如果原数据没有firstUseTime，并且返回数据有firstUseTime，则直接赋值
-            if (!item.firstUseTime && roomDetail.firstUseTime) item.firstUseTime = roomDetail.firstUseTime;
-            if (!item.secondUseTime && roomDetail.secondUseTime) item.secondUseTime = roomDetail.secondUseTime;
+            if (!item.firstUseTime && roomDetail.firstUseTime) {
+              item.firstStep = roomDetail.firstStep;
+              item.firstUseTime = roomDetail.firstUseTime;
+            }
+            if (!item.secondUseTime && roomDetail.secondUseTime) {
+              item.secondStep = roomDetail.secondStep;
+              item.secondUseTime = roomDetail.secondUseTime;
+            }
 
             checkUseTimeLarge20(item); // 查看是否已经大于20分钟
 
