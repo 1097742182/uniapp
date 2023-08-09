@@ -48,7 +48,8 @@ const store = new Vuex.Store({
 
     PKLevelStatus: false, // 是否为PK关卡
 
-    musicPlayer: null, // 展示音乐的
+    MusicPlayer: null, // 展示音乐的
+    MusicPlayStatus: false, // 是否正在播放音乐
   },
   getters: {},
   mutations: {
@@ -131,8 +132,11 @@ const store = new Vuex.Store({
       state.PKLevelStatus = PKLevelStatus;
     },
 
-    setMusicPlayer: (state, musicPlayer) => {
-      state.musicPlayer = musicPlayer;
+    setMusicPlayer: (state, MusicPlayer) => {
+      state.MusicPlayer = MusicPlayer;
+    },
+    setMusicPlayStatus: (state, MusicPlayStatus) => {
+      state.MusicPlayStatus = MusicPlayStatus;
     },
   },
   actions: {
@@ -321,11 +325,25 @@ const store = new Vuex.Store({
     },
 
     createMusicPlayer({ commit }) {
-      const musicPlayer = uni.createInnerAudioContext();
-      musicPlayer.autoplay = true;
-      musicPlayer.loop = true;
-      musicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameMusic.MP3";
-      commit("setMusicPlayer", musicPlayer);
+      const MusicPlayer = uni.createInnerAudioContext();
+      MusicPlayer.autoplay = true;
+      MusicPlayer.loop = true;
+      MusicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameMusic.MP3";
+      commit("setMusicPlayStatus", true);
+
+      // 监听音乐播放事件，更新状态码
+      MusicPlayer.onPlay(() => {
+        commit("setMusicPlayStatus", true);
+        console.log("音乐开始");
+      });
+
+      // 监听音乐暂停事件，更新状态码
+      MusicPlayer.onPause(() => {
+        commit("setMusicPlayStatus", false);
+        console.log("音乐暂停");
+      });
+
+      commit("setMusicPlayer", MusicPlayer);
     },
   },
   modules: {

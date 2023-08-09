@@ -5,10 +5,11 @@ export default {
   onLaunch: function () {
     console.log("App Launch");
     this.createMusicPlayer();
+    this.$store.commit("setMusicPlayStatus", true);
   },
   onShow: function () {
-    if (this.$store.state.musicPlayer) {
-      // this.$store.state.musicPlayer.play();
+    if (this.$store.state.MusicPlayer) {
+      // this.$store.state.MusicPlayer.play();
     }
   },
   onHide: function () {

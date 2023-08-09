@@ -1,5 +1,5 @@
 <template>
-  <div class="music-icon" @click="changeMusicStatus()" ref="musicIcon" id="musicIcon">
+  <div class="music-icon" :class="isRotate" @click="changeMusicStatus()" ref="musicIcon" id="musicIcon">
     <svg
       t="1691509346479"
       class="icon"
@@ -23,34 +23,39 @@
 export default {
   data() {
     return {
-      rotateDeg: 0,
+      isRotate: "",
     };
   },
+  computed: {
+    musicPlayStatus() {
+      return this.MusicPlayStatus;
+    },
+  },
+  watch: {
+    musicPlayStatus: {
+      handler() {
+        this._initMusicRotate();
+      },
+    },
+  },
   mounted() {
-    const query = uni.createSelectorQuery().in(this);
-    query
-      .select("#musicIcon")
-      .boundingClientRect((data) => {
-        console.log("得到布局位置信息" + JSON.stringify(data));
-        console.log("节点离页面顶部的距离为" + data.top);
-      })
-      .exec();
-
-    setInterval(() => {
-      this.rotateDeg += 10;
-
-      // let icon = document.querySelector(".music-icon");
-      // let icon = this.$el.querySelector(".music-icon");
-      // console.log(icon);
-      // icon.style.transform = `rotate(${this.rotateDeg}deg)`;
-    }, 100);
+    this._initMusicRotate();
   },
   methods: {
-    changeMusicStatus() {
-      if (this.$store.state.musicPlayer) {
-        this.$store.commit("setMusicPlayer", "");
+    _initMusicRotate() {
+      if (this.musicPlayStatus) {
+        this.isRotate = "rotate";
       } else {
-        this.$store.dispatch("createMusicPlayer");
+        this.isRotate = "";
+      }
+    },
+    changeMusicStatus() {
+      if (this.MusicPlayStatus) {
+        this.MusicPlayer.pause();
+        this.$store.commit("setMusicPlayStatus", false);
+      } else {
+        this.$store.commit("setMusicPlayStatus", true);
+        this.MusicPlayer.play();
       }
     },
   },
@@ -65,5 +70,18 @@ export default {
   width: 30px;
   height: 30px;
   // transition: transform 0.5s linear;
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
