@@ -35,25 +35,32 @@ export default {
     return {
       successDialogShow: false,
       errorDialogShow: false,
+      musicPlayer: null,
     };
   },
   components: {
     SuccessDialog,
     ErrorDialog,
   },
+  mounted() {
+    this._initGameWinMusic();
+  },
   methods: {
     success() {
       this.successDialogShow = true;
-      this._initGameWinMusic();
+      this.musicPlay();
     },
     error() {
       this.errorDialogShow = true;
     },
     _initGameWinMusic() {
-      const musicPlayer = uni.createInnerAudioContext();
-      musicPlayer.autoplay = true;
-      musicPlayer.loop = false;
-      musicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameWin.MP3";
+      this.musicPlayer = uni.createInnerAudioContext();
+      this.musicPlayer.loop = false;
+      this.musicPlayer.volume = 0.2;
+      this.musicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameWin.MP3";
+    },
+    musicPlay() {
+      this.musicPlayer.play();
     },
   },
 };

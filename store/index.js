@@ -326,10 +326,11 @@ const store = new Vuex.Store({
 
     createMusicPlayer({ commit }) {
       const MusicPlayer = uni.createInnerAudioContext();
-      MusicPlayer.autoplay = true;
+      // MusicPlayer.autoplay = true;
       MusicPlayer.loop = true;
+      MusicPlayer.volume = 0.2;
       MusicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameMusic.MP3";
-      commit("setMusicPlayStatus", true);
+      // commit("setMusicPlayStatus", true);
 
       // 监听音乐播放事件，更新状态码
       MusicPlayer.onPlay(() => {

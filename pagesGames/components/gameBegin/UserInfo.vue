@@ -7,11 +7,13 @@
 
     <!-- 如果不是PK界面，则展示关卡积分 -->
     <view class="right" v-if="!PKLevelStatus">
+      <view class="svgIcon"> <SvgIcon /> </view>
       <text class="userCount">关卡积分：{{ LevelCount }}</text>
     </view>
 
     <!-- 如果是PK界面，则展示时间计算 -->
     <view class="right" v-if="PKLevelStatus">
+      <view class="svgIcon"> <SvgIcon /> </view>
       <view class="userCount">关卡用时：<time-record-vue ref="TimeRecordVue" /> </view>
     </view>
   </view>
@@ -19,6 +21,7 @@
 
 <script>
 import TimeRecordVue from "components/TimeRecord/TimeRecord.vue";
+import SvgIcon from "@/components/MusicSvgIcon/index.vue";
 
 export default {
   data() {
@@ -33,6 +36,7 @@ export default {
   },
   components: {
     TimeRecordVue,
+    SvgIcon,
   },
   mounted() {
     this._initUserInfo();
@@ -87,5 +91,16 @@ export default {
 
 .redBackground {
   background: linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%);
+}
+
+.right {
+  position: relative;
+}
+
+.svgIcon {
+  position: absolute;
+  top: 6px;
+  z-index: 99;
+  left: -34px;
 }
 </style>

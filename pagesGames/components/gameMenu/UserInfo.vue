@@ -11,6 +11,7 @@
     </view>
 
     <view class="right">
+      <view class="svgIcon"> <SvgIcon /> </view>
       <view class="tag" @click="personalCenterClick()">个人中心</view>
       <!-- <text class="userCount">用户积分：{{ UserCount }}</text> -->
     </view>
@@ -18,6 +19,8 @@
 </template>
 
 <script>
+import SvgIcon from "@/components/MusicSvgIcon/index.vue";
+
 export default {
   data() {
     return {
@@ -43,6 +46,9 @@ export default {
     nickNameState() {
       this._initUserInfo();
     },
+  },
+  components: {
+    SvgIcon,
   },
   mounted() {
     this._initUserInfo();
@@ -126,6 +132,7 @@ export default {
   }
 
   .right {
+    position: relative;
     margin: auto;
 
     .tag {
@@ -152,5 +159,10 @@ export default {
   line-height: 1;
   background: #ffffff00;
   border-radius: 50%;
+}
+
+.svgIcon {
+  position: absolute;
+  left: -34px;
 }
 </style>

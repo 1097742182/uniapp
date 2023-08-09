@@ -61,7 +61,7 @@ export default {
 }
 
 .rotate {
-  animation: rotate 2s linear infinite;
+  animation: rotate 3s linear infinite;
 }
 
 @keyframes rotate {

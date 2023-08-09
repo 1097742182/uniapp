@@ -5,16 +5,16 @@
     <Main />
 
     <view class="gameStoryButton" @click="gameStoryShow = true">故事详情</view>
-    <div>
+    <view class="svgIcon">
       <SvgIcon />
-    </div>
+    </view>
   </view>
 </template>
 
 <script>
 import GameStoryVue from "./components/GameStory.vue";
 import Main from "./components/Main.vue";
-import SvgIcon from "./components/svgIcon";
+import SvgIcon from "@/components/MusicSvgIcon/index.vue";
 
 export default {
   data() {
@@ -59,5 +59,11 @@ export default {
   border-radius: 20px 0 0 20px;
   color: #ffffff;
   background: #3c9cff;
+}
+
+.svgIcon {
+  position: fixed;
+  right: 10px;
+  top: 150px;
 }
 </style>
