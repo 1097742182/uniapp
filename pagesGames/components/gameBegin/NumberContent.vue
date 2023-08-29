@@ -1,30 +1,15 @@
 <template>
   <view class="container" :class="backgroundType">
-    <number-content-item
-      v-for="(item, index) in NumberList"
-      :key="index"
-      :value="item"
-      :gameOver="gameOver"
-      :viewIndex="index"
-      @changeIndex="changeIndex"
-      :actived="CurrentIndex === index"
-    ></number-content-item>
+    <number-content-item v-for="(item, index) in NumberList" :key="index" :value="item" :gameOver="gameOver"
+      :viewIndex="index" @changeIndex="changeIndex" :actived="CurrentIndex === index"></number-content-item>
 
     <div class="question" @click="questionBtnClick()">
       <u-icon name="question-circle-fill" color="#1f8ce1" size="20"></u-icon>
     </div>
 
     <div style="position: absolute">
-      <u-popup
-        :show="popupShow"
-        mode="center"
-        @close="close"
-        @open="open"
-        :closeable="true"
-        round="20"
-        :zIndex="20000"
-        :safeAreaInsetBottom="false"
-      >
+      <u-popup :show="popupShow" mode="center" @close="close" @open="open" :closeable="true" round="20" :zIndex="20000"
+        :safeAreaInsetBottom="false">
         <view class="popup">
           <view class="popup-title">游戏规则</view>
           <view class="popup-content">
@@ -49,21 +34,16 @@
         </view>
       </u-popup>
 
-      <u-popup
-        :show="hardPopupShow"
-        mode="center"
-        @close="hardClose"
-        @open="hardOpen"
-        :closeable="true"
-        round="20"
-        :safeAreaInsetBottom="false"
-      >
+      <u-popup :show="hardPopupShow" mode="center" @close="hardClose" @open="hardOpen" :closeable="true" round="20"
+        :safeAreaInsetBottom="false">
         <view class="popup">
           <view class="popup-title">“华山论剑”游戏规则</view>
           <view class="popup-content">
             <view class="popup-content-item"> 与“菜鸟集训”规则大致相同 </view>
             <view class="popup-content-item" style="font-weight: bold; color: red"> “华山论剑”数字可重复 </view>
-
+            <view class="popup-content-item" style="font-weight: bold;">
+              当有重复数字出现时，优先判判定“打钩，即数字位置也对”的数量，再判定“数字有出现但位置不对的”数量
+            </view>
             <view class="popup-content-button-area">
               <view class="checkboxGroup">
                 <u-checkbox-group v-model="hardCheckboxValue" @change="handleHardCheckboxChange" style="margin: 6px">
