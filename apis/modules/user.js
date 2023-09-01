@@ -22,6 +22,10 @@ export function getUserInfo(code) {
   return http.post("/number/get_user_info", { code });
 }
 
+export function getRank(open_id) {
+  return http.post("/number/get_rank", { open_id });
+}
+
 export function addUserInfo(data) {
   return http.post("/number/add_data", data);
 }

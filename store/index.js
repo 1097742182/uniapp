@@ -328,7 +328,7 @@ const store = new Vuex.Store({
       const MusicPlayer = uni.createInnerAudioContext();
       MusicPlayer.autoplay = true;
       MusicPlayer.loop = true;
-      MusicPlayer.volume = 0.2;
+      MusicPlayer.volume = 0.5;
       MusicPlayer.src = "https://www.xinyongji.com:9898/media/MP3/gameMusic.MP3";
       commit("setMusicPlayStatus", true);
 
