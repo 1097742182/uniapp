@@ -16,7 +16,10 @@
     <view class="bottom">
       <slot name="bottom">
         <view class="bottomLeft">我的排名：{{ UserRank }}</view>
-        <view class="bottomRight" @click="countMallBtnClick()">积分商城 ></view>
+        <view class="bottomRight">
+          <view @click="countMallBtnClick()" v-if="false">积分商城 ></view>
+          <view @click="checkRankBtnClick()">查看排名 ></view>
+        </view>
       </slot>
     </view>
 
@@ -56,8 +59,13 @@ export default {
       const userCount = uni.getStorageSync("UserCount");
       this.$store.commit("SET_UserCount", userCount);
     },
+    // 积分商城按钮点击
     countMallBtnClick() {
       this.$Router.push({ name: "countMall", params: {} });
+    },
+    // 查看排名按钮点击
+    checkRankBtnClick() {
+      this.$Router.push({ name: "rankDetail", params: {} });
     },
     getUserLevelName() {
       if (this.UserCount < 1000) return "实习探员";

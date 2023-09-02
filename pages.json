@@ -65,11 +65,23 @@
           "path": "countMall",
           "name": "countMall",
           "meta": {
-            "title": "游戏开始"
+            "title": "积分商城"
           },
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "游戏开始",
+            "navigationBarTitleText": "积分商城",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "rankDetail",
+          "name": "rankDetail",
+          "meta": {
+            "title": "排名详情"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "排名详情",
             "enablePullDownRefresh": false
           }
         },

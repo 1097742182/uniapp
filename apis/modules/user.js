@@ -22,8 +22,14 @@ export function getUserInfo(code) {
   return http.post("/number/get_user_info", { code });
 }
 
+// 获取用户排名
 export function getRank(open_id) {
   return http.post("/number/get_rank", { open_id });
+}
+
+// 获取top20排名
+export function getTop20Rank() {
+  return http.post("/number/get_top20_rank");
 }
 
 export function addUserInfo(data) {
