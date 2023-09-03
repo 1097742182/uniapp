@@ -2,7 +2,7 @@
   <view class="u-page gradient">
     <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
-    <UserCountCard />
+    <UserCountCard :showRank="true" />
     <!-- <success-dialog /> -->
 
     <view class="u-demo-block">
