@@ -41,11 +41,9 @@ export default {
 .UserDetailCard {
   position: relative;
   overflow: hidden;
-  height: 100px;
   width: 100%;
   border-radius: 20px;
   padding: 20px;
-  padding-bottom: 40px;
   box-sizing: border-box;
 
   background: linear-gradient(90deg, #406de4, #7c78b8);
