@@ -15,10 +15,12 @@
 
     <view class="bottom">
       <slot name="bottom">
-        <view class="bottomLeft">我的排名：{{ UserRank }}</view>
+        <view class="bottomLeft" @tap="checkRankBtnClick()">
+          <view style="display: inline-block">我的排名：</view>
+          <view style="display: inline-block; border-bottom: 1px solid; padding: 1px 3px">{{ UserRank }}</view>
+        </view>
         <view class="bottomRight">
-          <view @click="countMallBtnClick()" class="linkItem" :class="countMall">积分商城 ></view>
-          <view @click="checkRankBtnClick()" class="linkItem" v-if="showRank" :class="checkRank">查看排名 ></view>
+          <view @click="countMallBtnClick()" class="linkItem">积分商城 ></view>
         </view>
       </slot>
     </view>
@@ -31,57 +33,19 @@
 </template>
 
 <script>
+import rankDetailVue from "pagesGames/rankDetail.vue";
 export default {
   data() {
     return {
       UserRank: "",
       isRotating: false,
-      countMall: "show",
-      checkRank: "hide",
     };
-  },
-  props: {
-    showRank: { type: Boolean, default: false },
   },
 
   mounted() {
-    this._initSmoothView();
     this._initUserRank();
   },
   methods: {
-    _initSmoothView() {
-      if (!this.showRank) return;
-
-      setTimeout(() => {
-        if (this.countMall === "show") {
-          this.countMall = "up";
-          this.checkRank = "show";
-        } else if (this.countMall === "hide") {
-          this.countMall = "show";
-          this.checkRank = "up";
-        }
-
-        setTimeout(() => {
-          if (this.countMall === "up") this.countMall = "hide";
-          if (this.checkRank === "up") this.checkRank = "hide";
-        }, 1000);
-      }, 500);
-
-      setInterval(() => {
-        if (this.countMall === "show") {
-          this.countMall = "up";
-          this.checkRank = "show";
-        } else if (this.countMall === "hide") {
-          this.countMall = "show";
-          this.checkRank = "up";
-        }
-
-        setTimeout(() => {
-          if (this.countMall === "up") this.countMall = "hide";
-          if (this.checkRank === "up") this.checkRank = "hide";
-        }, 1000);
-      }, 3000);
-    },
     async _initUserRank() {
       if (this.UserCount < 100) return (this.UserRank = "999+");
       if (!this.OpenId) return (this.UserRank = "999+");
@@ -104,7 +68,9 @@ export default {
     },
     // 查看排名按钮点击
     checkRankBtnClick() {
-      this.$Router.push({ name: "rankDetail", params: {} });
+      let pages = getCurrentPages(); //获取当前页面信息栈
+      const currentPage = pages[pages.length - 1];
+      if (currentPage.route != "pagesGames/rankDetail") this.$Router.push({ name: "rankDetail", params: {} });
     },
     getUserLevelName() {
       if (this.UserCount < 1000) return "实习探员";
@@ -197,23 +163,6 @@ export default {
       .linkItem {
         height: 40px;
         line-height: 40px;
-        position: absolute;
-        top: 40px;
-        right: 0;
-      }
-
-      .show {
-        transform: translateY(-100%);
-        transition: 0.5s transform ease-in-out;
-      }
-
-      .up {
-        transform: translateY(-200%);
-        transition: 0.5s transform ease-in-out;
-      }
-
-      .hide {
-        transform: translateY(0);
       }
     }
   }

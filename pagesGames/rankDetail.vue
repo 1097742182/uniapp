@@ -32,7 +32,6 @@ export default {
     async _initRankDetail() {
       const data = await this.$api.user.getTop20Rank();
       this.rankDetail = data;
-      console.log(rankDetailRes);
     },
   },
 };
