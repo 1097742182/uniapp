@@ -100,6 +100,8 @@ export default {
       const roomDetail = await this.$api.user.searchUser(userData);
       roomDetail.firstUser = this.NickName;
 
+      if (!this.$refs.MessageBox.show) return; // 如果“等待窗口”已关闭，则直接返回
+
       const id = roomDetail.roomId;
       this.$store.commit("PkOnline/SET_RoomDetail", roomDetail);
 
