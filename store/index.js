@@ -157,14 +157,21 @@ const store = new Vuex.Store({
       // 初始化UserStep
       if (state.LevelStep === -1) {
         let levelStep = uni.getStorageSync("LevelStep");
-        levelStep = levelStep ? levelStep : 1;
+        levelStep = levelStep || 1;
         commit("SET_LevelStep", levelStep);
+      }
+
+      // 初始化UserStep
+      if (state.HardLevelStep === -1) {
+        let HardLevelStep = uni.getStorageSync("HardLevelStep");
+        HardLevelStep = HardLevelStep || 1;
+        commit("SET_HardLevelStep", HardLevelStep);
       }
 
       // 初始化HardLevelStep
       if (state.HardLevelStep === -1) {
         let hardLevelStep = uni.getStorageSync("HardLevelStep");
-        hardLevelStep = hardLevelStep ? hardLevelStep : 1;
+        hardLevelStep = hardLevelStep || 1;
         commit("SET_HardLevelStep", hardLevelStep);
         console.log(state.HardLevelStep);
       }
@@ -188,15 +195,7 @@ const store = new Vuex.Store({
     },
     // 根据接口返回的信息，更新用户数据
     updateUserInfoByInterfaceData({ state, commit, dispatch }, userInfo) {
-      const openId = userInfo["openId"];
-      const nickname = userInfo["nickname"];
-      // const avatarUrl = userInfo["avatarUrl"];
-      const cityValue = userInfo["cityValue"];
-      const genderValue = userInfo["genderValue"];
-      const UserCount = userInfo["UserCount"];
-      const LevelStep = userInfo["LevelStep"];
-      const UserGameDetail = userInfo["UserGameDetail"];
-      const PkHistoryList = userInfo["PkHistoryList"];
+      const { openId, nickname, avatarUrl, cityValue, genderValue, UserCount, LevelStep, HardLevelStep, UserGameDetail, PkHistoryList } = userInfo;
 
       // 存到Vuex中
       if (openId) commit("SET_OpenId", openId);
@@ -204,6 +203,7 @@ const store = new Vuex.Store({
       // if (avatarUrl) commit("SET_AvatarUrl", avatarUrl);
       if (UserCount) commit("SET_UserCount", UserCount);
       if (LevelStep) commit("SET_LevelStep", LevelStep);
+      if (HardLevelStep) commit("SET_HardLevelStep", HardLevelStep);
       if (genderValue || cityValue) commit("SET_UserDetail", { genderValue, cityValue });
 
       // 存到storeage中
@@ -214,6 +214,7 @@ const store = new Vuex.Store({
       if (genderValue) uni.setStorageSync("genderValue", genderValue);
       if (UserCount) uni.setStorageSync("UserCount", UserCount);
       if (LevelStep) uni.setStorageSync("LevelStep", LevelStep);
+      if (HardLevelStep) uni.setStorageSync("HardLevelStep", HardLevelStep);
       if (UserGameDetail) uni.setStorageSync("UserGameDetail", JSON.parse(UserGameDetail));
       if (PkHistoryList) uni.setStorageSync("PkHistoryList", JSON.parse(PkHistoryList));
 
@@ -311,6 +312,12 @@ const store = new Vuex.Store({
         commit("SET_HardLevelStep", levelStep);
         uni.setStorageSync("HardLevelStep", levelStep);
       }
+
+      // 更新用户信息到数据库
+      const data = { openId: state.OpenId, nickname: state.NickName };
+      if (state.LevelStep && state.LevelStep != -1) data['LevelStep'] = state.LevelStep
+      if (state.HardLevelStep && state.HardLevelStep != -1) data['HardLevelStep'] = state.HardLevelStep
+      uni.$http.post("/number/update_data", data);
     },
     setUserDetail({ commit }, userDetail) {
       const { nickName, avatarUrl, cityValue, genderValue } = userDetail;

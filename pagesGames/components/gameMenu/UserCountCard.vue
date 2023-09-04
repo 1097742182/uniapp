@@ -20,6 +20,7 @@
           <view style="display: inline-block; border-bottom: 1px solid; padding: 1px 3px">{{ UserRank }}</view>
         </view>
         <view class="bottomRight">
+          <view></view>
           <view @click="countMallBtnClick()" class="linkItem">积分商城 ></view>
         </view>
       </slot>
@@ -158,7 +159,7 @@ export default {
       width: 200px;
       height: 40px;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
 
       .linkItem {
         height: 40px;
