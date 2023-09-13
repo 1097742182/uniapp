@@ -1,23 +1,38 @@
 <template>
   <view class="container" :class="backgroundType">
-    <number-content-item v-for="(item, index) in NumberList" :key="index" :value="item" :gameOver="gameOver"
-      :viewIndex="index" @changeIndex="changeIndex" :actived="CurrentIndex === index"></number-content-item>
+    <number-content-item
+      v-for="(item, index) in NumberList"
+      :key="index"
+      :value="item"
+      :gameOver="gameOver"
+      :viewIndex="index"
+      @changeIndex="changeIndex"
+      :actived="CurrentIndex === index"
+    ></number-content-item>
 
     <div class="question" @click="questionBtnClick()">
       <u-icon name="question-circle-fill" color="#1f8ce1" size="20"></u-icon>
     </div>
 
     <div style="position: absolute">
-      <u-popup :show="popupShow" mode="center" @close="close" @open="open" :closeable="true" round="20" :zIndex="20000"
-        :safeAreaInsetBottom="false">
+      <u-popup
+        :show="popupShow"
+        mode="center"
+        @close="close"
+        @open="open"
+        :closeable="true"
+        round="20"
+        :zIndex="20000"
+        :safeAreaInsetBottom="false"
+      >
         <view class="popup">
           <view class="popup-title">游戏规则</view>
           <view class="popup-content">
-            <view class="popup-content-item"> 每一关的密码是由不同的数字组成，数字不可重复。 </view>
+            <view class="popup-content-item"> 关卡密码是由不同的数字组成，数字不可重复。 </view>
             <view class="popup-content-item"> 破译者猜测其中的数字，并根据系统的提示，继续推理出下一轮的密码。 </view>
             <view class="popup-content-item"> 标签解析 </view>
-            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> √：代表有数字与位置都正确 </view>
-            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> O：代表数字正确 但位置不正确 </view>
+            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> √：代表数字与位置都正确 </view>
+            <view class="popup-content-item" style="margin: 8px 0 8px 40px"> O：代表数字有出现 但位置不正确 </view>
             <view class="popup-content-item" style="margin: 8px 0 8px 40px"> ~：代表数字并未出现 </view>
             <view class="popup-content-item"> 在每一关限定次数内完成密码破译，则成功通关，并得到相应的积分。 </view>
 
@@ -34,14 +49,21 @@
         </view>
       </u-popup>
 
-      <u-popup :show="hardPopupShow" mode="center" @close="hardClose" @open="hardOpen" :closeable="true" round="20"
-        :safeAreaInsetBottom="false">
+      <u-popup
+        :show="hardPopupShow"
+        mode="center"
+        @close="hardClose"
+        @open="hardOpen"
+        :closeable="true"
+        round="20"
+        :safeAreaInsetBottom="false"
+      >
         <view class="popup">
           <view class="popup-title">“华山论剑”游戏规则</view>
           <view class="popup-content">
             <view class="popup-content-item"> 与“菜鸟集训”规则大致相同 </view>
             <view class="popup-content-item" style="font-weight: bold; color: red"> “华山论剑”数字可重复 </view>
-            <view class="popup-content-item" style="font-weight: bold;">
+            <view class="popup-content-item" style="font-weight: bold">
               当有重复数字出现时，优先判判定“打钩，即数字位置也对”的数量，再判定“数字有出现但位置不对的”数量
             </view>
             <view class="popup-content-button-area">
