@@ -1,5 +1,5 @@
 <template>
-  <div class="enterRoom">
+  <div class="waitingRoom">
     <cl-header title="线上PK" :transparent="true" />
     <!-- <view>当前RoomId为：{{ roomId }}</view> -->
 
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.enterRoom {
+.waitingRoom {
   background-image: linear-gradient(to bottom, rgb(132, 193, 247) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
