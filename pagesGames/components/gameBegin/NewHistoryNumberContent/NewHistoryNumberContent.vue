@@ -1,6 +1,12 @@
 <template>
   <view class="HistoryNumberContent" ref="HistoryNumberContent" :style="'height:' + contentHeight">
-    <new-history-number-content-item v-for="item in countList" :value="item" :key="item" :ref="getRef()" class="contentItem" />
+    <new-history-number-content-item
+      v-for="(item, index) in countList"
+      :value="item"
+      :key="item"
+      :ref="getRef(index)"
+      class="contentItem"
+    />
   </view>
 </template>
 
@@ -10,7 +16,7 @@ import NewHistoryNumberContentItem from "./NewHistoryNumberContentItem.vue";
 export default {
   data() {
     return {
-      countList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      countList: Array.from({ length: 20 }, (_, index) => index), // 初始化0-19的数字
       contentHeight: "320px",
     };
   },
@@ -40,7 +46,7 @@ export default {
     NewHistoryNumberContentItem,
   },
   methods: {
-    getRef() {
+    getRef(index) {
       if (!this.secondHistory) return "contentItem";
       if (this.secondHistory) return "contentItem";
     },

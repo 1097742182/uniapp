@@ -2,7 +2,7 @@
   <view class="u-page gradient">
     <cl-header :key="0" title="游戏目录" :transparent="true" />
     <user-info />
-    <UserCountCard :showRank="true" />
+    <UserCountCard ref="UserCountCard" :showRank="true" />
     <!-- <success-dialog /> -->
 
     <view class="u-demo-block">
@@ -11,44 +11,34 @@
         <view class="subsection" :class="backgroundColor">
           <u-subsection :current="currentSubsection" @change="changeSubsection" :list="subsectionList"></u-subsection>
         </view>
-        <!-- <button
-          type="primary"
-          v-if="CurrentLevelType === 'normal'"
-          class="u-demo-block__hardLevel"
-          @click="changeLevelBtnClick()"
-        >
-          华山论剑 >
-        </button>
-
-        <button
-          type="primary"
-          v-if="CurrentLevelType === 'hard'"
-          class="u-demo-block__hardLevel"
-          style="background: #6273cb"
-          @click="changeLevelBtnClick()"
-        >
-          菜鸟集训 >
-        </button> -->
       </div>
       <view class="u-demo-block__content">
         <view class="u-page__button-item">
-          <!-- <u-button @click="gameBegin(1)" text="第一关" type="primary" /> -->
           <ice-button @click="gameBegin(1)" :buttonType="getButtonType(1)" buttonText="第一关" />
         </view>
         <view class="u-page__button-item">
-          <!-- <u-button @click="gameBegin(2)" text="第二关" type="primary" /> -->
           <ice-button @click="gameBegin(2)" :buttonType="getButtonType(2)" buttonText="第二关" />
         </view>
         <view class="u-page__button-item">
-          <!-- <u-button @click="gameBegin(3)" text="第三关" type="primary" /> -->
           <ice-button @click="gameBegin(3)" :buttonType="getButtonType(3)" buttonText="第三关" />
         </view>
         <view class="u-page__button-item">
-          <!-- <u-button @click="gameBegin(4)" text="第四关" type="primary" /> -->
           <ice-button @click="gameBegin(4)" :buttonType="getButtonType(4)" buttonText="第四关" />
         </view>
         <view class="u-page__button-item">
           <ice-button @click="gameBegin(5)" :buttonType="getButtonType(5)" buttonText="第五关" />
+        </view>
+        <view class="u-page__button-item">
+          <ice-button @click="gameBegin(6)" :buttonType="getButtonType(6)" buttonText="第六关" />
+        </view>
+        <view class="u-page__button-item">
+          <ice-button @click="gameBegin(7)" :buttonType="getButtonType(7)" buttonText="第七关" />
+        </view>
+        <view class="u-page__button-item">
+          <ice-button @click="gameBegin(8)" :buttonType="getButtonType(8)" buttonText="第八关" />
+        </view>
+        <view class="u-page__button-item">
+          <ice-button @click="gameBegin(9)" :buttonType="getButtonType(9)" buttonText="第九关" />
         </view>
       </view>
     </view>
@@ -71,6 +61,12 @@ export default {
       backgroundColor: "bg-blue",
     };
   },
+  onShow() {
+    this.$refs.UserCountCard._initUserRank();
+  },
+  onHide() {
+    console.log("OnHide");
+  },
   computed: {},
   watch: {
     currentSubsection(newVal) {
@@ -85,18 +81,16 @@ export default {
     },
     gameBegin(level) {
       if (level == 1) this.$store.dispatch("setLevelOne");
-
       if (level == 2) this.$store.dispatch("setLevelTwo");
-
       if (level == 3) this.$store.dispatch("setLevelThree");
-
       if (level == 4) this.$store.dispatch("setLevelFour");
-
       if (level == 5) this.$store.dispatch("setLevelFive");
+      if (level == 6) this.$store.dispatch("setLevelSix");
+      if (level == 7) this.$store.dispatch("setLevelSeven");
+      if (level == 8) this.$store.dispatch("setLevelEight");
+      if (level == 9) this.$store.dispatch("setLevelNine");
 
-      setTimeout(() => {
-        this.$Router.push({ name: "gameBegin", params: {} });
-      }, 100);
+      setTimeout(() => this.$Router.push({ name: "gameBegin", params: {} }), 100);
     },
     getButtonType(level) {
       if (this.CurrentLevelType === "normal") {
@@ -122,7 +116,6 @@ export default {
         this.contentKey = new Date().getTime();
       }, 100);
     },
-    getSubsectionClas1s() {},
   },
 };
 </script>
@@ -224,6 +217,9 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  padding: 10px 40px;
+  overflow: auto;
+  max-height: 300px;
 }
 
 .prompt {

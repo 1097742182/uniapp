@@ -1,8 +1,5 @@
 <template>
-  <view
-    @click="emitIndex()"
-    :class="{ inputClass: true, isActived: actived, rightColor: gameOver }"
-  >
+  <view @click="emitIndex()" class="inputClass" :class="{ isActived: actived, rightColor: gameOver }">
     {{ value }}
   </view>
 </template>
@@ -29,7 +26,8 @@ export default {
 <style>
 .inputClass {
   border: 1px solid #999999;
-  width: 50px;
+  width: 100%;
+  max-width: 50px;
   height: 50px;
   margin-right: 10px;
   font-size: 24px;

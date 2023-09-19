@@ -2,8 +2,8 @@
   <view class="HistoryNumberContentItem" :style="'margin-bottom:' + bottomValue">
     <view class="numberList">
       <view class="numberItem" v-for="(item, index) in numberList" :key="index">
-        <text v-if="item" :style="'color: ' + colorList[index]">{{ item }}</text>
-        <text v-else style="color: #ffffff">0</text>
+        <view v-if="item" :style="'color: ' + colorList[index]" class="numberItemItem">{{ item }}</view>
+        <view v-else style="color: #ffffff" class="numberItemItem">0</view>
 
         <!-- 最后出现答案时，展示的密码 -->
         <view v-if="currentLevelNumberResultShowState" class="numberListStatus">
@@ -43,10 +43,7 @@ export default {
       numberList: ["", "", "", ""],
       numberListStatus: ["~", "~", "~", "~"],
       colorList: [],
-      numberStatus: {
-        right: "",
-        nearlyRight: "",
-      },
+      numberStatus: { right: "", nearlyRight: "" },
       bottomValue: "10px",
     };
   },
@@ -107,6 +104,7 @@ export default {
       this.colorList.push(this.randomColor());
       this.colorList.push(this.randomColor());
       this.colorList.push(this.randomColor());
+      this.colorList.push(this.randomColor());
     },
     _checkNumberList() {
       const secretNumbers = this.CurrentLevelNumberResult;
@@ -157,6 +155,8 @@ export default {
 
   .numberList {
     display: flex;
+    flex: 0 0 69%;
+    justify-content: space-between;
     justify-content: center;
 
     // border: 1px solid blue;
@@ -170,12 +170,15 @@ export default {
 
     .numberItem {
       position: relative;
+      width: 100%;
+      max-width: 50px;
+      text-align: center;
 
-      text {
+      .numberItemItem {
         font-size: 20px;
         border: 1px solid palevioletred;
         border-radius: 5px;
-        padding: 12px 18px;
+        // padding: 12px 18px;
       }
     }
   }
@@ -186,6 +189,7 @@ export default {
     // width: 120px;
     border-radius: 6px;
     display: flex;
+    flex: 1;
     // justify-content: space-between;
 
     .statusNumber {

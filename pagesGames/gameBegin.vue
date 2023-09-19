@@ -360,12 +360,13 @@ export default {
     // 下一关按钮点击
     nextLevel() {
       if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelTwo");
-
       if (this.GameBeginTitle === "第二关") this.$store.dispatch("setLevelThree");
-
       if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelFour");
-
       if (this.GameBeginTitle === "第四关") this.$store.dispatch("setLevelFive");
+      if (this.GameBeginTitle === "第五关") this.$store.dispatch("setLevelSix");
+      if (this.GameBeginTitle === "第六关") this.$store.dispatch("setLevelSeven");
+      if (this.GameBeginTitle === "第七关") this.$store.dispatch("setLevelEight");
+      if (this.GameBeginTitle === "第八关") this.$store.dispatch("setLevelNine");
 
       this.$Router.replace({ name: "gameBegin", params: {} });
     },
@@ -415,7 +416,7 @@ export default {
     },
     // 查看是否最后一关
     checkIsLastLevel() {
-      return this.GameBeginTitle === "第五关";
+      return this.GameBeginTitle === "第九关";
     },
     getBackgroundColor() {
       if (this.CurrentLevelType === "hard") {

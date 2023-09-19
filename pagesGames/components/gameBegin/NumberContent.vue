@@ -8,6 +8,7 @@
       :viewIndex="index"
       @changeIndex="changeIndex"
       :actived="CurrentIndex === index"
+      style="width: 100%; display: flex; justify-content: center"
     ></number-content-item>
 
     <div class="question" @click="questionBtnClick()">
