@@ -1,7 +1,7 @@
 <template>
   <div class="waitingRoom">
     <cl-header title="线上PK" :transparent="true" />
-    <!-- <view>当前RoomId为：{{ roomId }}</view> -->
+    <!-- <view>当前waitingRoomId为：{{ waitingRoomId }}</view> -->
 
     <view class="avatarUrl">
       <button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
@@ -17,7 +17,7 @@
     <view class="nickname">
       <view>
         <view class="inputArea">房间ID号</view>
-        <input class="weui-input" :value="roomId" />
+        <input class="weui-input" :value="waitingRoomId" />
       </view>
 
       <view>
@@ -32,7 +32,17 @@
     </view>
 
     <view class="buttonArea">
-      <button type="primary" @click="enterRoom()" :disabled="checkEnterBtnStatus()" class="btnClass">开始游戏</button>
+      <view v-if="waitingRoomDetail.roomLeader == OpenId">
+        <button type="primary" v-if="!waitingRoomDetail.secondUser['status']" :disabled="true" class="btnClass">
+          等待用户准备
+        </button>
+        <button type="primary" v-else @click="enterRoom()" :disabled="checkEnterBtnStatus()" class="btnClass">开始游戏</button>
+      </view>
+
+      <view v-else-if="waitingRoomDetail.roomLeader != OpenId">
+        <button type="primary" v-if="!waitingRoomDetail.secondUser['status']" class="btnClass">准备开始</button>
+        <button type="primary" v-else @click="enterRoom()" :disabled="true" class="btnClass">已准备</button>
+      </view>
       <button @click="shareAgainBtnClick()" open-type="share" style="margin-top: 10px" class="btnClass">再次邀请</button>
     </view>
   </div>
@@ -42,11 +52,19 @@
 export default {
   data() {
     return {
-      roomId: "",
+      waitingRoomId: "",
       nickName: "",
       avatarUrl: "",
       user2: "",
       openId: "",
+
+      waitingRoomDetail: {
+        waitingRoomId: "",
+        roomLeader: "",
+        gameBeginStatus: false,
+        firstUser: { username: "", openId: "", status: false },
+        secondUser: { username: "", openId: "", status: false },
+      }, // 等待房间详情
 
       timeInterval: "",
     };
@@ -54,18 +72,28 @@ export default {
   async onShareAppMessage() {
     const data = JSON.parse(JSON.stringify(this.share));
     data.title = "对战房间";
-    data.path = "/pagesGames/pkOnlineMenu?roomId=" + this.roomId;
+    data.path = "/pagesGames/pkOnlineMenu?waitingRoomId=" + this.waitingRoomId;
     return data;
   },
   onLoad: function (option) {
-    console.log(option);
-    this.roomId = option.roomId;
+    this.waitingRoomId = option.waitingRoomId;
   },
   mounted() {
     this._initUserInfo();
+    clearInterval(this.timeInterval);
+    this._getRoomDetail(); // 立马执行一次
     this.timeInterval = setInterval(() => {
       this._getRoomDetail();
     }, 3000);
+  },
+  // 离开前 清除循环
+  onHide: function () {
+    console.log("page Hide");
+    // clearInterval(this.timeInterval);
+  },
+  beforeDestroy() {
+    console.log("page beforeDestroy");
+    clearInterval(this.timeInterval);
   },
   methods: {
     _initUserInfo() {
@@ -73,16 +101,22 @@ export default {
       this.nickName = this.NickName || "";
     },
     _getRoomDetail() {
-      console.log("RoomId", this.roomId);
-      if (!this.roomId) return; // 没有房间号，则直接返回
-      const data = { roomId: this.roomId };
-      this.$api.user.getRoomDetail(data).then((data) => {
-        if (this.nickName == data.firstUser) {
-          this.user2 = data.secondUser;
-        } else {
-          this.user2 = data.firstUser;
-        }
+      console.log("waitingRoomId", this.waitingRoomId);
+      if (!this.waitingRoomId) return; // 没有房间号，则直接返回
+      if (!this.OpenId) return uni.showToast({ title: "当前用户状态异常，请重新登录" }); // 如果没有OpenId，也是直接返回
 
+      const data = { waitingRoomId: this.waitingRoomId };
+      this.$api.user.checkWaitingRoom(data).then((data) => {
+        this.waitingRoomDetail = data;
+        const firstUser = data.firstUser;
+        const secondUser = data.secondUser;
+
+        // 如果当前用户的openId等于firstUser的openId，则用户2为secondUser的值
+        if (this.OpenId == firstUser.openId) this.user2 = secondUser.username;
+        else if (this.OpenId != firstUser.openId) this.user2 = firstUser.username;
+
+        console.log(this.user2);
+        // 如果用户2已经有值，则停止检查
         if (this.user2) clearInterval(this.timeInterval);
       });
     },
@@ -90,9 +124,9 @@ export default {
       // 如果没有名称与openId，则直接返回
       if (!this.nickName) return uni.showToast({ title: "请输入用户名！", icon: "none" });
       if (!this.OpenId) return uni.showToast({ title: "用户状态异常！", icon: "none" });
-      if (!this.roomId) return uni.showToast({ title: "房间号为空", icon: "none" });
+      if (!this.waitingRoomId) return uni.showToast({ title: "房间号为空", icon: "none" });
 
-      const data = { roomId: this.roomId };
+      const data = { waitingRoomId: this.waitingRoomId };
       this.$api.user.getRoomDetail(data).then((data) => {
         // 将获取到的数据保存到vuex中
         const roomDetail = data;

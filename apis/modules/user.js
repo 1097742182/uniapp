@@ -71,6 +71,17 @@ export function updateRoomDetail(data) {
   return http.post("/number/updateRoomDetail", data);
 }
 
+
+// 好友PK，创建PK房间
+export function getWaitingRoomDetail(data) {
+  return http.post("/number/getWaitingRoom", data);
+}
+
+// 好友PK，创建PK房间
+export function checkWaitingRoom(data) {
+  return http.post("/number/checkWaitingRoom", data);
+}
+
 function _searchUser() {
   const random = Math.random();
   console.log(random);
