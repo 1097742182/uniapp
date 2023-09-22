@@ -95,6 +95,7 @@ export default {
       this.popupShow = true;
     },
     OneClickSubmitBtnClick() {
+      // #ifdef MP-WEIXIN
       uni.login({
         provider: "weixin",
         success: (res) => {
@@ -107,6 +108,25 @@ export default {
           });
         },
       });
+      // #endif
+      // #ifdef H5
+      const userInfo = {
+        id: 12,
+        openId: "ohK3k5edaz-rP3XXkC_CguVC5Hy0",
+        session_key: "",
+        nickname: "\u949f~lin",
+        avatarUrl: "wxfile://tmp_ba5ce0293e8a37913783c1cd01bb16fd6fe3e18f8658d06b.jpg",
+        UserCount: 3637,
+        LevelStep: "9",
+        HardLevelStep: "3",
+        cityValue: "\u5e7f\u4e1c\u7701 \u6df1\u5733",
+        genderValue: "\u7537",
+        createTime: "2023-09-04T16:06:27.454Z",
+      };
+
+      this.$store.dispatch("updateUserInfoByInterfaceData", userInfo);
+      setTimeout(() => this.$refs.MainImage._initUserInfo(), 100);
+      // #endif
     },
   },
 };

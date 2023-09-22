@@ -62,7 +62,7 @@ export default {
     };
   },
   onShow() {
-    this.$refs.UserCountCard._initUserRank();
+    setTimeout(() => this.$refs.UserCountCard._initUserRank(), 100);
   },
   onHide() {
     console.log("OnHide");
