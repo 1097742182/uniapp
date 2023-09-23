@@ -82,6 +82,16 @@ export function checkWaitingRoom(data) {
   return http.post("/number/checkWaitingRoom", data);
 }
 
+// 好友PK，更新PK房间的内容，主要是status
+export function updateWaitingRoom(data) {
+  return http.post("/number/updateWaitingRoom", data);
+}
+
+// 好友PK，根据waitingRoomId获取PK详情
+export function getPkRoomFromWaitingRoom(data) {
+  return http.post("/number/getPkRoomFromWaitingRoom", data);
+}
+
 function _searchUser() {
   const random = Math.random();
   console.log(random);
