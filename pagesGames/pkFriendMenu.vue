@@ -17,12 +17,12 @@
         <ice-button @click="gameBegin()" buttonText="开始PK" />
       </view>
       <view>
-        <ice-button buttonText="邀请好友" />
-        <button class="shareButton" type="primary" open-type="share">好友PK</button>
+        <ice-button buttonText="邀请好友" @click="shareButtonClick()" />
+        <button class="shareButton" type="primary" open-type="share" v-if="false">好友PK</button>
       </view>
     </view>
     <button @click="enterRoomBtnClick()" v-if="false">enterRoom</button>
-    <button @click="waitingRoomBtnClick()" v-if="false">waitingRoom</button>
+    <button @click="waitingRoomBtnClick()" v-if="true">waitingRoom</button>
 
     <MessageBox ref="MessageBox" :showBottom="true" :confirmShow="false" cancelText="取消匹配">
       <view slot="body">匹配用户中……</view>
@@ -72,26 +72,27 @@ export default {
     IceButton,
   },
   mounted() {
-    this._checkIsHaveRoomId();
+    this._checkIsHaveWaitingRoomId();
     this.$store.dispatch("PkOnline/initPkOnlineData");
   },
   methods: {
-    // 如果有roomid传入进来，说明是链接跳转的，直接跳转到enterRoom中
-    _checkIsHaveRoomId() {
+    // 如果有waitingRoomid传入进来，说明是链接跳转的，直接跳转到waitingRoom中
+    _checkIsHaveWaitingRoomId() {
       const pages = getCurrentPages();
       const length = pages.length;
 
       const currentPage = pages[length - 1];
       const options = currentPage.options;
-      const roomId = options.roomId;
+      const waitingRoomId = options.waitingRoomId;
 
-      if (roomId) {
-        const path = "/pagesGames/enterRoom?roomId=" + roomId;
-        setTimeout(() => {
-          this.$Router.push({ path });
-        }, 100);
+      // 如果有waitingRoomId，则直接进入到waitingRoom中
+      if (waitingRoomId) {
+        const path = "/pagesGames/waitingRoom?waitingRoomId=" + waitingRoomId;
+        setTimeout(() => this.$Router.push({ path }), 10);
       }
     },
+
+    // 开始PK，开始在线PK模式
     async gameBegin() {
       this.$refs.MessageBox.open();
       this.$store.dispatch("setPKLevel");
@@ -131,6 +132,29 @@ export default {
     waitingRoomBtnClick() {
       const path = `/pagesGames/waitingRoom`;
       this.$Router.push({ path: path });
+    },
+    async shareButtonClick() {
+      // 根据用户信息，获取房间ID
+      const createRoomData = { username: this.NickName, openId: this.OpenId };
+      const res = await this.$api.user.getWaitingRoomDetail(createRoomData);
+      const waitingRoomId = res["waitingRoomId"];
+      if (!waitingRoomId) return uni.showToast({ title: "分享失败" });
+
+      // 保存roomId到vuex中（用处不大，暂时放着）
+      // this.$store.commit("PkOnline/SET_RoomId", roomId);
+
+      // this.share是通过mixin引入进来的，属于分享的returnData
+      const data = JSON.parse(JSON.stringify(this.share));
+      data.title = "对战房间";
+      data.path = "/pagesGames/pkOnlineMenu?waitingRoomId=" + waitingRoomId;
+
+      // 分享结束后跳转界面
+      setTimeout(() => {
+        const path = "/pagesGames/waitingRoom?waitingRoomId=" + waitingRoomId;
+        this.$Router.push(path);
+      }, 1000);
+
+      return data;
     },
   },
 };

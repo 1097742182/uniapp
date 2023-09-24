@@ -122,6 +122,18 @@
           }
         },
         {
+          "path": "pkFriendBegin",
+          "name": "pkFriendBegin",
+          "meta": {
+            "title": "线上PK"
+          },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "线上PK",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
           "path": "enterRoom",
           "name": "enterRoom",
           "meta": { "title": "线上PK" },
@@ -134,6 +146,16 @@
         {
           "path": "waitingRoom",
           "name": "waitingRoom",
+          "meta": { "title": "线上PK" },
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "线上PK",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "waitingRoomNew",
+          "name": "waitingRoomNew",
           "meta": { "title": "线上PK" },
           "style": {
             "navigationStyle": "custom",

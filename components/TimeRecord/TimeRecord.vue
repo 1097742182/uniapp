@@ -25,6 +25,10 @@ export default {
       }
     },
   },
+  onUnload() {
+    this.$off("$gameBegin", () => {});
+    this.$off("$stopTimer", () => {});
+  },
   mounted() {
     uni.$on("$gameBegin", () => {
       this.startTimer();

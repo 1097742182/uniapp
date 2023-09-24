@@ -108,6 +108,7 @@ export default {
   watch: {},
   mounted() {
     this._initQuestionShow();
+    // this._initQuestionHide();
   },
   methods: {
     _initQuestionShow() {
