@@ -21,6 +21,13 @@
             <view class="cancel btn" @click="cancel" v-if="cancelShow">{{ cancelText }}</view>
             <view class="confirm btn" @click="confirm" v-if="confirmShow">{{ confirmText }}</view>
           </view>
+
+          <view class="btns" v-if="showShare">
+            <view class="cancel btn" @click="cancel" v-if="cancelShow">{{ cancelText }}</view>
+            <button class="btn" style="height: 40px; line-height: 40px; padding: 0 16px" type="primary" open-type="share">
+              炫耀一下
+            </button>
+          </view>
         </slot>
       </view>
     </u-popup>
@@ -35,10 +42,12 @@ export default {
       show: false, //控制打开还是不打开
     };
   },
+
   props: {
     title: { type: String, default: "提示" },
     content: { type: String, default: "是否关闭对话框？" },
     showBottom: { type: Boolean, default: true },
+    showShare: { type: Boolean, default: false },
     cancelText: { type: String, default: "取消" },
     confirmText: { type: String, default: "确定" },
 
@@ -95,12 +104,14 @@ export default {
   .btns {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 
     .btn {
       padding: 5px 16px;
       text-align: center;
       border-radius: 6px;
       margin: 0 5px;
+      font-size: 16px;
     }
     .confirm {
       background: #409eff;

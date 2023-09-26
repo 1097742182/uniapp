@@ -66,7 +66,7 @@
             @close="successDialogShow = false"
             :safeAreaInsetBottom="false"
           >
-            <success-dialog @confirmBtnClick="successDialogShow = false" />
+            <success-dialog @confirmBtnClick="confirmBtnClick" />
           </u-popup>
 
           <!-- 失败的dialog展示 -->
@@ -95,6 +95,15 @@
         </view>
       </view>
     </view>
+
+    <message-box-vue
+      ref="shareMessageBox"
+      title="恭喜通关"
+      content="恭喜您已经击败了全国95%的聪明人，炫耀一下吧！"
+      :showShare="true"
+      :showBottom="false"
+      @confirm="messageBoxConfirm"
+    />
   </view>
 </template>
 
@@ -108,6 +117,7 @@ import ButtonContent from "./components/gameBegin/ButtonContent.vue";
 import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
 import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
+import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
 
 // 方法
 import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
@@ -128,7 +138,13 @@ export default {
       errorDialogShow: false, // 游戏失败动画
       warningDialogShow: false, // 游戏失败动画
       historyHeight: "355px",
+      shareContent: "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！",
     };
+  },
+  onShareAppMessage() {
+    const data = JSON.parse(JSON.stringify(this.share));
+    data.title = this.shareContent;
+    return data;
   },
   components: {
     UserInfo,
@@ -139,6 +155,7 @@ export default {
     ErrorDialog,
     SuccessDialog,
     WarningDialog,
+    MessageBoxVue,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -400,7 +417,7 @@ export default {
       if (this.GameBeginTitle === "第八关") this.$store.dispatch("setLevelEight");
       if (this.GameBeginTitle === "第九关") this.$store.dispatch("setLevelNine");
 
-      this.$Router.push({ name: "gameBegin", params: {} });
+      this.$Router.replace({ name: "gameBegin", params: {} });
     },
     getCurrentTitle() {
       if (this.GameBeginTitle === "第三关" || this.GameBeginTitle === "第四关") {
@@ -420,6 +437,12 @@ export default {
           background: "linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%)",
         };
       }
+    },
+    confirmBtnClick() {
+      this.successDialogShow = false;
+      this.shareContent = "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！";
+      if (this.CurrentLevelType === "hard") this.shareContent = "华山论剑，轻松拿下，无敌是最寂寞！";
+      if (this.checkIsLastLevel()) this.$refs.shareMessageBox.open();
     },
   },
 };
