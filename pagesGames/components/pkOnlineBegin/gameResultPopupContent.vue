@@ -1,14 +1,26 @@
 <template>
   <view>
     <!-- 成功的dialog展示 -->
-    <u-popup :show="successDialogShow" :round="30" mode="center" :closeOnClickOverlay="false"
-      @close="successDialogShow = false" :safeAreaInsetBottom="false">
-      <success-dialog @comfirmBtnClick="successDialogShow = false" />
+    <u-popup
+      :show="successDialogShow"
+      :round="30"
+      mode="center"
+      :closeOnClickOverlay="false"
+      @close="successDialogShow = false"
+      :safeAreaInsetBottom="false"
+    >
+      <success-dialog @confirmBtnClick="confirmBtnClick" />
     </u-popup>
 
     <!-- 失败的dialog展示 -->
-    <u-popup :show="errorDialogShow" :round="30" mode="center" :closeOnClickOverlay="false"
-      @close="errorDialogShow = false" :safeAreaInsetBottom="false">
+    <u-popup
+      :show="errorDialogShow"
+      :round="30"
+      mode="center"
+      :closeOnClickOverlay="false"
+      @close="errorDialogShow = false"
+      :safeAreaInsetBottom="false"
+    >
       <error-dialog @confirmBtnClick="errorDialogShow = false" />
     </u-popup>
   </view>
@@ -49,6 +61,10 @@ export default {
     },
     musicPlay() {
       this.musicPlayer.play();
+    },
+    confirmBtnClick() {
+      this.successDialogShow = false;
+      this.$emit("confirmBtnClick");
     },
   },
 };

@@ -24,7 +24,7 @@
 export default {
   methods: {
     confirmBtnClick() {
-      this.$emit("comfirmBtnClick");
+      this.$emit("confirmBtnClick");
     },
   },
 };
@@ -104,7 +104,6 @@ button,
   box-shadow: 5px 5px 20px rgba($gray, 10%);
   perspective: 40px;
 }
-
 
 .dot {
   width: 8px;

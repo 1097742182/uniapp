@@ -66,7 +66,7 @@
             @close="successDialogShow = false"
             :safeAreaInsetBottom="false"
           >
-            <success-dialog @comfirmBtnClick="successDialogShow = false" />
+            <success-dialog @confirmBtnClick="successDialogShow = false" />
           </u-popup>
 
           <!-- 失败的dialog展示 -->
