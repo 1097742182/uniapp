@@ -302,11 +302,7 @@ export default {
         this.$store.dispatch("UPDATE_UserCount", userCount);
 
         // 保存积分到数据库中
-        const data = {
-          openId: this.OpenId,
-          nickname: this.NickName,
-          UserCount: userCount,
-        };
+        const data = { openId: this.OpenId, nickname: this.NickName, UserCount: userCount };
         this.$api.user.setUserCount(data);
         return;
       }
@@ -395,14 +391,14 @@ export default {
     // 再来一局按钮点击
     reloadLevel() {
       if (this.GameBeginTitle === "第一关") this.$store.dispatch("setLevelOne");
-
       if (this.GameBeginTitle === "第二关") this.$store.dispatch("setLevelTwo");
-
       if (this.GameBeginTitle === "第三关") this.$store.dispatch("setLevelThree");
-
       if (this.GameBeginTitle === "第四关") this.$store.dispatch("setLevelFour");
-
       if (this.GameBeginTitle === "第五关") this.$store.dispatch("setLevelFive");
+      if (this.GameBeginTitle === "第六关") this.$store.dispatch("setLevelSix");
+      if (this.GameBeginTitle === "第七关") this.$store.dispatch("setLevelSeven");
+      if (this.GameBeginTitle === "第八关") this.$store.dispatch("setLevelEight");
+      if (this.GameBeginTitle === "第九关") this.$store.dispatch("setLevelNine");
 
       this.$Router.push({ name: "gameBegin", params: {} });
     },
