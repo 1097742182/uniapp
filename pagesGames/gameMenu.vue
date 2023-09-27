@@ -217,9 +217,13 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding: 10px 40px;
+  padding: 20px 40px;
+  padding-bottom: 30px;
   overflow: auto;
   max-height: 300px;
+
+  position: absolute;
+  left: 0;
 }
 
 .prompt {

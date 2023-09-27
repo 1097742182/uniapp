@@ -54,7 +54,7 @@
           </view>
           <!-- 如果游戏胜利了，并且是最后一关，则显示“返回菜单” -->
           <view class="popupBtn" v-else-if="gameStatus && checkIsLastLevel()">
-            <button type="success" class="submitClass" @click="returnMenuBtnClick()">返回菜单</button>
+            <button type="success" class="submitClass" style="color: #fff" @click="returnMenuBtnClick()">返回菜单</button>
           </view>
 
           <!-- 成功的dialog展示 -->
