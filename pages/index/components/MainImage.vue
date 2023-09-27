@@ -17,6 +17,7 @@
         class="weui-input"
         :value="nickName"
         @blur="bindblur"
+        @focus="handleFocus"
         @input="bindinput"
         placeholder="给自己起个名字，开始你的征程吧"
       />
@@ -56,6 +57,9 @@ export default {
     _initUserInfo() {
       this.avatarUrl = this.AvatarUrl ? this.AvatarUrl : this.ErrorAvatarUrl;
       this.nickName = this.NickName || "";
+    },
+    handleFocus() {
+      if (!this.nickName) this.nickName = this.$api.user.getRandomUser();
     },
     bindblur(e) {
       // 获取微信昵称

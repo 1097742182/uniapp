@@ -1,8 +1,7 @@
 import { city } from "./city.js";
 import { nameList } from "./name.js";
 import { formatDate, generateRandomTime, generateRandomNumber } from "@/utils/index.js";
-import store from '@/store';
-
+import store from "@/store";
 
 // test user request api
 const http = uni.$u.http;
@@ -15,6 +14,13 @@ const http = uni.$u.http;
 // test post api
 export function postGoodsInfo(params) {
   return http.post("/http/goodInfos", params);
+}
+
+export function getRandomUser() {
+  const randomNameNumber = Math.floor(Math.random() * nameList.length);
+  const user = nameList[randomNameNumber];
+
+  return user;
 }
 
 // 根据wx.login的code获取用户信息
@@ -70,7 +76,6 @@ export function getRoomDetail(data) {
 export function updateRoomDetail(data) {
   return http.post("/number/updateRoomDetail", data);
 }
-
 
 // 好友PK，创建PK房间
 export function getWaitingRoomDetail(data) {
