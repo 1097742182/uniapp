@@ -7,24 +7,30 @@
       <number-content :gameOver="gameOver" :backgroundType="backgroundType"></number-content>
 
       <!-- history区域 -->
-      <swiper
-        id="historySwiper"
-        :duration="300"
-        class="swiper-1"
-        :style="'height:' + historyHeight"
-        easing-function="linear"
-        :indicator-dots="true"
-        :current="currentSwiper"
-      >
-        <swiper-item>
-          <history-number-content v-if="getCurrentTitle()" />
-          <new-history-number-content v-else />
-        </swiper-item>
-        <swiper-item v-if="SecondHistory">
-          <history-number-content v-if="getCurrentTitle()" :secondHistory="true" />
-          <new-history-number-content v-else :secondHistory="true" />
-        </swiper-item>
-      </swiper>
+      <view style="position: relative">
+        <swiper
+          id="historySwiper"
+          :duration="300"
+          class="swiper-1"
+          :style="'height:' + historyHeight"
+          easing-function="linear"
+          :indicator-dots="true"
+          :current="currentSwiper"
+        >
+          <swiper-item>
+            <history-number-content v-if="getCurrentTitle()" />
+            <new-history-number-content v-else />
+          </swiper-item>
+          <swiper-item v-if="SecondHistory">
+            <history-number-content v-if="getCurrentTitle()" :secondHistory="true" />
+            <new-history-number-content v-else :secondHistory="true" />
+          </swiper-item>
+        </swiper>
+
+        <view class="box shake" style="position: absolute; right: 20px; bottom: 30px" @click="changeRightNumber()">
+          <img :src="svgBoxPath" alt="SVG Image" style="width: 50px; height: 50px" />
+        </view>
+      </view>
 
       <!-- <history-number-content v-if="GameBeginTitle === '第四关'" />
       <new-history-number-content v-else /> -->
@@ -104,6 +110,8 @@
       :showBottom="false"
       @confirm="messageBoxConfirm"
     />
+
+    <BoxDialog ref="BoxDialog" @showRightNumber="showRightNumber" @showErrorNumber="showErrorNumber" />
   </view>
 </template>
 
@@ -118,9 +126,10 @@ import SuccessDialog from "@/components/SuccessDialog/SuccessDialog.vue";
 import ErrorDialog from "@/components/ErrorDialog/ErrorDialog.vue";
 import WarningDialog from "@/components/WarningDialog/WarningDialog.vue";
 import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
+import BoxDialog from "./components/gameBegin/BoxDialog.vue";
 
 // 方法
-import { equals, addDuplicate, checkNumberRight } from "@/utils/index.js";
+import { equals, addDuplicate, checkNumberRight, getRandomFromList,getRandomNotInList } from "@/utils/index.js";
 
 export default {
   data() {
@@ -139,6 +148,7 @@ export default {
       warningDialogShow: false, // 游戏失败动画
       historyHeight: "355px",
       shareContent: "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！",
+      svgBoxPath: require("@/static/svg/box.svg"), // SVG文件路径
     };
   },
   onShareAppMessage() {
@@ -156,6 +166,7 @@ export default {
     SuccessDialog,
     WarningDialog,
     MessageBoxVue,
+    BoxDialog,
   },
   computed: {
     currentLevelNumberResultShowState() {
@@ -444,6 +455,17 @@ export default {
       if (this.CurrentLevelType === "hard") this.shareContent = "华山论剑，轻松拿下，无敌是最寂寞！";
       if (this.checkIsLastLevel()) this.$refs.shareMessageBox.open();
     },
+    changeRightNumber() {
+      this.$refs.BoxDialog.open();
+    },
+    showRightNumber() {
+      this.$store.commit("SET_RightButtonNumber", getRandomFromList(this.secretNumbers));
+      this.$refs.BoxDialog.close();
+    },
+    showErrorNumber() {
+      this.$store.commit("SET_ErrorButtonNumber", getRandomNotInList(this.secretNumbers, this.ButtonCount));
+      this.$refs.BoxDialog.close();
+    },
   },
 };
 </script>
@@ -507,6 +529,7 @@ export default {
 
 .swiper-1 {
   height: 345px;
+  position: relative;
 }
 
 /deep/ .u-popup__content {

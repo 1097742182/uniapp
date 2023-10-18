@@ -4,8 +4,8 @@
       <button
         type="primary"
         class="buttonClass"
-        :class="backgroundType"
         v-for="item in buttonFirstRow"
+        :class="[getButtonClass(item)]"
         :key="item"
         @click="buttonClick(item)"
       >
@@ -16,8 +16,8 @@
       <button
         type="primary"
         class="buttonClass"
-        :class="backgroundType"
         v-for="item in buttonSecondRow"
+        :class="[getButtonClass(item)]"
         :key="item"
         @click="buttonClick(item)"
       >
@@ -44,6 +44,11 @@ export default {
     this._initButtonRow();
   },
   methods: {
+    getButtonClass(item) {
+      if (item == this.RightButtonNumber) return "greenBackground";
+      if (item == this.ErrorButtonNumber) return "dangerBackground";
+      return this.backgroundType;
+    },
     _initButtonRow() {
       let buttonList = JSON.parse(JSON.stringify(this.buttonList));
       if (this.ButtonCount <= 6) buttonList.shift();
@@ -107,5 +112,13 @@ export default {
 
 .redBackground {
   background: linear-gradient(0deg, rgb(215, 138, 138) 0%, rgb(225, 89, 89) 100%);
+}
+
+.greenBackground {
+  background: linear-gradient(0deg, rgb(188, 238, 191) 0%, rgb(35, 233, 35) 100%);
+}
+
+.dangerBackground {
+  background: linear-gradient(0deg, rgb(238, 188, 200) 0%, rgb(238, 188, 200) 100%);
 }
 </style>

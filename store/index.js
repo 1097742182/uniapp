@@ -45,6 +45,8 @@ const store = new Vuex.Store({
     SecondHistory: false, // 是否开启第二次历史数据
     CurrentLevelNumberResult: [], // 当前关卡的答案
     CurrentLevelNumberResultShow: false, // 是否显示答案
+    RightButtonNumber: null, // 展示正确的数字
+    ErrorButtonNumber: null, // 展示错误的数字
 
     PKLevelStatus: false, // 是否为PK关卡
 
@@ -127,6 +129,12 @@ const store = new Vuex.Store({
     SET_CurrentLevelNumberResultShow(state, CurrentLevelNumberResultShow) {
       state.CurrentLevelNumberResultShow = CurrentLevelNumberResultShow;
     },
+    SET_RightButtonNumber: (state, RightButtonNumber) => {
+      state.RightButtonNumber = RightButtonNumber;
+    },
+    SET_ErrorButtonNumber: (state, ErrorButtonNumber) => {
+      state.ErrorButtonNumber = ErrorButtonNumber;
+    },
 
     SET_PKLevelStatus: (state, PKLevelStatus) => {
       state.PKLevelStatus = PKLevelStatus;
@@ -195,7 +203,18 @@ const store = new Vuex.Store({
     },
     // 根据接口返回的信息，更新用户数据
     updateUserInfoByInterfaceData({ state, commit, dispatch }, userInfo) {
-      const { openId, nickname, avatarUrl, cityValue, genderValue, UserCount, LevelStep, HardLevelStep, UserGameDetail, PkHistoryList } = userInfo;
+      const {
+        openId,
+        nickname,
+        avatarUrl,
+        cityValue,
+        genderValue,
+        UserCount,
+        LevelStep,
+        HardLevelStep,
+        UserGameDetail,
+        PkHistoryList,
+      } = userInfo;
 
       // 存到Vuex中
       if (openId) commit("SET_OpenId", openId);
@@ -226,6 +245,8 @@ const store = new Vuex.Store({
       commit("SET_CurrentIndex", 0);
       commit("SET_CurrentLevelNumberResult", []);
       commit("SET_CurrentLevelNumberResultShow", false);
+      commit("SET_RightButtonNumber", null);
+      commit("SET_ErrorButtonNumber", null);
     },
     setLevelOne({ state, commit, dispatch }) {
       dispatch("_setDefaultLevelValue");
@@ -359,8 +380,8 @@ const store = new Vuex.Store({
 
       // 更新用户信息到数据库
       const data = { openId: state.OpenId, nickname: state.NickName };
-      if (state.LevelStep && state.LevelStep != -1) data['LevelStep'] = state.LevelStep
-      if (state.HardLevelStep && state.HardLevelStep != -1) data['HardLevelStep'] = state.HardLevelStep
+      if (state.LevelStep && state.LevelStep != -1) data["LevelStep"] = state.LevelStep;
+      if (state.HardLevelStep && state.HardLevelStep != -1) data["HardLevelStep"] = state.HardLevelStep;
       uni.$http.post("/number/update_data", data);
     },
     setUserDetail({ commit }, userDetail) {

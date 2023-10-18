@@ -308,3 +308,29 @@ export function clearPKHistoryData(item) {
   if (!item.secondUseTime) item["secondUseTime"] = "20:00";
   if (!item.firstUseTime) item["firstUseTime"] = "20:00";
 }
+
+// 获取list中的随机数
+export function getRandomFromList(list) {
+  const listLength = list.length;
+  const randomIndex = Math.floor(Math.random() * listLength);
+  return list[randomIndex];
+}
+
+export function getRandomNotInList(list, length) {
+  let allNumbers = Array.from({ length: length }, (_, i) => i); // 创建一个包含1-10的数字数组
+
+  if (length <= 6) allNumbers = allNumbers.map((item) => String(item + 1));
+  else allNumbers = allNumbers.map((item) => String(item));
+
+  // 从数组中移除列表中的所有数字
+  let filteredNumbers = allNumbers.filter((num) => !list.includes(num));
+
+  if (filteredNumbers.length === 0) {
+    // 如果列表中没有缺失的数字
+    return null; // 或者你可以返回一个特定的值，或者抛出一个错误
+  }
+
+  // 从剩余的数字中随机选择一个
+  let randomIndex = Math.floor(Math.random() * filteredNumbers.length);
+  return filteredNumbers[randomIndex];
+}
