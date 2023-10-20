@@ -27,7 +27,12 @@
           </swiper-item>
         </swiper>
 
-        <view class="box shake" style="position: absolute; right: 20px; bottom: 30px" @click="changeRightNumber()">
+        <view
+          class="box shake"
+          v-if="HistoryNumberList.length >= HistoryNumberCount / 2"
+          style="position: absolute; right: 20px; bottom: 30px"
+          @click="changeRightNumber()"
+        >
           <img :src="svgBoxPath" alt="SVG Image" style="width: 50px; height: 50px" />
         </view>
       </view>
@@ -129,7 +134,7 @@ import MessageBoxVue from "@/components/MessageBox/MessageBox.vue";
 import BoxDialog from "./components/gameBegin/BoxDialog.vue";
 
 // 方法
-import { equals, addDuplicate, checkNumberRight, getRandomFromList,getRandomNotInList } from "@/utils/index.js";
+import { equals, addDuplicate, checkNumberRight, getRandomFromList, getRandomNotInList } from "@/utils/index.js";
 
 export default {
   data() {
@@ -147,12 +152,15 @@ export default {
       errorDialogShow: false, // 游戏失败动画
       warningDialogShow: false, // 游戏失败动画
       historyHeight: "355px",
-      shareContent: "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！",
+      easyShareContent: "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！",
+      hardShareContent: "华山论剑，轻松拿下，无敌是最寂寞！",
+      shareContent: "",
       svgBoxPath: require("@/static/svg/box.svg"), // SVG文件路径
     };
   },
   onShareAppMessage() {
     const data = JSON.parse(JSON.stringify(this.share));
+    data.imageUrl = "";
     data.title = this.shareContent;
     return data;
   },
@@ -451,8 +459,9 @@ export default {
     },
     confirmBtnClick() {
       this.successDialogShow = false;
-      this.shareContent = "我已通过菜鸟集训，超越了全国95%的聪明人，等你来挑战喔！";
-      if (this.CurrentLevelType === "hard") this.shareContent = "华山论剑，轻松拿下，无敌是最寂寞！";
+      this.shareContent = this.easyShareContent;
+      if (this.CurrentLevelType === "hard") this.shareContent = this.hardShareContent; // 困难模式修改文本
+      if (this.GameBeginTitle === "第六关") this.$refs.shareMessageBox.open();
       if (this.checkIsLastLevel()) this.$refs.shareMessageBox.open();
     },
     changeRightNumber() {
@@ -538,5 +547,29 @@ export default {
 
 .submitClass {
   background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgb(40, 131, 221) 100%);
+}
+
+.shake {
+  animation: scale 2s ease-in-out 1;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

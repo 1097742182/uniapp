@@ -14,7 +14,7 @@
           <view class="title">{{ title }}</view>
         </slot>
         <slot name="body">
-          <view class="content">{{ content }}</view>
+          <view class="content" v-html="content"></view>
         </slot>
         <slot name="bottom">
           <view class="btns" v-if="showBottom">
