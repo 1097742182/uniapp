@@ -157,7 +157,7 @@ export default {
       shareContent: "",
       svgBoxPath: require("@/static/svg/box.svg"), // SVG文件路径
 
-      shareCustomBackground: false
+      shareCustomBackground: false,
     };
   },
   onShareAppMessage() {
@@ -168,6 +168,15 @@ export default {
     }
     return data;
   },
+
+  onShow: function () {
+    console.log("gameBegin onShow");
+    this.$refs.BoxDialog.emitShareStatus();
+  },
+  onHide: function () {
+    console.log("gameBegin  App Hide");
+  },
+
   components: {
     UserInfo,
     NumberContent,
@@ -463,7 +472,7 @@ export default {
     },
     confirmBtnClick() {
       this.successDialogShow = false;
-      this.shareCustomBackground = true // 开启自定义界面分享功能
+      this.shareCustomBackground = true; // 开启自定义界面分享功能
       this.shareContent = this.easyShareContent;
       if (this.CurrentLevelType === "hard") this.shareContent = this.hardShareContent; // 困难模式修改文本
       if (this.GameBeginTitle === "第六关") this.$refs.shareMessageBox.open();

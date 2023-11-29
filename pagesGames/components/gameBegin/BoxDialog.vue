@@ -56,6 +56,7 @@ export default {
       bigUseCount: 600,
       smallUseCount: 400,
       shareType: "",
+      shareBtnStatus: false,
     };
   },
   computed: {
@@ -109,6 +110,14 @@ export default {
       this.$api.user.setUserCount(data);
     },
     shareBtnClick() {
+      this.shareBtnStatus = true;
+    },
+    emitShareStatus() {
+      // 如果没有开启，说明没有点击分享按钮，则取消当前操作
+      if (!this.shareBtnStatus == true) return;
+
+      this.shareBtnStatus = false; // 重置状态
+      uni.$showMsg("分享完成，使用道具成功");
       if (this.shareType === "right") this.$emit("showRightNumber");
       if (this.shareType === "error") this.$emit("showErrorNumber");
     },
