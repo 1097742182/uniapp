@@ -29,7 +29,7 @@
 
         <view
           class="box shake"
-          v-if="HistoryNumberList.length >= HistoryNumberCount / 2"
+          v-if="HistoryNumberList.length >= 1"
           style="position: absolute; right: 20px; bottom: 30px"
           @click="changeRightNumber()"
         >
@@ -156,12 +156,16 @@ export default {
       hardShareContent: "华山论剑，轻松拿下，无敌是最寂寞！",
       shareContent: "",
       svgBoxPath: require("@/static/svg/box.svg"), // SVG文件路径
+
+      shareCustomBackground: false
     };
   },
   onShareAppMessage() {
     const data = JSON.parse(JSON.stringify(this.share));
-    data.imageUrl = "";
-    data.title = this.shareContent;
+    if (this.shareCustomBackground) {
+      data.imageUrl = "";
+      data.title = this.shareContent;
+    }
     return data;
   },
   components: {
@@ -459,6 +463,7 @@ export default {
     },
     confirmBtnClick() {
       this.successDialogShow = false;
+      this.shareCustomBackground = true // 开启自定义界面分享功能
       this.shareContent = this.easyShareContent;
       if (this.CurrentLevelType === "hard") this.shareContent = this.hardShareContent; // 困难模式修改文本
       if (this.GameBeginTitle === "第六关") this.$refs.shareMessageBox.open();

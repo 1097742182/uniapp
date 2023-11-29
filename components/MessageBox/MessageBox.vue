@@ -19,6 +19,9 @@
         <slot name="bottom">
           <view class="btns" v-if="showBottom">
             <view class="cancel btn" @click="cancel" v-if="cancelShow">{{ cancelText }}</view>
+            <view @click="shareBtnClick()" v-if="ShowbottomShare">
+              <button class="btn shareBtn" type="primary" open-type="share">分享领取</button>
+            </view>
             <view class="confirm btn" @click="confirm" v-if="confirmShow">{{ confirmText }}</view>
           </view>
 
@@ -42,11 +45,19 @@ export default {
       show: false, //控制打开还是不打开
     };
   },
-
+  onShow() {
+    console.log("用户返回到面了！");
+    // 在这里添加监听代码
+  },
+  onShareAppMessage() {
+    const data = JSON.parse(JSON.stringify(this.share));
+    return data;
+  },
   props: {
     title: { type: String, default: "提示" },
     content: { type: String, default: "是否关闭对话框？" },
     showBottom: { type: Boolean, default: true },
+    ShowbottomShare: { type: Boolean, default: false }, // 分享领取的功能是否启用
     showShare: { type: Boolean, default: false },
     cancelText: { type: String, default: "取消" },
     confirmText: { type: String, default: "确定" },
@@ -67,6 +78,13 @@ export default {
     },
     cancel() {
       this.show = false;
+    },
+
+    shareBtnClick() {
+      setTimeout(() => {
+        this.show = false;
+        this.$emit("shareBtnClick");
+      }, 1000);
     },
   },
 };
@@ -113,6 +131,13 @@ export default {
       margin: 0 5px;
       font-size: 16px;
     }
+
+    .shareBtn {
+      height: 30px;
+      line-height: 20px;
+      font-size: 16px;
+    }
+
     .confirm {
       background: #409eff;
       color: #fff;

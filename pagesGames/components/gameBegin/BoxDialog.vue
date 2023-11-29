@@ -28,8 +28,20 @@
       </view>
     </u-popup>
 
-    <MessageBoxVue ref="useBigUserCount" :content="getUseCountContent(bigUseCount)" @confirm="useBigConfirm" />
-    <MessageBoxVue ref="useSmallUserCount" :content="getUseCountContent(smallUseCount)" @confirm="useSmallConfirm" />
+    <MessageBoxVue
+      ref="useBigUserCount"
+      :ShowbottomShare="true"
+      :content="getUseCountContent(bigUseCount)"
+      @confirm="useBigConfirm"
+      @shareBtnClick="shareBtnClick"
+    />
+    <MessageBoxVue
+      ref="useSmallUserCount"
+      :ShowbottomShare="true"
+      :content="getUseCountContent(smallUseCount)"
+      @confirm="useSmallConfirm"
+      @shareBtnClick="shareBtnClick"
+    />
   </view>
 </template>
  
@@ -43,6 +55,7 @@ export default {
       show: false, //控制打开还是不打开
       bigUseCount: 600,
       smallUseCount: 400,
+      shareType: "",
     };
   },
   computed: {
@@ -68,6 +81,7 @@ export default {
     },
     // 弹出消耗大量积分确认框
     showRightNumber() {
+      this.shareType = "right";
       this.$refs.useBigUserCount.open();
     },
     useBigConfirm() {
@@ -78,6 +92,7 @@ export default {
     },
     // 弹出消耗小量积分确认框
     showErrorNumber() {
+      this.shareType = "error";
       this.$refs.useSmallUserCount.open();
     },
     useSmallConfirm() {
@@ -92,6 +107,10 @@ export default {
       // 保存积分到数据库中
       const data = { openId: this.OpenId, nickname: this.NickName, UserCount: userCount };
       this.$api.user.setUserCount(data);
+    },
+    shareBtnClick() {
+      if (this.shareType === "right") this.$emit("showRightNumber");
+      if (this.shareType === "error") this.$emit("showErrorNumber");
     },
 
     // 检查是否已经使用过道具
