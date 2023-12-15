@@ -52,8 +52,9 @@ export default {
         content: "使用优惠券可享受更多优惠哦！",
         success: (res) => {
           if (res.confirm) {
-            // setTimeout(() => (this.popupShow = true), 200);
-            uni.$showMsg("网络异常，请稍后重试");
+            setTimeout(() => (this.popupShow = true), 200);
+            // uni.$showMsg("网络异常，请稍后重试");
+            uni.$showMsg("兑换成功");
           } else if (res.cancel) {
             console.log("取消兑换");
           }

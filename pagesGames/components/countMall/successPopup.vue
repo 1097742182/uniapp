@@ -28,8 +28,8 @@ export default {
     // 前往其他小程序
     goToMiniProgram() {
       uni.navigateToMiniProgram({
-        appId: "wx1234567890", // 目标小程序的appId，需要在微信公众号平台上配置为合法的关联小程序
-        path: "/pages/index/index", // 目标小程序中需要跳转到的页面路径，可以通过微信开发者工具查看
+        appId: "wx724a4f4d4603eea3", // 目标小程序的appId，需要在微信公众号平台上配置为合法的关联小程序
+        // path: "/pages/index/index", // 目标小程序中需要跳转到的页面路径，可以通过微信开发者工具查看
         success(res) {
           console.log("跳转成功", res); // 在控制台输出跳转结果
         },

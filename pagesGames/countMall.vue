@@ -4,23 +4,13 @@
     <view style="margin: 20px">
       <UserCountCard>
         <view slot="bottom" style="margin: auto 0; width: 100%">
-          <view
-            class="bottomRight"
-            style="text-align: right"
-            @click="myTicketBtnClick()"
-          >
-            我的优惠券 >
-          </view>
+          <view class="bottomRight" style="text-align: right" @click="myTicketBtnClick()"> 我的优惠券 > </view>
         </view>
       </UserCountCard>
     </view>
 
     <view style="margin: 10px">
-      <mall-ticket
-        v-for="(item, index) in ticketList"
-        :ticketDetail="item"
-        :key="index"
-      />
+      <mall-ticket v-for="(item, index) in ticketList" :ticketDetail="item" :key="index" />
     </view>
   </view>
 </template>
@@ -50,16 +40,17 @@ export default {
     MallTicket,
     UserCountCard,
   },
+  methods: {
+    myTicketBtnClick() {
+      // this.$Router.push({ name: "countMall", params: {} });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .countMall {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(132, 193, 247) 0%,
-    white 100%
-  );
+  background-image: linear-gradient(to bottom, rgb(132, 193, 247) 0%, white 100%);
   background-size: 100% 200px;
   background-repeat: no-repeat;
 
