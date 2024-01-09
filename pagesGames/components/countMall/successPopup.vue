@@ -10,8 +10,10 @@
     >
       <view class="popup-content">
         <view class="popup-title">优惠券领取成功！</view>
-        <view class="popup-desc">使用优惠券可享受更多优惠哦！</view>
-        <view class="popup-button" @tap="goToMiniProgram">前往其他小程序</view>
+        <view class="popup-desc"
+          >请记住，要在地址最后面加上：“（密码侦探）”，商家才能知道是自己人，买家才能享受买一赠一的优惠喔</view
+        >
+        <view class="popup-button" @tap="goToMiniProgram">前往杞小白商城</view>
       </view>
     </u-popup>
   </div>
