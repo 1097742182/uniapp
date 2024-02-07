@@ -1,6 +1,6 @@
 <template>
   <view class="u-page">
-    <cl-header :key="0" title="密码神探" :isBack="false" />
+    <cl-header :key="0" title="密码侦探" :isBack="false" />
     <main-image style="width: 100%" ref="MainImage"></main-image>
     <view class="loginPopup">
       <u-popup
@@ -44,7 +44,7 @@
     </view>
 
     <view class="footer">
-      <text class="u-demo-block__title">密码神探</text>
+      <text class="u-demo-block__title">密码侦探</text>
       <text class="info">本程序仅供娱乐，请勿用于非法活动</text>
     </view>
   </view>
