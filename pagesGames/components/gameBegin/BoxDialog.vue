@@ -15,7 +15,7 @@
           type="primary"
           style="margin: 10px; background: #2ce92c"
         >
-          展示正确答案
+          显示一个正确数字
         </button>
         <button
           @click="showErrorNumber()"
@@ -23,7 +23,7 @@
           type="primary"
           style="margin: 10px; background: #fb97af"
         >
-          排除错误答案
+          显示一个不正确数字
         </button>
       </view>
     </u-popup>
