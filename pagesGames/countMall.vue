@@ -24,9 +24,14 @@ export default {
     return {
       ticketList: [
         {
-          money: 10,
+          money: "买一送一",
           saleTips: "无门槛使用",
           needUserCount: 1000,
+        },
+        {
+          money: 10,
+          saleTips: "无门槛使用",
+          needUserCount: 2000,
         },
         {
           money: 100,

@@ -4,7 +4,8 @@
       <div class="left">
         <p>杞小白官方旗舰店</p>
         <view class="saleMoneyContent">
-          <span class="saleMoney">{{ ticketDetail.money }}.00</span>
+          <span class="saleBest" v-if="ticketDetail.money === '买一送一'">买一送一</span>
+          <span class="saleMoney" v-else>{{ ticketDetail.money }}.00</span>
         </view>
         <p class="saleTips">{{ ticketDetail.saleTips }}</p>
       </div>
@@ -190,5 +191,14 @@ export default {
   padding: 5px 10px;
   border-radius: 3px;
   display: block;
+}
+
+.saleBest {
+  font-size: 36px;
+  line-height: 50px;
+  color: #fff;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>
