@@ -57,7 +57,8 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxe16b90637ea98dcb",
+        // "appid" : "wxe16b90637ea98dcb", // 密码侦探小程序 appid
+        "appid" : "wx9e48b38eda513483", // 猜四个数字小程序 appid
         "setting" : {
             "urlCheck" : false
         },
